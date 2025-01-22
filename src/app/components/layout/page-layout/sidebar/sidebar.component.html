@@ -29,7 +29,7 @@
                             'mr-1' : isCollapsed,
                             'mr-4': !isCollapsed,
                             'text-accentForeground': currentRoute.includes(item.route),
-                            'bg-accent/10' : currentRoute.includes(item.route),
+                            'bg-accent/80': currentRoute.includes(item.route),
                             }"
                         role="link" [routerLink]="item.route"
                         (keydown)="onKeyPressed($event, item.route)">
