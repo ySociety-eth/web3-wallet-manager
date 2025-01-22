@@ -1,10 +1,11 @@
 import { Component } from '@angular/core';
 import { PageLayoutComponent } from "./components/layout/page-layout/page-layout.component";
 import { SidebarSections } from './models/navbar-items.interface';
+import { RouterOutlet } from '@angular/router';
 
 @Component({
   selector: 'app-root',
-  imports: [PageLayoutComponent],
+  imports: [RouterOutlet, PageLayoutComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })
