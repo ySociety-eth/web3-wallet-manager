@@ -1,56 +1,12 @@
 <div class="page-container">
-    <section class="flex gap-2">
+    <section class="flex flex-col sm:flex-row gap-2">
         <div class="grid grid-cols-2 gap-2 flex-1">
-            <!--  -->
-            <div class="flex gap-4 items-center bg-card p-4 rounded-xl">
-                <div>
-                    <i class="fi fi-rr-usd-circle flex text-3xl"></i>
-                </div>
-                <div>
-                    <h2 class="text-mutedForeground text-xs">Total Balance</h2>
-                    <span class="block font-medium text-xl overflow-hidden overflow-ellipsis whitespace-nowrap">$2.540</span>
-                </div>
-            </div>
-            <!--  -->
-            <div class="flex gap-4 items-center bg-card p-4 rounded-xl">
-                <div>
-                    <i class="fi fi-rr-exchange flex text-2xl"></i>
-                </div>
-                <div>
-                    <h2 class="text-mutedForeground text-xs">Total Transactions</h2>
-                    <span class="block font-medium text-xl overflow-hidden overflow-ellipsis whitespace-nowrap">22.647</span>
-                </div>
-            </div>
-            <!--  -->
-            <div class="flex gap-4 items-center bg-card p-4 rounded-xl">
-                <div>
-                    <i class="fi fi-tr-tax-alt flex text-2xl"></i>
-                </div>
-                <div>
-                    <h2 class="text-mutedForeground text-xs">Total Fees</h2>
-                    <span class="block font-medium text-xl overflow-hidden overflow-ellipsis whitespace-nowrap">$533,43</span>
-                </div>
-            </div>
-            <!--  -->
-            <div class="flex gap-4 items-center bg-card p-4 rounded-xl">
-                <div>
-                    <i class="fi fi-rr-nft-square flex text-2xl"></i>
-                </div>
-                <div class="overflow-hidden">
-                    <h2 class="text-mutedForeground text-xs">NFTs Total</h2>
-                    <span class="block text-xl font-medium overflow-hidden overflow-ellipsis whitespace-nowrap">$433,50</span>
-                </div>
-            </div>
-            <!--  -->
-            <div class="flex gap-4 items-center bg-card p-4 rounded-xl col-span-2">
-                <div>
-                    <i class="fi fi-rr-wallet-buyer flex text-2xl"></i>
-                </div>
-                <div class="overflow-hidden">
-                    <h2 class="text-mutedForeground text-xs">Wallet Address</h2>
-                    <span class="block font-medium overflow-hidden overflow-ellipsis whitespace-nowrap">0xC98e86927D9752586da1081c8dD9a41450232Deb</span>
-                </div>
-            </div>
+            <basic-card icon="fi-rr-usd-circle" title="Total Balance" value="$2.540"></basic-card>
+            <basic-card icon="fi-rr-exchange" title="Total Transactions" value="22.647"></basic-card>
+            <basic-card icon="fi-rr-tax-alt" title="Total Fees" value="$553,43"></basic-card>
+            <basic-card icon="fi-rr-nft-square" title="Total NFTs" value="$433,50"></basic-card>
+            <basic-card icon="fi-rr-wallet-buyer" title="Wallet Address" value="0xC98e86927D9752586da1081c8dD9a41450232Deb" valueFontSize="base"
+            class="col-span-2"></basic-card>
         </div>
         <div class="flex-1 rounded-xl bg-card flex items-center justify-center">
             <h1 class="text-6xl text-mutedForeground">graph</h1>
