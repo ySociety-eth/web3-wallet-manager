@@ -1,0 +1,19 @@
+<table class="w-full table-auto border border-border">
+    <thead>
+        <tr class="border border-border">
+            @for (column of columns(); track $index) {    
+                <th class="border border-border">{{column}}</th>
+            }
+        </tr>
+    </thead>
+    <tbody>
+        @for (column of data(); track $index; let columnIndex = $index) {
+            <tr class="border border-border">
+                @for (data of column; track $index) {
+                    <td class="border border-border">{{data}}</td>
+                }
+            </tr>
+        }
+    </tbody>
+    
+</table>
