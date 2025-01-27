@@ -3,6 +3,7 @@ import { BasicCardComponent } from '../../../components/shared/cards/basic-card/
 import { DataTableComponent } from "../../../components/shared/data-table/data-table.component";
 import { UserDataService } from '../../../services/api/user-data.service';
 import { UserTransaction } from '../../../models/api/users.interface';
+import { DataTableColumn } from '../../../models/data-table.interface';
 
 @Component({
   selector: 'dashboard-page',
@@ -25,10 +26,20 @@ ngOnInit(): void {
   console.log(this.userTransactions)
 }
 
-printData(){
-    console.log(this.transactions$);
-  }
-colunas = ['Block Number', 'From', 'To' ]
+colunas: DataTableColumn[] = [
+  {
+    label: 'Block Number',
+    property: 'blockNumber'
+  },
+  {
+    label: 'From',
+    property: 'from'
+  },
+  {
+    label: 'To',
+    property: 'to'
+  },
+]
 
 }
 

@@ -1,7 +1,6 @@
-import { Component, inject, input, OnInit } from '@angular/core';
-import { UserDataService } from '../../../services/api/user-data.service';
-import { UserTransaction } from '../../../models/api/users.interface';
+import { Component, input } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { DataTableColumn } from '../../../models/data-table.interface';
 
 @Component({
   selector: 'data-table',
@@ -10,36 +9,6 @@ import { CommonModule } from '@angular/common';
   styleUrl: './data-table.component.scss'
 })
 export class DataTableComponent {
-
-  public columns = input<string[]>();
-  public data = input<any[]>();
-
-
-  
-  // columns = ['Coluna1', 'Coluna2', 'c3'];
-  // data: any[] = [
-  //   ['a', 'b', 'c'],
-  //   ['d', 'e', 'f'],
-  //   ['as', 'bs', 'cs']
-  // ];
-
-
-//   private userDataService = inject(UserDataService);
-//   public transactions$ = this.userDataService.getTransaction();
-
-//   userTransactions: UserTransaction[] = [];
-
-// ngOnInit(): void {
-//   this.transactions$.subscribe(data => {
-//   for(let i = 0; i < 5; i++){
-//     const transaction = data.result[i];
-//     this.userTransactions.push(transaction)
-//   }
-//   })
-//   console.log(this.userTransactions)
-// }
-
-//   printData(){
-//     console.log(this.transactions$);
-//   }
+  public columns = input<DataTableColumn[]>();
+  public rows = input<any[]>();
 }

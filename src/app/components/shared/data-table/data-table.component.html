@@ -2,15 +2,15 @@
     <thead>
         <tr class="border border-border">
             @for (column of columns(); track $index) {    
-                <th class="border border-border">{{column}}</th>
+                <th class="border border-border">{{column.label}}</th>
             }
         </tr>
     </thead>
     <tbody>
-        @for (column of data(); track $index; let columnIndex = $index) {
+        @for (row of rows(); track $index) {
             <tr class="border border-border">
-                @for (data of column; track $index) {
-                    <td class="border border-border">{{data}}</td>
+                @for (column of columns(); track $index) {
+                    <td class="border border-border">{{row[column.property]}}</td>
                 }
             </tr>
         }

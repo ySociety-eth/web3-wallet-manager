@@ -6,8 +6,7 @@ import { Component, input } from '@angular/core';
     class: 'flex gap-4 items-center bg-card p-4 rounded-xl'
   },
   imports: [],
-  templateUrl: './basic-card.component.html',
-  styleUrl: './basic-card.component.scss'
+  templateUrl: './basic-card.component.html'
 })
 export class BasicCardComponent {
   public icon = input<string>('fi-rr-comment');
