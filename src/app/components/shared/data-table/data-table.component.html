@@ -1,16 +1,16 @@
-<table class="w-full table-auto border border-border">
+<table class="table-auto rounded-xl border-collapse border border-border overflow-hidden text-left w-full">
     <thead>
-        <tr class="border border-border">
+        <tr class="bg-card text-sm text-mutedForegroundNeutral whitespace-nowrap">
             @for (column of columns(); track $index) {    
-                <th class="border border-border">{{column.label}}</th>
+                <th class="py-3 px-2 first:pl-3 last:pr-3 font-semibold">{{column.label}}</th>
             }
         </tr>
     </thead>
     <tbody>
         @for (row of rows(); track $index) {
-            <tr class="border border-border">
+            <tr class="">
                 @for (column of columns(); track $index) {
-                    <td class="border border-border">{{row[column.property]}}</td>
+                    <td class="py-3 px-2 first:pl-3 last:pr-3 border-b border-border max-w">{{row[column.property]}}</td>
                 }
             </tr>
         }
