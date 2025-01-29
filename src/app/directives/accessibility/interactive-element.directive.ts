@@ -1,9 +1,11 @@
-import { Directive, ElementRef, Renderer2, OnInit, HostListener } from '@angular/core';
+import { Directive, ElementRef, Renderer2, OnInit, HostListener, input } from '@angular/core';
 
 @Directive({
   selector: '[interactiveElement]'
 })
 export class InteractiveElementDirective implements OnInit {
+
+  public interactiveElement = input<boolean>();
 
   constructor(
     private el: ElementRef,
@@ -11,6 +13,9 @@ export class InteractiveElementDirective implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    if(!this.interactiveElement()) { //verify if the element is not interactive
+      return;
+    }
     this.setTabIndex();
   }
 
@@ -23,6 +28,10 @@ export class InteractiveElementDirective implements OnInit {
 
   @HostListener('keydown', ['$event'])
   handleKeyDown(event: KeyboardEvent) {
+    if(!this.interactiveElement()) { //verify if the element is not interactive
+      return;
+    }
+
     if(event.key === 'Enter' || event.key === ' ') {
       event.preventDefault(); // avoid scroll when spacebar is hitted
       const element = this.el.nativeElement as HTMLElement
