@@ -4,10 +4,11 @@ import { DataTableComponent } from "../../../components/shared/data-table/data-t
 import { UserDataService } from '../../../services/api/user-data.service';
 import { UserTransaction } from '../../../models/api/users.interface';
 import { DataTableColumn } from '../../../models/data-table.interface';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'dashboard-page',
-  imports: [BasicCardComponent, DataTableComponent],
+  imports: [BasicCardComponent, DataTableComponent, CommonModule],
   templateUrl: './dashboard-page.component.html',
   styleUrl: './dashboard-page.component.scss'
 })
@@ -23,7 +24,6 @@ ngOnInit(): void {
       this.userTransactions.push(transaction)
     }
   })
-  console.log(this.userTransactions)
 }
 
 colunas: DataTableColumn[] = [

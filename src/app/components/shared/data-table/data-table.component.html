@@ -7,7 +7,8 @@
         </tr>
     </thead>
     <tbody>
-        @for (row of rows(); track $index) {
+        <!-- <h1>rows:{{displayedRows()}}</h1> -->
+        @for (row of displayedRows(); track $index) {
             <tr class="">
                 @for (column of columns(); track $index) {
                     <td class="py-3 px-2 first:pl-3 last:pr-3 border-b border-border max-w">{{row[column.property]}}</td>

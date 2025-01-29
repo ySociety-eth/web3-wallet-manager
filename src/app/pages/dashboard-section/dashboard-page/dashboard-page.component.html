@@ -15,7 +15,8 @@
     <section>
         <data-table
         [columns]="colunas"
-        [rows]="userTransactions"
+        [rows]="(transactions$ | async)?.result"
+        [limit]="5"
         ></data-table>
     </section>
 </div>
