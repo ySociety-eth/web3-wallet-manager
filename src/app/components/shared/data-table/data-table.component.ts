@@ -1,17 +1,21 @@
-import { Component, input, OnInit, signal } from '@angular/core';
+import { Component, input, OnInit, output, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { DataTableColumn } from '../../../models/data-table.interface';
+import { InteractiveElementDirective } from '../../../directives/accessibility/interactive-element.directive';
+import { popIn } from '../../../animations/default-transitions.animations';
 
 @Component({
   selector: 'data-table',
-  imports: [CommonModule],
+  imports: [CommonModule, InteractiveElementDirective],
   templateUrl: './data-table.component.html',
-  styleUrl: './data-table.component.scss'
+  styleUrl: './data-table.component.scss',
+  animations: [popIn]
 })
 export class DataTableComponent implements OnInit {
   public columns = input<DataTableColumn[]>();
   public rows = input<any[]>();
   public limit = input<number>();
+  public sorted = output<DataTableColumn>();
   
   protected displayedRows = signal<any[]>([]);
 
@@ -37,5 +41,23 @@ export class DataTableComponent implements OnInit {
     if(this.rows()) {
       this.displayedRows.set(this.rows()!)
     }
+  }
+
+  handleSort(column: DataTableColumn) {
+    switch (column.sort) {
+      case 'none': 
+        column.sort = 'descending'; break;
+      case 'descending':
+        column.sort = 'ascending'; break;
+      case 'ascending':
+        column.sort = 'none'; break;
+      default:
+        column.sort = 'unavailable'; break
+    }
+  }
+
+  sort(column: DataTableColumn) {
+    this.handleSort(column);
+    this.sorted.emit(column);
   }
 }

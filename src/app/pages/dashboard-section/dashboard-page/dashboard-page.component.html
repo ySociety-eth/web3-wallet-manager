@@ -17,6 +17,7 @@
         [columns]="colunas"
         [rows]="(transactions$ | async)?.result"
         [limit]="5"
+        (sorted)="x($event)"
         ></data-table>
     </section>
 </div>

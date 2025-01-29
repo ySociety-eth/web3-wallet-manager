@@ -29,17 +29,22 @@ ngOnInit(): void {
 colunas: DataTableColumn[] = [
   {
     label: 'Block Number',
-    property: 'blockNumber'
+    property: 'blockNumber',
+    sort: 'none'
   },
   {
     label: 'From',
-    property: 'from'
+    property: 'from',
+    sort: 'none'
   },
   {
     label: 'To',
-    property: 'to'
+    property: 'to',
+    sort: 'unavailable'
   },
 ]
-
+  x(e:any) {
+    console.log(e)
+  }
 }
 
