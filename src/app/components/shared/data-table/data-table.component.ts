@@ -57,6 +57,11 @@ export class DataTableComponent implements OnInit {
   }
 
   sort(column: DataTableColumn) {
+    this.columns()!.forEach(col => { // sets all other columns to none
+      if(col !== column && col.sort !== 'unavailable') {
+        col.sort = 'none';
+      }
+    });
     this.handleSort(column);
     this.sorted.emit(column);
   }
