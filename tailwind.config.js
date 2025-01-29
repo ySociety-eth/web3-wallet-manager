@@ -14,7 +14,13 @@ module.exports = {
         mutedForegroundNeutral: "hsla(var(--muted-foreground-neutral))",
         card: "hsla(var(--card))",
         border: "hsla(var(--border))",
-      }
+      },
+      transitionDuration: {
+        DEFAULT: '170ms',
+      },
+      transitionTimingFunction: {
+        DEFAULT: 'ease-in-out',
+      },
     },
   },
   plugins: [],
