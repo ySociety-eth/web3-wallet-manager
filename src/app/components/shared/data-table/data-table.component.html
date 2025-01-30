@@ -24,7 +24,14 @@
         @for (row of displayedRows(); track $index) {
             <tr>
                 @for (column of columns(); track $index) {
-                    <td class="py-3 px-2 first:pl-3 last:pr-3 border-b border-border max-w">{{row[column.property]}}</td>
+                    <td class="py-3 px-2 first:pl-3 last:pr-3 border-b border-border max-w">
+                        @if(column.truncate){
+                            <!-- truncate the string to middle format or end format, end format receives a length value on column.truncate[0] -->
+                            {{column.truncate === 'middle' ? (row[column.property] | truncate) : (row[column.property] | truncate:column.truncate[0]:column.truncate[1])}}
+                        }@else {
+                            {{row[column.property]}}
+                        }
+                    </td>
                 }
             </tr>
         }

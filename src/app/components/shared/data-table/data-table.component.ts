@@ -3,10 +3,11 @@ import { CommonModule } from '@angular/common';
 import { DataTableColumn } from '../../../models/data-table.interface';
 import { InteractiveElementDirective } from '../../../directives/accessibility/interactive-element.directive';
 import { popIn } from '../../../animations/default-transitions.animations';
+import { TruncatePipe } from '../../../pipes/formatting/truncate.pipe';
 
 @Component({
   selector: 'data-table',
-  imports: [CommonModule, InteractiveElementDirective],
+  imports: [CommonModule, InteractiveElementDirective, TruncatePipe],
   templateUrl: './data-table.component.html',
   styleUrl: './data-table.component.scss',
   animations: [popIn]

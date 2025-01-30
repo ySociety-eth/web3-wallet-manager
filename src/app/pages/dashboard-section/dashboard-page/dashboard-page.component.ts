@@ -35,12 +35,14 @@ colunas: DataTableColumn[] = [
   {
     label: 'From',
     property: 'from',
-    sort: 'none'
+    sort: 'none',
+    truncate: 'middle'
   },
   {
     label: 'To',
     property: 'to',
-    sort: 'unavailable'
+    sort: 'unavailable',
+    truncate: 'middle'
   },
 ]
   x(e:any) {
