@@ -1,15 +1,22 @@
-<div class="page-container">
+<div class="page-container space-y-8">
     <section class="flex flex-col sm:flex-row gap-2">
         <div class="grid grid-cols-2 gap-2 flex-1">
             <basic-card icon="fi-rr-usd-circle" title="Total Balance" value="$2.540"></basic-card>
             <basic-card icon="fi-rr-exchange" title="Total Transactions" value="22.647"></basic-card>
             <basic-card icon="fi-rr-tax-alt" title="Total Fees" value="$553,43"></basic-card>
-            <basic-card icon="fi-rr-nft-square" title="Total NFTs" value="$433,50"></basic-card>
+            <basic-card icon="fi-rr-nft-square" title="Total NFTs" value="$433,50≈"></basic-card>
             <basic-card icon="fi-rr-wallet-buyer" title="Wallet Address" value="0xC98e86927D9752586da1081c8dD9a41450232Deb" valueFontSize="base"
             class="col-span-2"></basic-card>
         </div>
         <div class="flex-1 rounded-xl bg-card flex items-center justify-center">
             <h1 class="text-6xl text-mutedForeground">graph</h1>
         </div>
+    </section>
+    <section>
+        <data-table
+        [columns]="colunas"
+        [rows]="(transactions$ | async)?.result"
+        [limit]="2"
+        ></data-table>
     </section>
 </div>

@@ -1,0 +1,39 @@
+<table class="table-auto rounded-t-xl border-collapse overflow-hidden text-left w-full">
+    <thead>
+        <tr class="bg-card text-sm text-mutedForegroundNeutral whitespace-nowrap">
+            @for (column of columns(); track $index) {    
+                <th class="py-3 px-2 first:pl-3 last:pr-3 font-semibold select-none
+                transition-colors" [interactiveElement]="column.sort !== 'unavailable'"
+                [ngClass]="{'hover:text-accentForeground focus:text-accentForeground hover:cursor-pointer': column.sort !== 'unavailable',
+                    'text-accentForeground': column.sort !== 'unavailable' && column.sort !== 'none',
+                }"
+                [attr.aria-sort]="column.sort !== 'unavailable' ? column.sort : null" (click)="column.sort !== 'unavailable' ? sort(column) : null">
+                    <div class="flex items-center gap-1">
+                        <span>{{column.label}}</span>
+                        @if (column.sort !== 'unavailable' && column.sort !== 'none') {
+                            <i class="fi fi-rr-caret-down flex transition-transform duration-300" 
+                            [ngClass]="{'rotate-180': column.sort === 'ascending'}" 
+                            [@popIn]="{ value: '', params: { duration: '200ms', width: 0, transform: 'scale(0) translateX(-40px)'}}"></i>
+                        }
+                    </div>
+                </th>
+            }
+        </tr>
+    </thead>
+    <tbody>
+        @for (row of displayedRows(); track $index) {
+            <tr>
+                @for (column of columns(); track $index) {
+                    <td class="py-3 px-2 first:pl-3 last:pr-3 border-b border-border max-w">
+                        @if(column.truncate){
+                            <!-- truncate the string to middle format or end format, end format receives a length value on column.truncate[0] -->
+                            {{column.truncate === 'middle' ? (row[column.property] | truncate) : (row[column.property] | truncate:column.truncate[0]:column.truncate[1])}}
+                        }@else {
+                            {{row[column.property]}}
+                        }
+                    </td>
+                }
+            </tr>
+        }
+    </tbody>
+</table>

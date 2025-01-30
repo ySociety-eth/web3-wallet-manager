@@ -11,9 +11,16 @@ module.exports = {
         accent: "hsla(var(--accent))",
         muted: "hsla(var(--muted))",
         mutedForeground: "hsla(var(--muted-foreground))",
+        mutedForegroundNeutral: "hsla(var(--muted-foreground-neutral))",
         card: "hsla(var(--card))",
         border: "hsla(var(--border))",
-      }
+      },
+      transitionDuration: {
+        DEFAULT: '170ms',
+      },
+      transitionTimingFunction: {
+        DEFAULT: 'ease-in-out',
+      },
     },
   },
   plugins: [],
