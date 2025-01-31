@@ -36,7 +36,8 @@ colunas: DataTableColumn[] = [
     label: 'From',
     property: 'from',
     sort: 'none',
-    truncate: 'middle'
+    truncate: 'middle',
+    copyToClipboard: true
   },
   {
     label: 'To',

@@ -25,12 +25,19 @@
             <tr>
                 @for (column of columns(); track $index) {
                     <td class="py-3 px-2 first:pl-3 last:pr-3 border-b border-border max-w">
-                        @if(column.truncate){
-                            <!-- truncate the string to middle format or end format, end format receives a length value on column.truncate[0] -->
-                            {{column.truncate === 'middle' ? (row[column.property] | truncate) : (row[column.property] | truncate:column.truncate[0]:column.truncate[1])}}
-                        }@else {
-                            {{row[column.property]}}
-                        }
+                        <div class="flex items-center gap-1">
+                            <span>
+                                @if(column.truncate){
+                                    <!-- truncate the string to middle format or end format, end format receives a length value on column.truncate[0] -->
+                                    {{column.truncate === 'middle' ? (row[column.property] | truncate) : (row[column.property] | truncate:column.truncate[0]:column.truncate[1])}}
+                                }@else {
+                                    {{row[column.property]}}
+                                }
+                            </span>
+                            @if(column.copyToClipboard === true) {
+                                <button copy-to-clipboard [value]="row[column.property]"></button>
+                            }
+                        </div>
                     </td>
                 }
             </tr>

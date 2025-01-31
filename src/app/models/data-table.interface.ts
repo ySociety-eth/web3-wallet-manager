@@ -3,4 +3,5 @@ export interface DataTableColumn {
     property: string;
     sort: 'ascending' | 'descending' | 'none' | 'unavailable';
     truncate?: 'middle' | [number, 'end'];
+    copyToClipboard?: boolean;
 }

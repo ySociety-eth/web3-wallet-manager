@@ -4,10 +4,12 @@ import { DataTableColumn } from '../../../models/data-table.interface';
 import { InteractiveElementDirective } from '../../../directives/accessibility/interactive-element.directive';
 import { popIn } from '../../../animations/default-transitions.animations';
 import { TruncatePipe } from '../../../pipes/formatting/truncate.pipe';
+import { CopyToClipboardComponent } from '../copy-to-clipboard/copy-to-clipboard.component';
+import { ClipboardModule } from '@angular/cdk/clipboard';
 
 @Component({
   selector: 'data-table',
-  imports: [CommonModule, InteractiveElementDirective, TruncatePipe],
+  imports: [CommonModule, InteractiveElementDirective, TruncatePipe, CopyToClipboardComponent, ClipboardModule],
   templateUrl: './data-table.component.html',
   styleUrl: './data-table.component.scss',
   animations: [popIn]
