@@ -13,6 +13,7 @@
   "dependencies": {
     "@abstract-foundation/agw-client": "^1.1.1",
     "@angular/animations": "^19.0.0",
+    "@angular/cdk": "^19.1.2",
     "@angular/common": "^19.0.0",
     "@angular/compiler": "^19.0.0",
     "@angular/core": "^19.0.0",
