@@ -1,4 +1,5 @@
 @use './app/styles/themes.scss';
+@use '@angular/material' as mat;
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -7,3 +8,12 @@
 .page-container {
     padding: 2.5rem;
 }
+html, body { height: 100%; }
+body { margin: 0; }
+
+:root {
+    @include mat.tooltip-overrides((
+      container-color: hsl(var(--tooltip-background)),
+      supporting-text-color: hsl(var(--tooltip-foreground)),
+    ));
+  }
