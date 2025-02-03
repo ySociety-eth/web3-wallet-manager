@@ -16,7 +16,14 @@
         <data-table
         [columns]="colunas"
         [rows]="(transactions$ | async)?.result"
-        [limit]="2"
-        ></data-table>
+        [limit]="10"
+        >
+        <ng-template #blockNumber let-value>
+            <div>helo</div>
+        </ng-template>
+        <ng-template #fromxd let-value>
+            <div>from{{value}}</div>
+        </ng-template>
+        </data-table>
     </section>
 </div>

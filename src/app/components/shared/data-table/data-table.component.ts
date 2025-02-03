@@ -1,4 +1,4 @@
-import { Component, input, OnInit, output, signal } from '@angular/core';
+import { AfterContentInit, Component, ContentChild, ContentChildren, Input, input, OnChanges, OnInit, output, QueryList, signal, SimpleChanges, TemplateRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { DataTableColumn } from '../../../models/data-table.interface';
 import { InteractiveElementDirective } from '../../../directives/accessibility/interactive-element.directive';
@@ -6,24 +6,42 @@ import { popIn } from '../../../animations/default-transitions.animations';
 import { TruncatePipe } from '../../../pipes/formatting/truncate.pipe';
 import { CopyToClipboardComponent } from '../copy-to-clipboard/copy-to-clipboard.component';
 import { ClipboardModule } from '@angular/cdk/clipboard';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 @Component({
   selector: 'data-table',
-  imports: [CommonModule, InteractiveElementDirective, TruncatePipe, CopyToClipboardComponent, ClipboardModule],
+  imports: [CommonModule, InteractiveElementDirective, TruncatePipe, CopyToClipboardComponent, ClipboardModule, MatTooltipModule],
   templateUrl: './data-table.component.html',
-  styleUrl: './data-table.component.scss',
+  styles: `
+    :host {
+      display: block;
+      max-width: 100%;
+      overflow: auto;
+    }`,
   animations: [popIn]
 })
-export class DataTableComponent implements OnInit {
+export class DataTableComponent implements OnInit, OnChanges, AfterContentInit {
   public columns = input<DataTableColumn[]>();
   public rows = input<any[]>();
   public limit = input<number>();
   public sorted = output<DataTableColumn>();
+  @ContentChildren(TemplateRef) templates!: QueryList<TemplateRef<any>>;
+  templateMap: { [key: string]: TemplateRef<any> } = {};
   
   protected displayedRows = signal<any[]>([]);
 
   ngOnInit(): void {
     this.handleDisplayedRows();
+  }
+
+  ngAfterContentInit(): void {
+    this.fillTemplates();
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if(changes['rows'] || changes['limit']) {
+      this.handleDisplayedRows();
+    }
   }
 
   handleDisplayedRows() {
@@ -67,5 +85,14 @@ export class DataTableComponent implements OnInit {
     });
     this.handleSort(column);
     this.sorted.emit(column);
+  }
+
+  fillTemplates() {
+    this.templates.forEach(template => {
+      const templateName = (template as any)._declarationTContainer.localNames[0];
+      if(templateName) {
+        this.templateMap[templateName] = template;
+      }
+    })
   }
 }

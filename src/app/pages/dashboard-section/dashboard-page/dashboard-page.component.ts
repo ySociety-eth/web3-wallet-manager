@@ -12,31 +12,26 @@ import { CommonModule } from '@angular/common';
   templateUrl: './dashboard-page.component.html',
   styleUrl: './dashboard-page.component.scss'
 })
-export class DashboardPageComponent implements OnInit{
+export class DashboardPageComponent{
 private userDataService = inject(UserDataService);
 public transactions$ = this.userDataService.getTransaction();
 userTransactions: UserTransaction[] = [];
 
-ngOnInit(): void {
-  this.transactions$.subscribe(data => {
-    for(let i = 0; i < 5; i++){
-      const transaction = data.result[i];
-      this.userTransactions.push(transaction)
-    }
-  })
-}
+
 
 colunas: DataTableColumn[] = [
   {
     label: 'Block Number',
     property: 'blockNumber',
-    sort: 'none'
+    sort: 'none',
+    useTemplate: true,
   },
   {
     label: 'From',
     property: 'from',
     sort: 'none',
     truncate: 'middle',
+    useTemplate: true,
     copyToClipboard: true
   },
   {

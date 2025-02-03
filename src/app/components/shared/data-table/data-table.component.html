@@ -9,7 +9,9 @@
                 }"
                 [attr.aria-sort]="column.sort !== 'unavailable' ? column.sort : null" (click)="column.sort !== 'unavailable' ? sort(column) : null">
                     <div class="flex items-center gap-1">
+                        <!-- column label -->
                         <span>{{column.label}}</span>
+                        <!-- sort icon -->
                         @if (column.sort !== 'unavailable' && column.sort !== 'none') {
                             <i class="fi fi-rr-caret-down flex transition-transform duration-300" 
                             [ngClass]="{'rotate-180': column.sort === 'ascending'}" 
@@ -25,19 +27,33 @@
             <tr>
                 @for (column of columns(); track $index) {
                     <td class="py-3 px-2 first:pl-3 last:pr-3 border-b border-border max-w">
-                        <div class="flex items-center gap-1">
-                            <span>
+                        <!-- data of row -->
+                        @if (column.useTemplate && templateMap[column.property]) {
+                            <!-- render the custom template -->
+                            <ng-container
+                                *ngTemplateOutlet="templateMap[column.property]; context: { $implicit: row[column.property] }"
+                            ></ng-container>
+                            
+                        }@else {
+                            
+                         
+                            <div class="flex items-center gap-1">
                                 @if(column.truncate){
                                     <!-- truncate the string to middle format or end format, end format receives a length value on column.truncate[0] -->
-                                    {{column.truncate === 'middle' ? (row[column.property] | truncate) : (row[column.property] | truncate:column.truncate[0]:column.truncate[1])}}
-                                }@else {
-                                    {{row[column.property]}}
+                                    <span [matTooltip]="row[column.property]">
+                                        {{column.truncate === 'middle' ? (row[column.property] | truncate) : (row[column.property] | truncate:column.truncate[0]:column.truncate[1])}}
+                                    </span>
+                                    }@else {
+                                        <span>
+                                            {{row[column.property]}}
+                                        </span>
+                                    }
+                                    <!-- copy to clipboard icon -->
+                                @if(column.copyToClipboard === true) {
+                                    <button copy-to-clipboard [value]="row[column.property]"></button>
                                 }
-                            </span>
-                            @if(column.copyToClipboard === true) {
-                                <button copy-to-clipboard [value]="row[column.property]"></button>
-                            }
-                        </div>
+                            </div>
+                        }
                     </td>
                 }
             </tr>
