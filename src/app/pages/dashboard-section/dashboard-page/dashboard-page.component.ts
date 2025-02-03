@@ -5,10 +5,11 @@ import { UserDataService } from '../../../services/api/user-data.service';
 import { UserTransaction } from '../../../models/api/users.interface';
 import { DataTableColumn } from '../../../models/data-table.interface';
 import { CommonModule } from '@angular/common';
+import { DataTableTemplateComponent } from '../../../components/shared/data-table/template/data-table-template.component';
 
 @Component({
   selector: 'dashboard-page',
-  imports: [BasicCardComponent, DataTableComponent, CommonModule],
+  imports: [BasicCardComponent, DataTableComponent, CommonModule, DataTableTemplateComponent],
   templateUrl: './dashboard-page.component.html',
   styleUrl: './dashboard-page.component.scss'
 })

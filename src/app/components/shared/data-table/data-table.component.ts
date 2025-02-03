@@ -1,4 +1,4 @@
-import { AfterContentInit, Component, ContentChild, ContentChildren, Input, input, OnChanges, OnInit, output, QueryList, signal, SimpleChanges, TemplateRef } from '@angular/core';
+import { AfterContentInit, Component, ContentChildren, input, OnChanges, OnInit, output, QueryList, signal, SimpleChanges, TemplateRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { DataTableColumn } from '../../../models/data-table.interface';
 import { InteractiveElementDirective } from '../../../directives/accessibility/interactive-element.directive';
@@ -7,6 +7,7 @@ import { TruncatePipe } from '../../../pipes/formatting/truncate.pipe';
 import { CopyToClipboardComponent } from '../copy-to-clipboard/copy-to-clipboard.component';
 import { ClipboardModule } from '@angular/cdk/clipboard';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { DataTableTemplateComponent } from './template/data-table-template.component';
 
 @Component({
   selector: 'data-table',
@@ -25,9 +26,8 @@ export class DataTableComponent implements OnInit, OnChanges, AfterContentInit {
   public rows = input<any[]>();
   public limit = input<number>();
   public sorted = output<DataTableColumn>();
-  @ContentChildren(TemplateRef) templates!: QueryList<TemplateRef<any>>;
-  templateMap: { [key: string]: TemplateRef<any> } = {};
-  
+  @ContentChildren(DataTableTemplateComponent) templates!: QueryList<DataTableTemplateComponent>;
+  templateMap: { [key: string]: TemplateRef<any> } = {}
   protected displayedRows = signal<any[]>([]);
 
   ngOnInit(): void {
@@ -36,6 +36,7 @@ export class DataTableComponent implements OnInit, OnChanges, AfterContentInit {
 
   ngAfterContentInit(): void {
     this.fillTemplates();
+    console.log(this.templateMap)
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -89,10 +90,7 @@ export class DataTableComponent implements OnInit, OnChanges, AfterContentInit {
 
   fillTemplates() {
     this.templates.forEach(template => {
-      const templateName = (template as any)._declarationTContainer.localNames[0];
-      if(templateName) {
-        this.templateMap[templateName] = template;
-      }
+      this.templateMap[template.name()] = template.templateRef;
     })
   }
 }
