@@ -18,12 +18,6 @@
         [rows]="(transactions$ | async)?.result"
         [limit]="10"
         >
-
-            <data-table-template name="blockNumber">
-                <ng-template let-value>
-                    <span class="text-accentForeground">{{value}}</span>
-                </ng-template>
-            </data-table-template>
         </data-table>
     </section>
 </div>

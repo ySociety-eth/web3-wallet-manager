@@ -3,13 +3,9 @@ import { AfterViewInit, Component, ContentChild, Input, input, TemplateRef } fro
 @Component({
     selector: "data-table-template",
     template: '',
-}) export class DataTableTemplateComponent implements AfterViewInit{
+}) export class DataTableTemplateComponent {
     public name = input.required<string>();
     @ContentChild(TemplateRef) templateRef!: TemplateRef<any>; //get the template reference from the parent component
-
-    ngAfterViewInit(): void {
-        console.log(this.name(), this.templateRef)
-    }
 
 
     // this is a template component that will be used to render the data in the data-table.component.ts

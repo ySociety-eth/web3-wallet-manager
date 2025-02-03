@@ -18,7 +18,8 @@ import { DataTableTemplateComponent } from './template/data-table-template.compo
       display: block;
       max-width: 100%;
       overflow: auto;
-    }`,
+    }
+    `,
   animations: [popIn]
 })
 export class DataTableComponent implements OnInit, OnChanges, AfterContentInit {
@@ -26,9 +27,10 @@ export class DataTableComponent implements OnInit, OnChanges, AfterContentInit {
   public rows = input<any[]>();
   public limit = input<number>();
   public sorted = output<DataTableColumn>();
+  protected displayedRows = signal<any[]>([]);
+  protected highlightedData = signal<string | null>(null);
   @ContentChildren(DataTableTemplateComponent) templates!: QueryList<DataTableTemplateComponent>;
   templateMap: { [key: string]: TemplateRef<any> } = {}
-  protected displayedRows = signal<any[]>([]);
 
   ngOnInit(): void {
     this.handleDisplayedRows();
@@ -36,7 +38,6 @@ export class DataTableComponent implements OnInit, OnChanges, AfterContentInit {
 
   ngAfterContentInit(): void {
     this.fillTemplates();
-    console.log(this.templateMap)
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -88,9 +89,18 @@ export class DataTableComponent implements OnInit, OnChanges, AfterContentInit {
     this.sorted.emit(column);
   }
 
+  setHighlightData(data: string) {
+    this.highlightedData.set(data);
+  }
+
+  clearHighlightData() {
+    this.highlightedData.set(null);
+  }
+
   fillTemplates() {
     this.templates.forEach(template => {
       this.templateMap[template.name()] = template.templateRef;
     })
   }
+  
 }

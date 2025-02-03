@@ -5,4 +5,5 @@ export interface DataTableColumn {
     sort: 'ascending' | 'descending' | 'none' | 'unavailable';
     truncate?: 'middle' | [number, 'end'];
     copyToClipboard?: boolean;
+    highlighData?: boolean;
 }

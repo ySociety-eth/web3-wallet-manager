@@ -5,11 +5,10 @@ import { UserDataService } from '../../../services/api/user-data.service';
 import { UserTransaction } from '../../../models/api/users.interface';
 import { DataTableColumn } from '../../../models/data-table.interface';
 import { CommonModule } from '@angular/common';
-import { DataTableTemplateComponent } from '../../../components/shared/data-table/template/data-table-template.component';
 
 @Component({
   selector: 'dashboard-page',
-  imports: [BasicCardComponent, DataTableComponent, CommonModule, DataTableTemplateComponent],
+  imports: [BasicCardComponent, DataTableComponent, CommonModule],
   templateUrl: './dashboard-page.component.html',
   styleUrl: './dashboard-page.component.scss'
 })
@@ -25,25 +24,24 @@ colunas: DataTableColumn[] = [
     label: 'Block Number',
     property: 'blockNumber',
     sort: 'none',
-    useTemplate: true,
   },
   {
     label: 'From',
     property: 'from',
     sort: 'none',
     truncate: 'middle',
-    useTemplate: true,
-    copyToClipboard: true
+    copyToClipboard: true,
+    highlighData: true
   },
   {
     label: 'To',
     property: 'to',
     sort: 'unavailable',
-    truncate: 'middle'
+    truncate: 'middle',
+    copyToClipboard: true,
+    highlighData: true
   },
 ]
-  x(e:any) {
-    console.log(e)
-  }
+
 }
 
