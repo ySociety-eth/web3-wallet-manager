@@ -17,6 +17,9 @@ module.exports = {
         card: "hsla(var(--card))",
         border: "hsla(var(--border))",
       },
+      borderRadius: {
+        dft: '0.75rem'
+      },
       transitionDuration: {
         DEFAULT: '170ms',
       },
