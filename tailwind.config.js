@@ -5,6 +5,8 @@ module.exports = {
     extend: {
       colors: {
         primary: "hsla(var(--primary))",
+        primaryLight: "hsla(var(--primary-light))",
+        primaryLighter: "hsla(var(--primary-lighter))",
         background: "hsla(var(--background))",
         foreground: "hsla(var(--foreground))",
         accentForeground: "hsla(var(--accent-foreground))",

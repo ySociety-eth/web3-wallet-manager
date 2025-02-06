@@ -1,4 +1,5 @@
-@use './app/styles/themes.scss';
+@use './app/styles/_themes.scss';
+@use './app/styles/global-styles.scss';
 @use '@angular/material' as mat;
 @tailwind base;
 @tailwind components;
