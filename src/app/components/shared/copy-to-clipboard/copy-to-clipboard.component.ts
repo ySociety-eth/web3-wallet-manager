@@ -5,7 +5,7 @@ import { MatTooltip, MatTooltipModule } from '@angular/material/tooltip';
   selector: 'button[copy-to-clipboard]',
   imports: [ClipboardModule, MatTooltipModule],
   template: `<i #tooltip="matTooltip" #copyIcon [matTooltip]="'Copy to Clipboard'" [cdkCopyToClipboard]="value() || ''"
-   class='fi fi-rr-copy-alt flex text-mutedForeground hover:text-accentForeground cursor-pointer transition-colors'
+   class='fi fi-rr-copy-alt flex text-mutedForegroundNeutral hover:text-accentForeground cursor-pointer transition-colors'
    (click)="onCopyToClipboardClick(tooltip)">`,
 })
 export class CopyToClipboardComponent {

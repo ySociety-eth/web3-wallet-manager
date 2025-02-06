@@ -2,7 +2,6 @@ import { Component, inject, OnInit } from '@angular/core';
 import { BasicCardComponent } from '../../../components/shared/cards/basic-card/basic-card.component';
 import { DataTableComponent } from "../../../components/shared/data-table/data-table.component";
 import { UserDataService } from '../../../services/api/user-data.service';
-import { UserTransaction } from '../../../models/api/users.interface';
 import { DataTableColumn } from '../../../models/data-table.interface';
 import { CommonModule } from '@angular/common';
 
@@ -15,7 +14,6 @@ import { CommonModule } from '@angular/common';
 export class DashboardPageComponent{
 private userDataService = inject(UserDataService);
 public transactions$ = this.userDataService.getTransaction();
-userTransactions: UserTransaction[] = [];
 
 
 
@@ -31,7 +29,9 @@ colunas: DataTableColumn[] = [
     sort: 'none',
     truncate: 'middle',
     copyToClipboard: true,
-    highlighData: true
+    highlighData: true,
+    href: (address: any) => `https://etherscan.io/address/${address}`,
+    hrefTarget: '_blank',
   },
   {
     label: 'To',
@@ -39,7 +39,9 @@ colunas: DataTableColumn[] = [
     sort: 'unavailable',
     truncate: 'middle',
     copyToClipboard: true,
-    highlighData: true
+    highlighData: true,
+    href: (address: any) => `https://etherscan.io/address/${address}`,
+    hrefTarget: '_blank',
   },
 ]
 

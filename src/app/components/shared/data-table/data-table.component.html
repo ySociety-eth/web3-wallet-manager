@@ -37,19 +37,38 @@
                         }@else {
                             <!-- render the default template -->
                             <div class="flex items-center gap-1">
-                                <span class="px-1 rounded border border-dashed transition-all" 
-                                [matTooltip]="column.truncate ? row[column.property] : null"
-                                [ngClass]="highlightedData() == row[column.property] && column.highlighData ? 'border-primary/50 bg-primary/20' : 'border-transparent'"
-                                (mouseenter)="setHighlightData(row[column.property])"
-                                (mouseleave)="clearHighlightData()">
-                                @if(column.truncate){
-                                    <!-- truncate the string to middle format or end format, end format receives a length value on column.truncate[0] -->
-                                        {{column.truncate === 'middle' ? (row[column.property] | truncate) : (row[column.property] | truncate:column.truncate[0]:column.truncate[1])}}
-                                    }@else {
-                                        <!-- returns raw data -->
-                                        {{row[column.property]}}
-                                    }
-                                </span>
+                                @if(column.href) {
+                                    <!-- common span -->
+                                    <a class="gb_a px-1 rounded border border-dashed transition-all" 
+                                    [href]="column.href(row[column.property]) || null" [target]="column.hrefTarget || '_self'" rel="noopener noreferrer"
+                                    [matTooltip]="column.truncate ? row[column.property] : null"
+                                    [ngClass]="highlightedData() == row[column.property] && column.highlighData ? 'border-primary/50 bg-primary/15' : 'border-transparent'"
+                                    (mouseenter)="setHighlightData(row[column.property])"
+                                    (mouseleave)="clearHighlightData()">
+                                    @if(column.truncate){
+                                        <!-- truncate the string to middle format or end format, end format receives a length value on column.truncate[0] -->
+                                            {{column.truncate === 'middle' ? (row[column.property] | truncate) : (row[column.property] | truncate:column.truncate[0]:column.truncate[1])}}
+                                        }@else {
+                                            <!-- returns raw data -->
+                                            {{row[column.property]}}
+                                        }
+                                    </a>
+                                }@else {
+                                    <!-- anchor link -->
+                                    <span class="px-1 rounded border border-dashed transition-all"
+                                    [matTooltip]="column.truncate ? row[column.property] : null"
+                                    [ngClass]="highlightedData() == row[column.property] && column.highlighData ? 'border-primary/50 bg-primary/15' : 'border-transparent'"
+                                    (mouseenter)="setHighlightData(row[column.property])"
+                                    (mouseleave)="clearHighlightData()">
+                                    @if(column.truncate){
+                                        <!-- truncate the string to middle format or end format, end format receives a length value on column.truncate[0] -->
+                                            {{column.truncate === 'middle' ? (row[column.property] | truncate) : (row[column.property] | truncate:column.truncate[0]:column.truncate[1])}}
+                                        }@else {
+                                            <!-- returns raw data -->
+                                            {{row[column.property]}}
+                                        }
+                                    </span>
+                                }
                                     <!-- copy to clipboard icon -->
                                 @if(column.copyToClipboard === true) {
                                     <button copy-to-clipboard [value]="row[column.property]"></button>
