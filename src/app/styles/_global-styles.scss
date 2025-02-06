@@ -1,0 +1,6 @@
+.gb_a{ //anchor link
+    color: hsl(var(--primary-light));
+    &:hover {
+        color: hsl(var(--primary-lighter));
+    }
+}
