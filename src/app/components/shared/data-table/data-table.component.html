@@ -1,5 +1,5 @@
-<table class="table-auto rounded-t-xl border-collapse overflow-hidden text-left w-full">
-    <thead>
+<table #table class="table-auto rounded-t-xl border-collapse text-left w-full">
+    <thead class="sticky top-0">
         <tr class="bg-card text-sm text-mutedForegroundNeutral whitespace-nowrap">
             @for (column of columns(); track $index) {    
                 <th class="py-3 px-2 first:pl-3 last:pr-3 font-semibold select-none

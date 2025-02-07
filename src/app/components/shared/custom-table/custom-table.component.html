@@ -1,0 +1,14 @@
+<div class="flex gap-1 mb-2">
+    @for (item of tableList(); track $index) {
+        <button class="py-1 px-3 rounded-md font-medium transition-colors
+        hover:bg-accent hover:text-accentForeground"
+        [ngClass]="item.active ? 'text-accentForeground' : 'text-mutedForeground'"
+        (click)="activateItem(item)">
+        {{item.label}}
+        </button>
+    }
+</div>
+<!-- inner div -->
+<div class="bg-card rounded-t-dft p-3">
+</div>
+<data-table [columns]="currentTable()?.dataTableColumns" [rows]="currentTable()?.dataTableRow" [limit]="limit()"></data-table>

@@ -12,11 +12,17 @@ export class UserDataService {
 
   public getTransaction(): Observable<UserTransactions> {
     const timestamp = new Date().getTime(); // Para evitar cache
-    const fullUrl = `${this.url}module=account&action=txlist&page=1&offset=10&sort=desc&endblock=99999999&startblock=0&address=0x3cBE18fE24F227f542B44191385A55Df11d39D06&_=${timestamp}`;
+    const fullUrl = `${this.url}module=account&action=txlist&page=1&offset=100&sort=desc&endblock=99999999&startblock=0&address=0x3cBE18fE24F227f542B44191385A55Df11d39D06&_=${timestamp}`;
   
     return this.http.get<UserTransactions>(fullUrl, {
       headers: { 'Cache-Control': 'no-cache', 'Pragma': 'no-cache' }
     });
+  }
+
+  public getBlocks(): Observable<any> {
+    return this.http.get('https://eth.blockscout.com/api/v2/blocks?type=block',
+      { headers: { 'Cache-Control': 'no-cache', 'Pragma': 'no-cache'}
+    })
   }
 
   constructor() { }

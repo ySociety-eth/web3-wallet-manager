@@ -13,11 +13,10 @@
         </div>
     </section>
     <section>
-        <data-table
-        [columns]="colunas"
-        [rows]="(transactions$ | async)?.result"
-        [limit]="10"
+        <custom-table
+        [tableList]="tableList"
+        [limit]="30"
         >
-        </data-table>
+        </custom-table>
     </section>
 </div>

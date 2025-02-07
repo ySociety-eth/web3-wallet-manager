@@ -1,6 +1,6 @@
 import { AfterContentInit, Component, ContentChildren, input, OnChanges, OnInit, output, QueryList, signal, SimpleChanges, TemplateRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { DataTableColumn } from '../../../models/data-table.interface';
+import { DataTableColumn } from '../../../models/tables.interface';
 import { InteractiveElementDirective } from '../../../directives/accessibility/interactive-element.directive';
 import { popIn } from '../../../animations/default-transitions.animations';
 import { TruncatePipe } from '../../../pipes/formatting/truncate.pipe';
