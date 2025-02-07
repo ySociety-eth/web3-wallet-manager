@@ -1,4 +1,3 @@
-
 export interface DataTableColumn {
     label: string;
     property: string;
@@ -9,4 +8,12 @@ export interface DataTableColumn {
     highlighData?: boolean;
     href?: (data: any) => string; //it should be called like this: href(data): `https://url.com/${data}`
     hrefTarget?: '_blank' | '_self';
+}
+
+export interface TableListItem {
+    label: string;
+    key: string;
+    active?: boolean
+    dataTableColumns: DataTableColumn[]
+    dataTableRow: any[]
 }
