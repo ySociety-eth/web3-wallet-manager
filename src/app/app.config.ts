@@ -6,6 +6,7 @@ import { provideClientHydration, withEventReplay } from '@angular/platform-brows
 import { BrowserAnimationsModule, provideAnimations } from '@angular/platform-browser/animations';
 import { provideHttpClient, withFetch } from '@angular/common/http';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
+import { provideEnvironmentNgxMask } from 'ngx-mask';
 
 export const appConfig: ApplicationConfig = {
   providers: [provideZoneChangeDetection({ eventCoalescing: true }),
@@ -13,5 +14,7 @@ export const appConfig: ApplicationConfig = {
   provideClientHydration(withEventReplay()),
   importProvidersFrom(BrowserAnimationsModule),
   provideHttpClient(withFetch()),
-  provideAnimations(), provideAnimationsAsync()]
+  provideAnimations(),
+  provideAnimationsAsync(),
+  provideEnvironmentNgxMask()]
 };
