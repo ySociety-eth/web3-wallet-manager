@@ -11,6 +11,8 @@
     }
 </div>
 <!-- inner div -->
-<div class="bg-card rounded-t-dft p-3">
+<div class="bg-card rounded-t-dft p-3 flex justify-between items-center">
+    <h1 class="text-lg font-semibold text-mutedForeground">Table</h1>
+    <paginator [limit]="1000"></paginator>
 </div>
 <data-table [columns]="currentTable()?.dataTableColumns" [rows]="currentTable()?.dataTableRow" [limit]="limit()"></data-table>

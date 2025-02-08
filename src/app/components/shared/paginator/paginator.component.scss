@@ -1,0 +1,200 @@
+$foreground: var(--foreground);
+$control-button-foreground: var(--primary);
+$border-color: var(--border);
+$hover-border-color: var(--border);
+$hover-bkg-color: var(--accent);
+$hover-fg-color: var(--accent-foreground);
+$active-bkg-color: var(--primary);
+$disabled-border-color: var(--border);
+$radius: .5rem;
+
+$button-padding-block: .32rem; //height of the button
+$button-width: 2rem;
+$control-button-width: 2.2rem;
+$font-size: .7rem;
+
+:host {
+    display: inline-block;
+}
+
+
+.paginator {
+    display: flex;
+    align-items: stretch;
+    justify-content: center;
+    color: hsla($foreground);
+    
+    &__item,
+    &__prev,
+    &__next {
+        // padding-inline: .1rem;
+        padding-block: $button-padding-block;
+        background-color: transparent;
+        border: 1px solid hsla($border-color);
+        transition: all 150ms ease-in-out;
+
+        .fi {
+            display: flex;
+        }
+
+        &:hover:not(&--active, :disabled) {
+            background-color: hsla($hover-bkg-color);
+            border-color: hsla($hover-border-color);
+            color: hsla($hover-fg-color);
+        }
+        // bug fix to right side border color
+        &:has(+ &:hover:not(&--active, :disabled)) {
+            border-right-color: hsla($hover-border-color);
+        }
+
+        &:active:not(&--active, :disabled) {
+            background-color: hsla($active-bkg-color);
+            transition: background-color ease-out 100ms;
+        }
+
+        &:disabled {
+            cursor: default;
+            border-color: hsla($disabled-border-color);
+            color: hsla($foreground, 0.5);
+            // opacity: .5;
+        }
+    }
+
+    &__item {
+        font-weight: 300;
+        min-width: $button-width;
+        font-size: $font-size;
+        border-left: 0;
+        &--active {
+            background-color: hsla($active-bkg-color);
+        }
+        &--selector:disabled { // fix border color to right side when disabled
+            opacity: 1;
+            border-color: hsla($disabled-border-color);
+            border-right-color: hsla($border-color);
+        }
+    }
+
+    &__prev {
+        border-radius: $radius 0 0 $radius;
+    }
+
+    &__next {
+        border-radius: 0 $radius $radius 0;
+        border-left: 0;
+    }
+    //control buttons
+    &__prev,
+    &__next {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-width: $control-button-width;
+        color: hsla($control-button-foreground);
+    }
+
+    // @media screen and (max-width: 768px) {
+    //     &__item {
+    //         padding-block: .8em;
+    //         min-width: 4em;
+    //     }
+
+    //     &__prev,
+    //     &__next {
+    //         min-width: 4.5em;
+    //     }
+
+    //     &__prev {
+    //         border-radius: calc(var(--radius)) 0 0 calc(var(--radius));
+    //     }
+    
+    //     &__next {
+    //         border-radius: 0 calc(var(--radius)) calc(var(--radius)) 0;
+    //         border-left: 0;
+    //     }
+    // }
+
+}
+
+.select-page {
+    position: fixed;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+    width: 100%;
+    height: 100%;
+
+    &__backdrop {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: hsl(var(--backdrop));
+        backdrop-filter: blur(3px);
+    }
+
+    &__content {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        max-width: calc(100% - 2em);
+        gap: 1em;
+        padding: 2em;
+        background-color: hsl(var(--background-dark));
+        border-radius: var(--radius);
+        z-index: 1;
+
+        h2 {
+            font-size: 1.1em;
+        }
+        
+        input {
+            background-color: transparent;
+            border: 0;
+            border-bottom: 2px solid hsl(var(--primary));
+            text-align: center;
+            width: min(3.5em, 100%);
+            transition: all 150ms ease-in-out;
+            &:hover:not(:focus) {
+                filter: brightness(1.2);
+            }
+            &:focus {
+                outline: none;
+                border-color: hsl(var(--primary-light));
+            }
+        }
+
+        button {
+            padding: .7em 2em;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            background-color: hsl(var(--primary));
+            color: hsl(var(--background-dark));
+            border: 0;
+            border-radius: calc(var(--radius)/1.5);
+            font-weight: 600;
+            transition: background-color 150ms ease-in-out;
+            
+
+            &:hover {
+                background-color: hsl(var(--primary-light));
+            }
+
+            &:active {
+                background-color: hsl(var(--primary-dark));
+                transition: background-color ease-out 100ms;
+            }
+        }
+
+        &__error {
+            font-size: 1em;
+            color: hsl(var(--destructive));
+        }
+    }
+}

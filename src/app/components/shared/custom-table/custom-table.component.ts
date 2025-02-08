@@ -2,10 +2,11 @@ import { Component, input, OnChanges, OnInit, output, signal, SimpleChanges } fr
 import { DataTableComponent } from '../data-table/data-table.component';
 import { DataTableColumn, TableListItem } from '../../../models/tables.interface';
 import { CommonModule } from '@angular/common';
+import PaginatorComponent from '../paginator/paginator.component';
 
 @Component({
   selector: 'custom-table',
-  imports: [DataTableComponent, CommonModule],
+  imports: [DataTableComponent, CommonModule, PaginatorComponent],
   templateUrl: './custom-table.component.html',
 })
 export class CustomTableComponent implements OnInit, OnChanges {
