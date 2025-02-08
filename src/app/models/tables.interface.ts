@@ -1,3 +1,5 @@
+import { Observable } from "rxjs";
+
 export interface DataTableColumn {
     label: string;
     property: string;
@@ -13,7 +15,8 @@ export interface DataTableColumn {
 export interface TableListItem {
     label: string;
     key: string;
-    active?: boolean
-    dataTableColumns: DataTableColumn[]
-    dataTableRow: any[]
+    active?: boolean;
+    dataTableColumns: DataTableColumn[];
+    dataTableRow: any[];
+    loadData: Observable<any>; //it should be called like this: loadData.pipe(map(data => data.result), shareReplay(1))
 }

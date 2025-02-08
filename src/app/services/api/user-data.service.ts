@@ -20,9 +20,7 @@ export class UserDataService {
   }
 
   public getBlocks(): Observable<any> {
-    return this.http.get('https://eth.blockscout.com/api/v2/blocks?type=block',
-      { headers: { 'Cache-Control': 'no-cache', 'Pragma': 'no-cache'}
-    })
+    return this.http.get('https://eth.blockscout.com/api/v2/blocks?type=block',)
   }
 
   constructor() { }

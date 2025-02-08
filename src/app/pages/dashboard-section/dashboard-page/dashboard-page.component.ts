@@ -5,6 +5,7 @@ import { DataTableColumn, TableListItem } from '../../../models/tables.interface
 import { CommonModule } from '@angular/common';
 import { CustomTableComponent } from '../../../components/shared/custom-table/custom-table.component';
 import { UserTransaction, UserTransactions } from '../../../models/api/users.interface';
+import { map, shareReplay } from 'rxjs';
 
 @Component({
   selector: 'dashboard-page',
@@ -12,24 +13,13 @@ import { UserTransaction, UserTransactions } from '../../../models/api/users.int
   templateUrl: './dashboard-page.component.html',
   styleUrl: './dashboard-page.component.scss'
 })
-export class DashboardPageComponent implements OnInit {
+export class DashboardPageComponent {
 private userDataService = inject(UserDataService);
 public transactions$ = this.userDataService.getTransaction();
 public blocks$ = this.userDataService.getBlocks();
 transactionsData: UserTransaction[] = [] 
 blocksData: any = {};
 
-ngOnInit(): void {
-  this.transactions$.subscribe((data) => {
-    this.transactionsData = data.result;
-    this.updateTableList();
-  });
-
-  this.blocks$.subscribe((data) => {
-    this.blocksData = data.items;
-    this.updateTableList();
-  })
-}
 
 
 transactionColumns: DataTableColumn[] = [
@@ -78,26 +68,29 @@ transactionColumns: DataTableColumn[] = [
   },
 ]
 
-tableList: TableListItem[] = [];
 
-updateTableList(): void {
-  this.tableList = [
+  tableList = [
     {
       label: 'Transactions',
       active: true,
       key: 'transactions',
       dataTableColumns: this.transactionColumns,
-      dataTableRow: this.transactionsData
+      dataTableRow: [],
+      loadData: this.transactions$.pipe(
+        map(data => data.result),
+        shareReplay(1)
+      )
     },
     {
       label: 'Blocks',
       active: false,
       key: 'blocks',
       dataTableColumns: this.blocksColumns,
-      dataTableRow: this.blocksData
+      dataTableRow: [],
+      loadData: this.blocks$.pipe(map
+        (data => data.items),
+        shareReplay(1)
+      )
     }
   ];
 }
-
-}
-

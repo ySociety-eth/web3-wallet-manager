@@ -10,13 +10,11 @@ import { CommonModule } from '@angular/common';
 })
 export class CustomTableComponent implements OnInit, OnChanges {
   // data-table variables
-  public columns = input<DataTableColumn[]>();
-  public rows = input<any[]>();
   public limit = input<number>();
   public sorted = output<DataTableColumn>();
 
   // custom-table variables
-  public tableList = input<TableListItem[]>();
+  public tableList = input.required<TableListItem[]>();
   public currentTable = signal<TableListItem | null>(null);
 
   
@@ -37,7 +35,17 @@ export class CustomTableComponent implements OnInit, OnChanges {
   }
 
   setActiveItem() {
-    const activeItem = this.tableList()?.find((item) => item.active) || null;
-    this.currentTable.set(activeItem)
+    const activeItem = this.tableList()?.find((item) => item.active);
+    this.loadColumn(activeItem!);
+    this.currentTable.set(activeItem!)
+  }
+
+  loadColumn(listItem: TableListItem) {
+    const data$ = listItem.loadData;
+    data$.subscribe(
+      {
+        next: (data) => listItem.dataTableRow = data 
+      }
+    )
   }
 }
