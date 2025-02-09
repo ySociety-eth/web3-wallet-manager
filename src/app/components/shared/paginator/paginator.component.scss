@@ -1,14 +1,16 @@
-$foreground: var(--foreground);
+$foreground: var(--muted-foreground);
+$background: var(--muted);
 $control-button-foreground: var(--primary);
 $border-color: var(--border);
 $hover-border-color: var(--border);
 $hover-bkg-color: var(--accent);
 $hover-fg-color: var(--accent-foreground);
 $active-bkg-color: var(--primary);
+$active-fg-color: var(--accent-foreground);
 $disabled-border-color: var(--border);
 $radius: .5rem;
 
-$button-padding-block: .32rem; //height of the button
+$button-padding-block: .3rem; //height of the button
 $button-width: 2rem;
 $control-button-width: 2.2rem;
 $font-size: .7rem;
@@ -28,8 +30,9 @@ $font-size: .7rem;
     &__prev,
     &__next {
         // padding-inline: .1rem;
+        font-weight: 500;
         padding-block: $button-padding-block;
-        background-color: transparent;
+        background-color: hsla($background);
         border: 1px solid hsla($border-color);
         transition: all 150ms ease-in-out;
 
@@ -61,12 +64,12 @@ $font-size: .7rem;
     }
 
     &__item {
-        font-weight: 300;
         min-width: $button-width;
         font-size: $font-size;
         border-left: 0;
         &--active {
             background-color: hsla($active-bkg-color);
+            color: hsla($active-fg-color);
         }
         &--selector:disabled { // fix border color to right side when disabled
             opacity: 1;
