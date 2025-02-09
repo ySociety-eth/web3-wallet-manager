@@ -1,32 +1,38 @@
 <div class="paginator">
-    <button class="paginator__prev" (click)="onPreviousPage()">
-        <i class="fi fi-rr-angle-small-left"></i>
+    <button class="paginator__prev" (click)="this.currentPage < 10 ? onPreviousPage() : selectPage(1)"
+    [disabled]="currentPage === 1">
+        @if(this.currentPage < 10) {
+            <i class="fi fi-rr-angle-small-left"></i>
+        } @else {
+            <i class="fi fi-rr-angle-double-small-left"></i>
+        }
     </button>
     <button class="paginator__item"
-    [ngClass]="{'paginator__item--active': firstButtonValue === currentPage}"
+    [ngClass]="{ 'paginator__item--active': firstButtonValue === currentPage }"
     (click)="onPageSelected(firstButtonValue)">
         {{ firstButtonValue }}
     </button>
     <button class="paginator__item" [disabled]="secondButtonValue > limit()"
-    [ngClass]="{'paginator__item--active': secondButtonValue === currentPage}"
+    [ngClass]="{ 'paginator__item--active': secondButtonValue === currentPage }"
     (click)="onPageSelected(secondButtonValue)">
         {{ secondButtonValue }}
     </button>
     <button class="paginator__item" [disabled]="thirdButtonValue > limit()"
-    [ngClass]="{'paginator__item--active': thirdButtonValue === currentPage}"
+    [ngClass]="{ 'paginator__item--active': thirdButtonValue === currentPage }"
     (click)="onPageSelected(thirdButtonValue)">
         {{ thirdButtonValue }}
     </button>
     <button class="paginator__item paginator__item--selector" (click)="onOpenPageSelector()"
     [disabled]="limit() <= 3">
-        ...
+        <i class="fi fi-rr-search flex justify-self-center"></i>
     </button>
     <button class="paginator__item"
-    [ngClass]="{'paginator__item--active': limit() === currentPage}"
+    [ngClass]="{ 'paginator__item--active': limit() === currentPage }"
     (click)="onPageSelected(limit())">
         {{ limit() }}
     </button>
-    <button class="paginator__next" (click)="onNextPage()">
+    <button class="paginator__next" (click)="onNextPage()"
+    [disabled]="currentPage === limit()">
         <i class="fi fi-rr-angle-small-right"></i>
     </button>
 </div>

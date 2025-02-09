@@ -71,6 +71,9 @@ $font-size: .7rem;
             background-color: hsla($active-bkg-color);
             color: hsla($active-fg-color);
         }
+        &--selector {
+            color: hsla($control-button-foreground);
+        }
         &--selector:disabled { // fix border color to right side when disabled
             opacity: 1;
             border-color: hsla($disabled-border-color);

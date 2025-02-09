@@ -19,11 +19,11 @@ export default class PaginatorComponent {
 
 
   
-  currentPage = this.startsAt();
-  secondToLastPage = this.limit() - 1;
-  showPageSelector = false;
-  pageSelectorError = false;
-  pageSelectorInputValue = '';
+  protected currentPage = this.startsAt();
+  protected secondToLastPage = this.limit() - 1;
+  protected showPageSelector = false;
+  protected pageSelectorError = false;
+  protected pageSelectorInputValue = '';
 
   selectPage(page: number) {
     this.currentPage = page;
