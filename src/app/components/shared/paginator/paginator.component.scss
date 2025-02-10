@@ -1,3 +1,4 @@
+//paginator
 $foreground: var(--muted-foreground);
 $background: var(--muted);
 $control-button-foreground: var(--primary);
@@ -15,8 +16,19 @@ $button-width: 2rem;
 $control-button-width: 2.2rem;
 $font-size: .7rem;
 
+//selector
+
+$selector-background: var(--muted);
+$selector-input-placeholder: var(--muted-foreground-neutral);
+$selector-input-fg: var(--primary-light);
+$selector-button-bkg: var(--primary);
+$selector-button-fg: var(--foreground);
+$hover-selector-button-bkg: var(--primary-light);
+$hover-selector-button-fg: var(--accent-foreground);
+
 :host {
     display: inline-block;
+    position: relative;
 }
 
 
@@ -67,12 +79,12 @@ $font-size: .7rem;
         min-width: $button-width;
         font-size: $font-size;
         border-left: 0;
+        &--selector {
+            color: hsla($control-button-foreground);
+        }
         &--active {
             background-color: hsla($active-bkg-color);
             color: hsla($active-fg-color);
-        }
-        &--selector {
-            color: hsla($control-button-foreground);
         }
         &--selector:disabled { // fix border color to right side when disabled
             opacity: 1;
@@ -122,85 +134,132 @@ $font-size: .7rem;
 
 }
 
-.select-page {
-    position: fixed;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    top: 0;
-    left: 0;
-    z-index: 1000;
-    width: 100%;
-    height: 100%;
-
-    &__backdrop {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background-color: hsl(var(--backdrop));
-        backdrop-filter: blur(3px);
-    }
-
-    &__content {
+.select {
+    position: absolute;
+    top: calc(100% + 4px);
+    right: 50%;
+    transform: translateX(50%);
+    z-index: 10;
+    background-color: hsla($selector-background);
+    padding: .5rem;
+    border-radius: $radius;
+    font-size: .8rem;
+    &__header {
         display: flex;
-        flex-direction: column;
-        justify-content: center;
+        justify-content: space-between;
         align-items: center;
-        max-width: calc(100% - 2em);
-        gap: 1em;
-        padding: 2em;
-        background-color: hsl(var(--background-dark));
-        border-radius: var(--radius);
-        z-index: 1;
-
+        gap: .5rem;
         h2 {
-            font-size: 1.1em;
+            white-space: nowrap;
         }
-        
+
         input {
+            max-width: 2.5rem;
             background-color: transparent;
-            border: 0;
-            border-bottom: 2px solid hsl(var(--primary));
             text-align: center;
-            width: min(3.5em, 100%);
-            transition: all 150ms ease-in-out;
-            &:hover:not(:focus) {
-                filter: brightness(1.2);
-            }
+            color: hsla($selector-input-fg);
+            
             &:focus {
                 outline: none;
-                border-color: hsl(var(--primary-light));
+            }
+            &::placeholder {
+                color: hsla($selector-input-placeholder);
             }
         }
 
         button {
-            padding: .7em 2em;
-            width: 100%;
-            display: flex;
-            justify-content: center;
-            background-color: hsl(var(--primary));
-            color: hsl(var(--background-dark));
-            border: 0;
-            border-radius: calc(var(--radius)/1.5);
-            font-weight: 600;
-            transition: background-color 150ms ease-in-out;
-            
-
+            padding: .2rem;
+            background-color: hsla($selector-button-bkg);
+            color: hsla($selector-button-fg);
+            border-radius: calc($radius / 1.5);
+            transition: all 150ms ease-in-out;
             &:hover {
-                background-color: hsl(var(--primary-light));
+                background-color: hsla($hover-selector-button-bkg);
+                color: hsla($hover-selector-button-fg);
             }
-
-            &:active {
-                background-color: hsl(var(--primary-dark));
-                transition: background-color ease-out 100ms;
-            }
-        }
-
-        &__error {
-            font-size: 1em;
-            color: hsl(var(--destructive));
         }
     }
 }
+
+// .select-page {
+//     position: fixed;
+//     display: flex;
+//     align-items: center;
+//     justify-content: center;
+//     top: 0;
+//     left: 0;
+//     z-index: 1000;
+//     width: 100%;
+//     height: 100%;
+
+//     &__backdrop {
+//         position: absolute;
+//         top: 0;
+//         left: 0;
+//         width: 100%;
+//         height: 100%;
+//         background-color: hsl(var(--backdrop));
+//         backdrop-filter: blur(3px);
+//     }
+
+//     &__content {
+//         display: flex;
+//         flex-direction: column;
+//         justify-content: center;
+//         align-items: center;
+//         max-width: calc(100% - 2em);
+//         gap: 1em;
+//         padding: 2em;
+//         background-color: hsl(var(--background-dark));
+//         border-radius: var(--radius);
+//         z-index: 1;
+
+//         h2 {
+//             font-size: 1.1em;
+//         }
+        
+//         input {
+//             background-color: transparent;
+//             border: 0;
+//             border-bottom: 2px solid hsl(var(--primary));
+//             text-align: center;
+//             width: min(3.5em, 100%);
+//             transition: all 150ms ease-in-out;
+//             &:hover:not(:focus) {
+//                 filter: brightness(1.2);
+//             }
+//             &:focus {
+//                 outline: none;
+//                 border-color: hsl(var(--primary-light));
+//             }
+//         }
+
+//         button {
+//             padding: .7em 2em;
+//             width: 100%;
+//             display: flex;
+//             justify-content: center;
+//             background-color: hsl(var(--primary));
+//             color: hsl(var(--background-dark));
+//             border: 0;
+//             border-radius: calc(var(--radius)/1.5);
+//             font-weight: 600;
+//             transition: background-color 150ms ease-in-out;
+            
+
+//             &:hover {
+//                 background-color: hsl(var(--primary-light));
+//             }
+
+//             &:active {
+//                 background-color: hsl(var(--primary-dark));
+//                 transition: background-color ease-out 100ms;
+//             }
+//         }
+
+//         &__error {
+//             font-size: 1em;
+//             color: hsl(var(--destructive));
+//         }
+//     }
+// }
