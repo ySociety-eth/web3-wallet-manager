@@ -1,4 +1,6 @@
-<aside class="transition-all duration-300 overflow-hidden h-full" [ngClass]="isCollapsed ? 'w-16' : 'w-64'" @navbarSidebarSlideInOutAnimation
+<aside class="transition-all duration-300 overflow-hidden h-full bg-muted" @navbarSidebarSlideInOutAnimation
+[ngClass]="[isCollapsed ? 'w-16' : 'w-64',
+ smallScreen ? 'absolute border-r border-r-border' : 'relative']" 
 (mouseenter)="isCollapsed ? onMouseEnterSidebar() : null"
 (mouseleave)="onMouseLeaveSidebar()">
     <div class="py-4">
@@ -28,8 +30,8 @@
                         [ngClass]="{
                             'mr-1' : isCollapsed,
                             'mr-4': !isCollapsed,
-                            'text-accentForeground': currentRoute.includes(item.route),
                             'bg-accent/80': currentRoute.includes(item.route),
+                            'text-accentForeground': currentRoute.includes(item.route),
                             }"
                         role="link" [routerLink]="item.route"
                         (keydown)="onKeyPressed($event, item.route)">
