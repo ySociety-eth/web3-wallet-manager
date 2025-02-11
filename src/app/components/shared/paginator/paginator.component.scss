@@ -136,6 +136,7 @@ $hover-selector-button-fg: var(--accent-foreground);
 
 .select {
     position: absolute;
+    overflow: hidden;
     top: calc(100% + 4px);
     right: 50%;
     transform: translateX(50%);

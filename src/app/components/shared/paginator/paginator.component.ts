@@ -1,8 +1,8 @@
 import { CommonModule } from '@angular/common';
 import { Component, effect, ElementRef, HostListener, input, output, signal, ViewChild } from '@angular/core';
-// import { fadeInOut, parentAnimations, popUp, slideUpDown } from '../../../animations/transition-animations';
 import { NgxMaskDirective } from 'ngx-mask';
 import { FormsModule } from '@angular/forms';
+import { popIn } from '../../../animations/default-transitions.animations';
 
 @Component({
   selector: 'paginator',
@@ -10,14 +10,14 @@ import { FormsModule } from '@angular/forms';
   imports: [CommonModule, NgxMaskDirective, FormsModule],
   templateUrl: './paginator.component.html',
   styleUrl: './paginator.component.scss',
-  // animations: [popUp, fadeInOut, parentAnimations, slideUpDown]
+  animations: [popIn]
 })
 export default class PaginatorComponent {
   limit = input<number>(1);
   startsAt = input<number>(1);
   getCurrentPage = output<number>();
 
-  constructor() {
+  constructor(private elementRef: ElementRef) {
     effect(() => {
       this.firstButtonValue = this.getButtonValue(-1);
       this.secondButtonValue = this.getButtonValue(0);
@@ -32,7 +32,8 @@ export default class PaginatorComponent {
   protected secondToLastPage = this.limit() - 1;
   protected showPageSelector = false;
   protected pageSelectorInputValue = '';
-  @ViewChild('pageSelector') pageSelectorInputElementRef!: ElementRef<HTMLInputElement>;
+  @ViewChild('pageSelector') pageSelectorElementRef!: ElementRef<HTMLInputElement>;
+  @ViewChild('pageSelectorInput') pageSelectorInputElementRef!: ElementRef<HTMLInputElement>;
 
   selectPage(page: number) {
     this.currentPage.set(page);
@@ -100,15 +101,6 @@ export default class PaginatorComponent {
     this.showPageSelector ? this.closePageSelector() : this.openPageSelector();
   }
 
-  @HostListener('window:keydown', ['$event']) // close page selector on esc key press
-  handleKeyDown(event: KeyboardEvent): void {
-    if (event.key === 'Escape') {
-      if (this.showPageSelector) { // close page selector if open
-        this.closePageSelector();
-      }
-    }
-  }
-
 
   onSelectSpecificPage(page: string) {
     const pageNumber = parseInt(page, 10);
@@ -138,6 +130,29 @@ export default class PaginatorComponent {
 
     } else {
       this.pageSelectorInputValue = value; // update to allowed value
+    }
+  }
+
+
+  //listeners
+
+  // close page selector on click outside or pressing esc
+  @HostListener('document:click', ['$event'])
+  @HostListener('document:keydown', ['$event'])
+  handleDocumentEvent(event: Event): void {
+    if (this.showPageSelector) {
+      const hostElement = this.elementRef.nativeElement as HTMLElement;
+  
+      // close on click outside
+      if (event instanceof MouseEvent && !hostElement.contains(event.target as Node)) {
+        this.closePageSelector();
+        return;
+      }
+  
+      // close on pressing esc
+      if (event instanceof KeyboardEvent && event.key === 'Escape') {
+        this.closePageSelector();
+      }
     }
   }
 
