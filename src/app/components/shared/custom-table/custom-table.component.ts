@@ -1,8 +1,9 @@
-import { Component, input, OnChanges, OnInit, output, signal, SimpleChanges } from '@angular/core';
+import { Component, ContentChildren, input, OnChanges, OnInit, output, QueryList, signal, SimpleChanges } from '@angular/core';
 import { DataTableComponent } from '../data-table/data-table.component';
 import { DataTableColumn, TableListItem } from '../../../models/tables.interface';
 import { CommonModule } from '@angular/common';
 import PaginatorComponent from '../paginator/paginator.component';
+import { DataTableTemplateComponent } from '../data-table/template/data-table-template.component';
 
 @Component({
   selector: 'custom-table',
@@ -17,6 +18,7 @@ export class CustomTableComponent implements OnInit, OnChanges {
   // custom-table variables
   public tableList = input.required<TableListItem[]>();
   public currentTable = signal<TableListItem | null>(null);
+  @ContentChildren(DataTableTemplateComponent) templates!: QueryList<DataTableTemplateComponent>;
 
   
   ngOnInit(): void {

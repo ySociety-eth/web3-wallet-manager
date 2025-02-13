@@ -15,4 +15,5 @@
     <h1 class="text-lg font-semibold text-mutedForeground">Table</h1>
     <paginator [limit]="500"></paginator>
 </div>
-<data-table [columns]="currentTable()?.dataTableColumns" [rows]="currentTable()?.dataTableRow" [limit]="limit()"></data-table>
+<data-table [columns]="currentTable()?.dataTableColumns" [rows]="currentTable()?.dataTableRow" [limit]="limit()" [parentTemplates]="templates">
+</data-table>
