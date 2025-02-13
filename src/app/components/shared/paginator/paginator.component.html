@@ -46,9 +46,9 @@
             [(ngModel)]="pageSelectorInputValue"
             (input)="onPageSelectorInputChange(pageSelectorInput.value, pageSelectorInput)"
             (keydown.enter)="onSelectSpecificPage(pageSelectorInput.value)">
-            <button (click)="onSelectSpecificPage(pageSelectorInput.value)">
-                <i class="fi fi-br-angle-small-right flex"></i>
-            </button>
         </div>
+        <button (click)="onSelectSpecificPage(pageSelectorInput.value)">
+            <i class="fi fi-br-angle-small-right flex"></i>
+        </button>
     </div>
 }

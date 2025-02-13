@@ -10,6 +10,7 @@ $active-bkg-color: var(--primary);
 $active-fg-color: var(--accent-foreground);
 $disabled-border-color: var(--border);
 $radius: .5rem;
+$useBorder: false;
 
 $button-padding-block: .3rem; //height of the button
 $button-width: 2rem;
@@ -45,7 +46,9 @@ $hover-selector-button-fg: var(--accent-foreground);
         font-weight: 500;
         padding-block: $button-padding-block;
         background-color: hsla($background);
-        border: 1px solid hsla($border-color);
+        @if $useBorder {
+            border: 1px solid hsla($border-color);
+        }
         transition: all 150ms ease-in-out;
 
         .fi {
@@ -136,19 +139,21 @@ $hover-selector-button-fg: var(--accent-foreground);
 
 .select {
     position: absolute;
-    top: calc(100% + 4px);
+    top: calc(100% + .5rem);
     right: 50%;
     transform: translateX(50%);
+    display: flex;
+    align-items: center;
     z-index: 10;
     background-color: hsla($selector-background);
-    padding: .5rem;
     border-radius: $radius;
-    font-size: .8rem;
+    font-size: .75rem;
     &__header {
         display: flex;
         justify-content: space-between;
         align-items: center;
-        gap: .5rem;
+        padding: .3rem .7rem;
+        gap: .3rem;
         h2 {
             white-space: nowrap;
         }
@@ -167,16 +172,17 @@ $hover-selector-button-fg: var(--accent-foreground);
             }
         }
 
-        button {
-            padding: .2rem;
-            background-color: hsla($selector-button-bkg);
-            color: hsla($selector-button-fg);
-            border-radius: calc($radius / 1.5);
-            transition: all 150ms ease-in-out;
-            &:hover {
-                background-color: hsla($hover-selector-button-bkg);
-                color: hsla($hover-selector-button-fg);
-            }
+    }
+    button {
+        padding: .2rem .4rem;
+        align-self: stretch;
+        background-color: hsla($selector-button-bkg);
+        color: hsla($selector-button-fg);
+        border-radius: 0 $radius $radius 0;
+        transition: all 150ms ease-in-out;
+        &:hover {
+            background-color: hsla($hover-selector-button-bkg);
+            color: hsla($hover-selector-button-fg);
         }
     }
 }
