@@ -1,4 +1,4 @@
-import { AfterContentInit, Component, ContentChildren, input, OnChanges, OnInit, output, QueryList, signal, SimpleChanges, TemplateRef } from '@angular/core';
+import { AfterContentInit, Component, ContentChildren, inject, input, OnChanges, OnInit, output, QueryList, signal, SimpleChanges, TemplateRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { DataTableColumn } from '../../../models/tables.interface';
 import { InteractiveElementDirective } from '../../../directives/accessibility/interactive-element.directive';
@@ -8,10 +8,12 @@ import { CopyToClipboardComponent } from '../copy-to-clipboard/copy-to-clipboard
 import { ClipboardModule } from '@angular/cdk/clipboard';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { DataTableTemplateComponent } from './template/data-table-template.component';
+import { UpdatedTimeService } from '../../../services/updated-time.service';
+import { TimeAgoPipe } from '../../../pipes/formatting/timeAgo.pipe';
 
 @Component({
   selector: 'data-table',
-  imports: [CommonModule, InteractiveElementDirective, TruncatePipe, CopyToClipboardComponent, ClipboardModule, MatTooltipModule],
+  imports: [CommonModule, InteractiveElementDirective, TruncatePipe, CopyToClipboardComponent, ClipboardModule, MatTooltipModule, TimeAgoPipe],
   templateUrl: './data-table.component.html',
   styles: `
     :host {
@@ -23,12 +25,17 @@ import { DataTableTemplateComponent } from './template/data-table-template.compo
   animations: [popIn]
 })
 export class DataTableComponent implements OnInit, OnChanges, AfterContentInit {
+  //injections
+  updatedTimeService = inject(UpdatedTimeService);
+  //variables
   public columns = input<DataTableColumn[]>();
   public rows = input<any[]>();
   public limit = input<number>();
   public sorted = output<DataTableColumn>();
+  public parentTemplates = input<QueryList<DataTableTemplateComponent>>();
   protected displayedRows = signal<any[]>([]);
   protected highlightedData = signal<string | null>(null);
+  protected updatedTime = this.updatedTimeService.getTimeNow();
   @ContentChildren(DataTableTemplateComponent) templates!: QueryList<DataTableTemplateComponent>;
   templateMap: { [key: string]: TemplateRef<any> } = {}
 
@@ -98,6 +105,11 @@ export class DataTableComponent implements OnInit, OnChanges, AfterContentInit {
   }
 
   fillTemplates() {
+    if(this.parentTemplates()) {
+      this.parentTemplates()?.forEach(template => {
+        this.templateMap[template.name()] = template.templateRef;
+      })
+    }
     this.templates.forEach(template => {
       this.templateMap[template.name()] = template.templateRef;
     })

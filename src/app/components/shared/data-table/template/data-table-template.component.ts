@@ -26,7 +26,7 @@ import { AfterViewInit, Component, ContentChild, Input, input, TemplateRef } fro
     // </data-table>
 
                                 // IMPORTANT
-    // the columns should have a property called useTemplate that will be used to determine if the column should use a template or not
+    // the column should have a property called useTemplate = true 
     // columns: DataTableColumn[] = [
     //   {
     //     label: 'Block Number',

@@ -3,13 +3,14 @@ import { Observable } from "rxjs";
 export interface DataTableColumn {
     label: string;
     property: string;
-    useTemplate?: boolean;
+    useTemplate?: boolean; // info about the use of templates in > \src\app\components\shared\data-table\template
     sort: 'ascending' | 'descending' | 'none' | 'unavailable';
     truncate?: 'middle' | [number, 'end'];
     copyToClipboard?: boolean;
     highlighData?: boolean;
     href?: (data: any) => string; //it should be called like this: href(data): `https://url.com/${data}`
     hrefTarget?: '_blank' | '_self';
+    isTimestamp?: boolean;
 }
 
 export interface TableListItem {
