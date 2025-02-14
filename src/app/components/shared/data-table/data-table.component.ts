@@ -1,5 +1,5 @@
 import { AfterContentInit, Component, ContentChildren, inject, input, OnChanges, OnInit, output, QueryList, signal, SimpleChanges, TemplateRef } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 import { DataTableColumn } from '../../../models/tables.interface';
 import { InteractiveElementDirective } from '../../../directives/accessibility/interactive-element.directive';
 import { popIn } from '../../../animations/default-transitions.animations';
@@ -9,11 +9,14 @@ import { ClipboardModule } from '@angular/cdk/clipboard';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { DataTableTemplateComponent } from './template/data-table-template.component';
 import { UpdatedTimeService } from '../../../services/updated-time.service';
-import { TimeAgoPipe } from '../../../pipes/formatting/timeAgo.pipe';
+import { TimeAgoPipe } from '../../../pipes/formatting/time-ago.pipe';
+import { DateFormatPipe } from '../../../pipes/formatting/date-format.pipe';
 
 @Component({
   selector: 'data-table',
-  imports: [CommonModule, InteractiveElementDirective, TruncatePipe, CopyToClipboardComponent, ClipboardModule, MatTooltipModule, TimeAgoPipe],
+  imports: [CommonModule, InteractiveElementDirective, TruncatePipe, CopyToClipboardComponent, ClipboardModule,
+   MatTooltipModule, TimeAgoPipe, DateFormatPipe ],
+  providers: [DatePipe],
   templateUrl: './data-table.component.html',
   styles: `
     :host {

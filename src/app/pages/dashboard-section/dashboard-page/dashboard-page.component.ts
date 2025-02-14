@@ -1,4 +1,4 @@
-import { Component, effect, inject } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { BasicCardComponent } from '../../../components/shared/cards/basic-card/basic-card.component';
 import { UserDataService } from '../../../services/api/user-data.service';
 import { DataTableColumn } from '../../../models/tables.interface';
@@ -6,13 +6,11 @@ import { CommonModule } from '@angular/common';
 import { CustomTableComponent } from '../../../components/shared/custom-table/custom-table.component';
 import { UserTransaction } from '../../../models/api/users.interface';
 import { map, shareReplay } from 'rxjs';
-import { DataTableTemplateComponent } from "../../../components/shared/data-table/template/data-table-template.component";
-import { TimeAgoPipe } from '../../../pipes/formatting/timeAgo.pipe';
 import { UpdatedTimeService } from '../../../services/updated-time.service';
 
 @Component({
   selector: 'dashboard-page',
-  imports: [BasicCardComponent, CommonModule, CustomTableComponent, DataTableTemplateComponent, TimeAgoPipe],
+  imports: [BasicCardComponent, CommonModule, CustomTableComponent],
   templateUrl: './dashboard-page.component.html',
   styleUrl: './dashboard-page.component.scss'
 })

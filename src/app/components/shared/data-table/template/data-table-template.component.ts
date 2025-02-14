@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ContentChild, Input, input, TemplateRef } from "@angular/core";
+import { Component, ContentChild, input, TemplateRef } from "@angular/core";
 
 @Component({
     selector: "data-table-template",

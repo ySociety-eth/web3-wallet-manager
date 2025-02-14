@@ -22,10 +22,12 @@ $font-size: .7rem;
 $selector-background: var(--muted);
 $selector-input-placeholder: var(--muted-foreground-neutral);
 $selector-input-fg: var(--primary-light);
-$selector-button-bkg: var(--primary);
-$selector-button-fg: var(--foreground);
-$hover-selector-button-bkg: var(--primary-light);
+$selector-button-bkg: var(--muted);
+$selector-button-fg: var(--primary);
+$hover-selector-button-bkg: var(--accent);
 $hover-selector-button-fg: var(--accent-foreground);
+$active-selector-button-bkg: var(--primary);
+$active-selector-button-fg: var(--accent-foreground);
 
 :host {
     display: inline-block;
@@ -38,6 +40,8 @@ $hover-selector-button-fg: var(--accent-foreground);
     align-items: stretch;
     justify-content: center;
     color: hsla($foreground);
+    position: relative;
+    z-index: 2;
     
     &__item,
     &__prev,
@@ -148,11 +152,13 @@ $hover-selector-button-fg: var(--accent-foreground);
     background-color: hsla($selector-background);
     border-radius: $radius;
     font-size: .75rem;
+    z-index: 1;
     &__header {
         display: flex;
         justify-content: space-between;
         align-items: center;
         padding: .3rem .7rem;
+        padding-right: .15rem;
         gap: .3rem;
         h2 {
             white-space: nowrap;
@@ -183,6 +189,10 @@ $hover-selector-button-fg: var(--accent-foreground);
         &:hover {
             background-color: hsla($hover-selector-button-bkg);
             color: hsla($hover-selector-button-fg);
+        }
+        &:active {
+            background-color: hsla($active-selector-button-bkg);
+            color: hsla($active-selector-button-fg);
         }
     }
 }

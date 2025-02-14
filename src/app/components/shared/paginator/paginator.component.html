@@ -39,7 +39,7 @@
 </div>
 
 @if (showPageSelector) {
-    <div #pageSelector class="select" [@popIn]="{ value: '', params: { duration: '300ms', width: 0, transform: 'translateY(-100%) scale(0.1)' } }">
+    <div #pageSelector class="select" [@popIn]="{ value: '', params: { duration: '175ms', width: 0, transform: 'translate(-50%, -20%) scale(0.6)' } }">
         <div class="select__header">
             <h2>Select Page:</h2>
             <input #pageSelectorInput type="tel" [placeholder]="1 + '-' + limit()" mask="0000"
@@ -48,7 +48,7 @@
             (keydown.enter)="onSelectSpecificPage(pageSelectorInput.value)">
         </div>
         <button (click)="onSelectSpecificPage(pageSelectorInput.value)">
-            <i class="fi fi-br-angle-small-right flex"></i>
+            <i class="fi fi-br-angle-double-small-right flex"></i>
         </button>
     </div>
 }
