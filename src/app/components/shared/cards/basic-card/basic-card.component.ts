@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component, HostBinding, input } from '@angular
 import { CardComponent } from '../card/card/card.component';
 
 @Component({
-  selector: 'card[basic-card]',
+  selector: 'basic-card',
   imports: [],
   templateUrl: './basic-card.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush

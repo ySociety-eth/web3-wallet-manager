@@ -7,7 +7,7 @@ import { inject, Pipe, PipeTransform } from "@angular/core";
 })
 export class DateFormatPipe implements PipeTransform {
     private angularDateFormater = inject(DatePipe);
-    transform(value: number | string, format: string = 'y-M-d h:m a') {
+    transform(value: number | string, format: string = 'MMM d y - h:m a') {
         const valueInMilliseconds = this.toMilliseconds(value);
 
         return this.angularDateFormater.transform(valueInMilliseconds, format);

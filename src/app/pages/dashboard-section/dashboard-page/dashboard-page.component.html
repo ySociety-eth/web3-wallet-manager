@@ -1,15 +1,48 @@
 <div class="page-container space-y-8">
-    <section class="flex flex-col sm:flex-row gap-2">
-        <div class="grid grid-cols-2 gap-2 flex-1">
-            <card basic-card icon="fi-rr-usd-circle" title="Total Balance" value="$2.540"></card>
-            <card basic-card icon="fi-rr-exchange" title="Total Transactions" value="22.647"></card>
-            <card basic-card icon="fi-rr-tax-alt" title="Total Fees" value="$553,43"></card>
-            <card basic-card icon="fi-rr-nft-square" title="Total NFTs" value="$433,50≈"></card>
-            <card basic-card icon="fi-rr-wallet-buyer" title="Wallet Address" value="0xC98e86927D9752586da1081c8dD9a41450232Deb" valueFontSize="base"
-            class="col-span-2"></card>
+    <section class="flex flex-col gap-8">
+        <div class="flex flex-col sm:flex-row gap-2">
+            <div class="grid grid-cols-2 gap-2 flex-1">
+                <basic-card icon="fi-rr-usd-circle" title="Total Balance" value="$2.540"></basic-card>
+                <basic-card icon="fi-rr-exchange" title="Total Transactions" value="22.647"></basic-card>
+                <basic-card icon="fi-rr-tax-alt" title="Total Fees" value="$553,43"></basic-card>
+                <basic-card icon="fi-rr-nft-square" title="Total NFTs" value="$433,50≈"></basic-card>
+                <basic-card icon="fi-rr-wallet-buyer" title="Wallet Address" value="0xC98e86927D9752586da1081c8dD9a41450232Deb" valueFontSize="base"
+                class="col-span-2"></basic-card>
+            </div>
+            <div class="flex-1 rounded-xl bg-card flex items-center justify-center">
+                <h1 class="text-6xl text-mutedForeground">graph</h1>
+            </div>
         </div>
-        <div class="flex-1 rounded-xl bg-card flex items-center justify-center">
-            <h1 class="text-6xl text-mutedForeground">graph</h1>
+
+        <div class="flex gap-2 flex-wrap">
+            <card background="transparent" class="flex gap-4 items-center flex-1 min-w-max">
+                <i class="text-mutedForeground text-4xl fi fi-sr-chart-histogram flex"></i>
+                <div class="flex flex-col text-lg">
+                    <h2 class="font-medium">Last 30 Days</h2>
+                    <div class="flex items-center gap-1 text-green-400 text-sm">
+                        <span>$127,65 <small>(+0.47%)</small></span>
+                        <i class="fi fi-rr-angle-small-up flex text-xs"></i>
+                    </div>
+                </div>
+            </card>
+            <card background="transparent" class="flex gap-4 items-center flex-1 min-w-max">
+                <i class="text-mutedForeground text-4xl fi fi-ss-crown flex"></i>
+                <div class="flex flex-col text-lg">
+                    <h2 class="font-medium">Biggest Position</h2>
+                    <div class="text-mutedForegroundNeutral text-sm">
+                        <span>Ethereum <small>0.675(77.4%)</small></span>
+                    </div>
+                </div>
+            </card>
+            <card background="transparent" class="flex gap-4 items-center flex-1 min-w-max">
+                <i class="text-mutedForeground text-4xl fi fi-ss-daily-calendar flex"></i>
+                <div class="flex flex-col text-lg">
+                    <h2 class="font-medium">Blockchain Age</h2>
+                    <div class="text-mutedForegroundNeutral text-sm">
+                        <span>Registered on <small>Feb 05 2017</small></span>
+                    </div>
+                </div>
+            </card>
         </div>
     </section>
     <section>

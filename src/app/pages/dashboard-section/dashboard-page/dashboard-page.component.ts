@@ -7,10 +7,11 @@ import { CustomTableComponent } from '../../../components/shared/custom-table/cu
 import { UserTransaction } from '../../../models/api/users.interface';
 import { map, shareReplay } from 'rxjs';
 import { UpdatedTimeService } from '../../../services/updated-time.service';
+import { CardComponent } from '../../../components/shared/cards/card/card/card.component';
 
 @Component({
   selector: 'dashboard-page',
-  imports: [BasicCardComponent, CommonModule, CustomTableComponent],
+  imports: [BasicCardComponent, CommonModule, CustomTableComponent, CardComponent],
   templateUrl: './dashboard-page.component.html',
   styleUrl: './dashboard-page.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush
