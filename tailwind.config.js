@@ -12,6 +12,7 @@ module.exports = {
         accentForeground: "hsla(var(--accent-foreground))",
         accent: "hsla(var(--accent))",
         muted: "hsla(var(--muted))",
+        mutedDark: "hsla(var(--muted-dark))",
         mutedForeground: "hsla(var(--muted-foreground))",
         mutedForegroundNeutral: "hsla(var(--muted-foreground-neutral))",
         card: "hsla(var(--card))",
