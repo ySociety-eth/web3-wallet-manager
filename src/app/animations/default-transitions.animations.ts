@@ -1,4 +1,4 @@
-import { animate, state, style, transition, trigger } from "@angular/animations";
+import { animate, animateChild, group, query, state, style, transition, trigger } from "@angular/animations";
 
 export const popIn = trigger('popIn', [
     state('void', style({
@@ -33,3 +33,13 @@ export const popIn = trigger('popIn', [
 //use this in the template like this:
 //[@popIn]="{ value: '', params: { duration: '200ms', width: 0}}"
 //width:0 will animate width, also for height: 0
+
+export const queryAnimations = [
+    trigger('queryAnimations', [
+      transition(':leave', [
+        group([
+          query('@popIn, @navbarSidebarSlideInOutAnimation', animateChild(), { optional: true }),
+        ])
+      ])
+    ])
+  ];
