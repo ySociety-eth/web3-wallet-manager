@@ -1,14 +1,15 @@
-import { Component, input } from '@angular/core';
+import { Component, HostBinding, input } from '@angular/core';
+import { CardComponent } from '../card/card/card.component';
 
 @Component({
-  selector: 'basic-card',
-  host: {
-    class: 'flex gap-4 items-center bg-card p-4 rounded-xl'
-  },
+  selector: 'card[basic-card]',
   imports: [],
   templateUrl: './basic-card.component.html'
 })
-export class BasicCardComponent {
+export class BasicCardComponent extends CardComponent {
+  @HostBinding('class') get classes(): string {
+    return `${this.baseClasses} flex gap-4 items-center`;
+  }
   public icon = input<string>('fi-rr-comment');
   public title = input<string>('Title');
   public value = input<string>('Value');
