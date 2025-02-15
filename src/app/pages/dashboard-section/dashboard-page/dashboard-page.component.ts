@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { BasicCardComponent } from '../../../components/shared/cards/basic-card/basic-card.component';
 import { UserDataService } from '../../../services/api/user-data.service';
 import { DataTableColumn } from '../../../models/tables.interface';
@@ -12,7 +12,8 @@ import { UpdatedTimeService } from '../../../services/updated-time.service';
   selector: 'dashboard-page',
   imports: [BasicCardComponent, CommonModule, CustomTableComponent],
   templateUrl: './dashboard-page.component.html',
-  styleUrl: './dashboard-page.component.scss'
+  styleUrl: './dashboard-page.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class DashboardPageComponent {
 //injections
