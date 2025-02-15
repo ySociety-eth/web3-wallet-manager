@@ -1,4 +1,4 @@
-import { Component, ContentChildren, input, OnChanges, OnInit, output, QueryList, signal, SimpleChanges } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ContentChildren, input, OnChanges, OnInit, output, QueryList, signal, SimpleChanges } from '@angular/core';
 import { DataTableComponent } from '../data-table/data-table.component';
 import { DataTableColumn, TableListItem } from '../../../models/tables.interface';
 import { CommonModule } from '@angular/common';
@@ -9,6 +9,7 @@ import { DataTableTemplateComponent } from '../data-table/template/data-table-te
   selector: 'custom-table',
   imports: [DataTableComponent, CommonModule, PaginatorComponent],
   templateUrl: './custom-table.component.html',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class CustomTableComponent implements OnInit, OnChanges {
   // data-table variables
@@ -39,15 +40,16 @@ export class CustomTableComponent implements OnInit, OnChanges {
 
   setActiveItem() {
     const activeItem = this.tableList()?.find((item) => item.active);
-    this.loadColumn(activeItem!);
-    this.currentTable.set(activeItem!)
-  }
+    const data$ = activeItem?.loadData;
 
-  loadColumn(listItem: TableListItem) {
-    const data$ = listItem.loadData;
-    data$.subscribe(
+    data$?.subscribe(
       {
-        next: (data) => listItem.dataTableRow = data 
+        next: (data) => {
+          if(activeItem) {
+            activeItem.dataTableRow = data
+            this.currentTable.set(activeItem);
+          }
+        }
       }
     )
   }
