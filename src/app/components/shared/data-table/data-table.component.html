@@ -39,7 +39,7 @@
                             <div class="flex items-center gap-1">
                                 @if(column.href) {
                                     <!-- common span -->
-                                        <a class="gb_a px-1 rounded border border-dashed transition-all" 
+                                        <a class="gb_a px-1 rounded border border-dashed transition-all whitespace-nowrap" 
                                         [href]="column.href(row[column.property]) || null" [target]="column.hrefTarget || '_self'" rel="noopener noreferrer"
                                         [matTooltip]="column.truncate ? row[column.property] : null"
                                         [ngClass]="highlightedData() == row[column.property] && column.highlighData ? 'border-primary/50 bg-primary/15' : 'border-transparent'"
@@ -55,7 +55,7 @@
                                         </a>
                                     }@else {
                                         <!-- anchor link -->
-                                        <span class="px-1 rounded border border-dashed transition-all"
+                                        <span class="px-1 rounded border border-dashed transition-all whitespace-nowrap"
                                         [matTooltip]="column.truncate ? row[column.property] : (column.isTimestamp ? (row[column.property] | dateFormat) : null)"
                                         [ngClass]="highlightedData() == row[column.property] && column.highlighData ? 'border-primary/50 bg-primary/15' : 'border-transparent'"
                                         (mouseenter)="setHighlightData(row[column.property])"

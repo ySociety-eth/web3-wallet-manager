@@ -8,6 +8,7 @@ import { UserTransaction } from '../../../models/api/users.interface';
 import { map, shareReplay } from 'rxjs';
 import { UpdatedTimeService } from '../../../services/updated-time.service';
 import { CardComponent } from '../../../components/shared/cards/card/card/card.component';
+import { title } from 'node:process';
 
 @Component({
   selector: 'dashboard-page',
@@ -89,6 +90,7 @@ transactionColumns: DataTableColumn[] = [
   tableList = [
     {
       label: 'Transactions',
+      title: 'Recent Transactions',
       active: true,
       key: 'transactions',
       dataTableColumns: this.transactionColumns,
@@ -100,7 +102,7 @@ transactionColumns: DataTableColumn[] = [
     },
     {
       label: 'Blocks',
-      active: false,
+      title: 'Recent Blocks',
       key: 'blocks',
       dataTableColumns: this.blocksColumns,
       dataTableRow: [],

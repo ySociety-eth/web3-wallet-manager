@@ -15,6 +15,7 @@ export interface DataTableColumn {
 
 export interface TableListItem {
     label: string;
+    title: string;
     key: string;
     active?: boolean;
     dataTableColumns: DataTableColumn[];
