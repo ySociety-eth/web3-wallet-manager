@@ -98,7 +98,11 @@ transactionColumns: DataTableColumn[] = [
       loadData: this.transactions$.pipe(
         map(data => data.result),
         shareReplay(1)
-      )
+      ),
+      page: {
+        currentPage: 1,
+        totalPages: 50
+      }
     },
     {
       label: 'Blocks',
@@ -109,7 +113,11 @@ transactionColumns: DataTableColumn[] = [
       loadData: this.blocks$.pipe(map
         (data => data.items),
         shareReplay(1)
-      )
+      ),
+      page: {
+        currentPage: 1,
+        totalPages: 25
+      }
     }
   ];
 }

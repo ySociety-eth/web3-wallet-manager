@@ -13,7 +13,11 @@
 <!-- inner div -->
 <div class="bg-card rounded-t-dft p-3 flex justify-between items-center flex-wrap gap-2">
     <h1 class="text-lg font-semibold text-mutedForeground text-nowrap">{{ currentTable()?.title }}</h1>
-    <paginator [limit]="500"></paginator>
+    <paginator 
+        [limit]="currentTable()?.page?.totalPages || 0"
+        [initialPageIndex]="currentTable()?.page?.currentPage || 0"
+        (getCurrentPage)="onPageSelected($event)"
+    ></paginator>
 </div>
 <data-table [columns]="currentTable()?.dataTableColumns" [rows]="currentTable()?.dataTableRow" [limit]="limit()" [parentTemplates]="templates">
 </data-table>

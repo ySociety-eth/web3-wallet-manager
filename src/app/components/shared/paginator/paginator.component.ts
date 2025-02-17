@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, effect, ElementRef, HostListener, input, output, signal, ViewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, effect, ElementRef, HostListener, input, OnChanges, output, signal, SimpleChanges, ViewChild } from '@angular/core';
 import { NgxMaskDirective } from 'ngx-mask';
 import { FormsModule } from '@angular/forms';
 import { popIn } from '../../../animations/default-transitions.animations';
@@ -10,11 +10,12 @@ import { popIn } from '../../../animations/default-transitions.animations';
   imports: [CommonModule, NgxMaskDirective, FormsModule],
   templateUrl: './paginator.component.html',
   styleUrl: './paginator.component.scss',
-  animations: [popIn]
+  animations: [popIn],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
-export default class PaginatorComponent {
+export default class PaginatorComponent implements OnChanges {
   limit = input<number>(1);
-  startsAt = input<number>(1);
+  initialPageIndex = input<number>(1);
   getCurrentPage = output<number>();
 
   constructor(private elementRef: ElementRef) {
@@ -28,12 +29,18 @@ export default class PaginatorComponent {
   protected secondButtonValue = 0;
   protected thirdButtonValue = 0;
 
-  protected currentPage = signal<number>(this.startsAt());
+  protected currentPage = signal<number>(this.initialPageIndex());
   protected secondToLastPage = this.limit() - 1;
   protected showPageSelector = false;
   protected pageSelectorInputValue = '';
   @ViewChild('pageSelector') pageSelectorElementRef!: ElementRef<HTMLInputElement>;
   @ViewChild('pageSelectorInput') pageSelectorInputElementRef!: ElementRef<HTMLInputElement>;
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if(changes['initialPageIndex']) {
+      this.selectPage(this.initialPageIndex());
+    }
+  }
 
   selectPage(page: number) {
     this.currentPage.set(page);

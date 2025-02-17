@@ -55,4 +55,12 @@ export class CustomTableComponent implements OnInit, OnChanges {
       }
     )
   }
+
+  onPageSelected(page: number) {
+    let activeItem = this.tableList()?.find((item) => item.active);
+    if (activeItem && activeItem.page) {
+      activeItem.page.currentPage = page;
+    }
+  }
+  
 }
