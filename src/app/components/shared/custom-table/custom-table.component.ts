@@ -50,7 +50,9 @@ export class CustomTableComponent implements OnInit, OnChanges {
       {
         next: (data) => {
             const updatedItem = { ...activeItem!, dataTableRow: data } // creates a new object with updated data so signals can detect changes
-            this.currentTable.set(updatedItem);
+            if(this.currentTable()?.key === updatedItem.key) { // avoid updating table if user has changed active item
+              this.currentTable.set(updatedItem);
+            }
         }
       }
     )
