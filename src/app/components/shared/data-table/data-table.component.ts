@@ -1,4 +1,4 @@
-import { AfterContentInit, Component, ContentChildren, inject, input, OnChanges, OnInit, output, QueryList, signal, SimpleChanges, TemplateRef } from '@angular/core';
+import { AfterContentInit, ChangeDetectionStrategy, Component, ContentChildren, inject, input, OnChanges, OnInit, output, QueryList, signal, SimpleChanges, TemplateRef } from '@angular/core';
 import { CommonModule, DatePipe } from '@angular/common';
 import { DataTableColumn } from '../../../models/tables.interface';
 import { InteractiveElementDirective } from '../../../directives/accessibility/interactive-element.directive';
@@ -25,7 +25,8 @@ import { DateFormatPipe } from '../../../pipes/formatting/date-format.pipe';
       overflow: auto;
     }
     `,
-  animations: [popIn]
+  animations: [popIn],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class DataTableComponent implements OnInit, OnChanges, AfterContentInit {
   //injections

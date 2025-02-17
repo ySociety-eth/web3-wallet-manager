@@ -39,16 +39,18 @@ export class CustomTableComponent implements OnInit, OnChanges {
   }
 
   setActiveItem() {
-    const activeItem = this.tableList()?.find((item) => item.active);
-    const data$ = activeItem?.loadData;
-
-    data$?.subscribe(
+    let activeItem = this.tableList()?.find((item) => item.active);
+    if(!activeItem) {
+      this.tableList()[0].active = true; // if no active items found, set first element of tableList
+      activeItem = this.tableList().find((item) => item.active);
+    }
+    const data$ = activeItem!.loadData;
+    this.currentTable.set(activeItem!) // it will sets an empty tableRow, displaying an empty table while api is requested
+    data$.subscribe(
       {
         next: (data) => {
-          if(activeItem) {
-            activeItem.dataTableRow = data
-            this.currentTable.set(activeItem);
-          }
+            const updatedItem = { ...activeItem!, dataTableRow: data } // creates a new object with updated data so signals can detect changes
+            this.currentTable.set(updatedItem);
         }
       }
     )

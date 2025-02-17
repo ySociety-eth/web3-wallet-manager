@@ -1,16 +1,11 @@
-.gb_a{ //anchor link
-    // color: hsl(var(--primary-light));
-    // position: relative;
-    // &:hover {
-    //     color: hsl(var(--primary-lighter));
-    //     &::after {
-    //         content: '';
-    //         top: 2px;
-
-    //     }
-    // }
-    
-
+.gb_a { //global anchor
+    color: hsl(var(--primary-light));
+    transition: color 175ms ease-in-out;
+    &:hover {
+        color: hsl(var(--primary-lighter));
+    }
+}
+.gb_aa { //global anchor animated
     position: relative;
     color: hsl(var(--primary-light));
     text-decoration: none;
