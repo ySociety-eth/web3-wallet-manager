@@ -1,8 +1,9 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, effect, ElementRef, HostListener, input, OnChanges, output, signal, SimpleChanges, ViewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, effect, ElementRef, HostListener, inject, input, OnChanges, output, Signal, signal, SimpleChanges, ViewChild } from '@angular/core';
 import { NgxMaskDirective } from 'ngx-mask';
 import { FormsModule } from '@angular/forms';
 import { popIn } from '../../../animations/default-transitions.animations';
+import { DocumentListenerService } from '../../../services/document-listener.service';
 
 @Component({
   selector: 'paginator',
@@ -11,27 +12,32 @@ import { popIn } from '../../../animations/default-transitions.animations';
   templateUrl: './paginator.component.html',
   styleUrl: './paginator.component.scss',
   animations: [popIn],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  // changeDetection: ChangeDetectionStrategy.OnPush
 })
 export default class PaginatorComponent implements OnChanges {
-  limit = input<number>(1);
-  initialPageIndex = input<number>(1);
-  getCurrentPage = output<number>();
-
-  constructor(private elementRef: ElementRef) {
+  //injections
+  private elementRef = inject(ElementRef)
+  private documentListener = inject(DocumentListenerService);
+  //
+  public limit = input<number>(1);
+  public initialPageIndex = input<number>(1);
+  public getCurrentPage = output<number>();
+  private documentEvent = this.documentListener.event$
+  constructor() {
     effect(() => {
-      this.firstButtonValue = this.getButtonValue(-1);
-      this.secondButtonValue = this.getButtonValue(0);
-      this.thirdButtonValue = this.getButtonValue(1);
-    });
+      const event = this.documentEvent();
+      if(event) {
+        this.handleDocumentEvent(event);
+      }
+    })
   }
-  protected firstButtonValue = 0;
-  protected secondButtonValue = 0;
-  protected thirdButtonValue = 0;
+  protected firstButtonValue = computed(() => this.getButtonValue(-1));
+  protected secondButtonValue = computed(() => this.getButtonValue(0));
+  protected thirdButtonValue = computed(() => this.getButtonValue(1));
 
   protected currentPage = signal<number>(this.initialPageIndex());
   protected secondToLastPage = this.limit() - 1;
-  protected showPageSelector = false;
+  protected showPageSelector = signal(false);
   protected pageSelectorInputValue = '';
   @ViewChild('pageSelector') pageSelectorElementRef!: ElementRef<HTMLInputElement>;
   @ViewChild('pageSelectorInput') pageSelectorInputElementRef!: ElementRef<HTMLInputElement>;
@@ -89,13 +95,13 @@ export default class PaginatorComponent implements OnChanges {
 
   // Page Selector modal methods
   closePageSelector() {
-    this.showPageSelector = false;
+    this.showPageSelector.set(false);
     this.pageSelectorInputValue = '';
   }
 
   openPageSelector() {
     if(this.limit() >= 3) {
-      this.showPageSelector = true;
+      this.showPageSelector.set(true);
 
       setTimeout(() => { // timeout to wait for the element to be rendered before interacting with it
         const inputElement = this.pageSelectorInputElementRef.nativeElement
@@ -105,7 +111,7 @@ export default class PaginatorComponent implements OnChanges {
   }
 
   togglePageSelector() {
-    this.showPageSelector ? this.closePageSelector() : this.openPageSelector();
+    this.showPageSelector() ? this.closePageSelector() : this.openPageSelector();
   }
 
 
@@ -144,23 +150,18 @@ export default class PaginatorComponent implements OnChanges {
   //listeners
 
   // close page selector on click outside or pressing esc
-  @HostListener('document:click', ['$event'])
-  @HostListener('document:keydown', ['$event'])
   handleDocumentEvent(event: Event): void {
-    if (this.showPageSelector) {
+    if (this.showPageSelector() === true) {
       const hostElement = this.elementRef.nativeElement as HTMLElement;
-  
       // close on click outside
       if (event instanceof MouseEvent && !hostElement.contains(event.target as Node)) {
         this.closePageSelector();
         return;
       }
-  
       // close on pressing esc
       if (event instanceof KeyboardEvent && event.key === 'Escape') {
         this.closePageSelector();
       }
     }
   }
-
 }
