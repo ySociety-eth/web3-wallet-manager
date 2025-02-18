@@ -22,6 +22,7 @@ export default class PaginatorComponent implements OnChanges {
   public limit = input<number>(1);
   public initialPageIndex = input<number>(1);
   public getCurrentPage = output<number>();
+  public disabled = input(false);
   private documentEvent = this.documentListener.event$
   constructor() {
     effect(() => {
@@ -49,8 +50,10 @@ export default class PaginatorComponent implements OnChanges {
   }
 
   selectPage(page: number) {
-    this.currentPage.set(page);
-    this.getCurrentPage.emit(this.currentPage());
+    if(this.disabled() === false) {
+      this.currentPage.set(page);
+      this.getCurrentPage.emit(this.currentPage());
+    }
   }
 
   onPageSelected(page: number){
