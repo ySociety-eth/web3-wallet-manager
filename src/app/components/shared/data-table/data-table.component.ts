@@ -2,7 +2,7 @@ import { AfterViewInit, ChangeDetectionStrategy, Component, computed, ContentChi
 import { CommonModule, DatePipe } from '@angular/common';
 import { DataTableColumn } from '../../../models/tables.interface';
 import { InteractiveElementDirective } from '../../../directives/accessibility/interactive-element.directive';
-import { popIn } from '../../../animations/default-transitions.animations';
+import { popIn, queryAnimations } from '../../../animations/default-transitions.animations';
 import { TruncatePipe } from '../../../pipes/formatting/truncate.pipe';
 import { CopyToClipboardComponent } from '../copy-to-clipboard/copy-to-clipboard.component';
 import { ClipboardModule } from '@angular/cdk/clipboard';
@@ -25,7 +25,7 @@ import { DateFormatPipe } from '../../../pipes/formatting/date-format.pipe';
       overflow: auto;
     }
     `,
-  animations: [popIn],
+  animations: [popIn, queryAnimations],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class DataTableComponent implements AfterViewInit {

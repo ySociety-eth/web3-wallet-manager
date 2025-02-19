@@ -42,6 +42,11 @@ transactionColumns: DataTableColumn[] = [
     isTimestamp: true,
     sort: 'none',
   },
+  // {
+  //   label: 'Gas Limit',
+  //   property: 'gas',
+  //   sort: 'none',
+  // },
   {
     label: 'From',
     property: 'from',
