@@ -5,7 +5,7 @@ import { Injectable, Renderer2, RendererFactory2, signal } from '@angular/core';
 })
 export class PageLayoutService {
   private _smallScreen = signal<boolean>(false);
-  private _sidebarCollapsed = signal<boolean>(false);
+  private _sidebarCollapsed = signal<boolean>(true);
   private renderer: Renderer2;
 
   get isSmallScreen() {

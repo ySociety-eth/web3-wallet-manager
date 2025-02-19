@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, ContentChildren, input, OnChanges, OnInit, output, QueryList, signal, SimpleChanges } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, ContentChildren, input, OnChanges, OnInit, output, QueryList, signal, SimpleChanges } from '@angular/core';
 import { DataTableComponent } from '../data-table/data-table.component';
 import { DataTableColumn, TableListItem } from '../../../models/tables.interface';
 import { CommonModule } from '@angular/common';
@@ -13,12 +13,13 @@ import { DataTableTemplateComponent } from '../data-table/template/data-table-te
 })
 export class CustomTableComponent implements OnInit, OnChanges {
   // data-table variables
-  public limit = input<number>();
+  public limit = input.required<number>();
   public sorted = output<DataTableColumn>();
 
   // custom-table variables
   public tableList = input.required<TableListItem[]>();
   public currentTable = signal<TableListItem | null>(null);
+  protected loadingTable = computed(() => this.currentTable()?.dataTableRow.length === 0);
   @ContentChildren(DataTableTemplateComponent) templates!: QueryList<DataTableTemplateComponent>;
 
   
@@ -45,7 +46,7 @@ export class CustomTableComponent implements OnInit, OnChanges {
       activeItem = this.tableList().find((item) => item.active);
     }
     const data$ = activeItem!.loadData;
-    this.currentTable.set(activeItem!) // it will sets an empty tableRow, displaying an empty table while api is requested
+    this.currentTable.set( {...activeItem!, dataTableRow: [] }) // it will sets an empty tableRow, displaying an empty table while api is requested
     data$.subscribe(
       {
         next: (data) => {
@@ -61,7 +62,7 @@ export class CustomTableComponent implements OnInit, OnChanges {
   onPageSelected(page: number) {
     let activeItem = this.tableList()?.find((item) => item.active);
     if (activeItem && activeItem.page) {
-      activeItem.page.currentPage = page;
+      activeItem.page.currentPage = page; // update currentPage of active item
     }
   }
   

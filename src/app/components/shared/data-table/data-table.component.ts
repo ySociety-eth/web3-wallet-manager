@@ -34,7 +34,7 @@ export class DataTableComponent implements OnInit, OnChanges, AfterContentInit {
   //variables
   public columns = input<DataTableColumn[]>();
   public rows = input<any[]>();
-  public limit = input<number>();
+  public limit = input.required<number>();
   public sorted = output<DataTableColumn>();
   public parentTemplates = input<QueryList<DataTableTemplateComponent>>();
   protected displayedRows = signal<any[]>([]);
@@ -58,6 +58,11 @@ export class DataTableComponent implements OnInit, OnChanges, AfterContentInit {
   }
 
   handleDisplayedRows() {
+    if(this.rows()?.length === 0) { // if there are no rows
+      this.generateSkeletonRows()
+      return
+    }
+
     if(this.limit()) {
       this.sliceDisplayedRows()
     } else {
@@ -117,6 +122,20 @@ export class DataTableComponent implements OnInit, OnChanges, AfterContentInit {
     this.templates.forEach(template => {
       this.templateMap[template.name()] = template.templateRef;
     })
+  }
+
+  generateSkeletonRows() {
+    var skeletonRow: any[] = [] 
+
+    for(var i = 0; i < this.limit(); i++ ) {
+      let row: any = {}
+      this.columns()?.forEach(value => {
+        row[value.property] = 'skeleton' // sets all properties of the rows to 'skeleton'
+      })
+      skeletonRow.push(row); // pushes the row to the skeletonRow array
+    }
+
+    this.displayedRows.set(skeletonRow) // sets the displayed rows to the skeleton rows
   }
   
 }

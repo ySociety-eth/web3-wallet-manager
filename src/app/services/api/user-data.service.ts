@@ -8,7 +8,7 @@ import { UserTransactions } from '../../models/api/users.interface';
 })
 export class UserDataService {
   private http = inject(HttpClient);
-  readonly url = 'https://block-explorer-api.testnet.abs.xyz/api?'
+  readonly url = 'Xhttps://block-explorer-api.testnet.abs.xyz/api?'
 
   public getTransaction(): Observable<UserTransactions> {
     const timestamp = new Date().getTime(); // Para evitar cache

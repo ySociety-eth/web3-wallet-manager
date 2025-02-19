@@ -16,6 +16,7 @@
     <paginator 
         [limit]="currentTable()?.page?.totalPages || 0"
         [initialPageIndex]="currentTable()?.page?.currentPage || 0"
+        [disabled]="loadingTable()"
         (getCurrentPage)="onPageSelected($event)"
     ></paginator>
 </div>
