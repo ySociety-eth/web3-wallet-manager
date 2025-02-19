@@ -9,10 +9,11 @@ import { map, shareReplay } from 'rxjs';
 import { UpdatedTimeService } from '../../../services/updated-time.service';
 import { CardComponent } from '../../../components/shared/cards/card/card/card.component';
 import { title } from 'node:process';
+import { DataTableTemplateComponent } from "../../../components/shared/data-table/template/data-table-template.component";
 
 @Component({
   selector: 'dashboard-page',
-  imports: [BasicCardComponent, CommonModule, CustomTableComponent, CardComponent],
+  imports: [BasicCardComponent, CommonModule, CustomTableComponent, CardComponent, DataTableTemplateComponent],
   templateUrl: './dashboard-page.component.html',
   styleUrl: './dashboard-page.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush
@@ -33,6 +34,7 @@ transactionColumns: DataTableColumn[] = [
     label: 'Block Number',
     property: 'blockNumber',
     sort: 'none',
+    useTemplate: true
   },
   {
     label: 'Time',
@@ -67,6 +69,7 @@ transactionColumns: DataTableColumn[] = [
     label: 'Block Number',
     property: 'height',
     sort: 'none',
+    useTemplate: true
   },
   {
     label: 'Time',

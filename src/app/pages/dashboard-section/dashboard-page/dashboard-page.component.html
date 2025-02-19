@@ -50,7 +50,16 @@
         [tableList]="tableList"
         [limit]="5"
         >
-        
+            <data-table-template name="blockNumber">
+                <ng-template let-value>
+                    <span>xdd{{value}}</span>
+                </ng-template>
+            </data-table-template>
+            <data-table-template name="height">
+                <ng-template let-value>
+                    <span>height{{value}}</span>
+                </ng-template>
+            </data-table-template>
         </custom-table>
     </section>
 </div>
