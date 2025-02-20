@@ -12,13 +12,26 @@
 </div>
 <!-- inner div -->
 <div class="bg-card rounded-t-dft p-3 flex justify-between items-center flex-wrap gap-2">
-    <h1 class="text-lg font-semibold text-mutedForeground text-nowrap">{{ currentTable()?.title }}</h1>
+    <h1 class="text-lg font-semibold text-mutedForeground text-nowrap">{{ currentTable().title }}</h1>
     <paginator 
-        [limit]="currentTable()?.page?.totalPages || 0"
-        [initialPageIndex]="currentTable()?.page?.currentPage || 0"
+        [limit]="currentTable().page.totalPages || 0"
+        [initialPageIndex]="currentTable().page.currentPage"
         [disabled]="loadingTable()"
         (getCurrentPage)="onPageSelected($event)"
     ></paginator>
 </div>
-<data-table [columns]="currentTable()?.dataTableColumns" [rows]="currentTable()?.dataTableRow" [limit]="limit()" [parentTemplates]="templates">
+<data-table [columns]="currentTable().dataTableColumns" [rows]="currentTable().dataTableRow" [limit]="limit()" [parentTemplates]="templates">
 </data-table>
+<div class="bg-card rounded-b-dft p-3 flex justify-between items-center flex-wrap gap-2">
+
+<dropdown-selection class="text-xs font-normal min-w-[7.2rem]" [items]="[
+    {name: '5 rows', isActive: limit() === 5},
+    {name: '25 rows', isActive: limit() === 25},
+    {name: '50 rows', isActive: limit() === 50},
+    {name: '100 rows', isActive: limit() === 100}
+]" 
+dropdownId="'xd'"
+label="Manage rows"
+>
+</dropdown-selection>
+</div>

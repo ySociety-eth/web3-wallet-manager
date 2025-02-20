@@ -4,10 +4,11 @@ import { DataTableColumn, TableListItem } from '../../../models/tables.interface
 import { CommonModule } from '@angular/common';
 import PaginatorComponent from '../paginator/paginator.component';
 import { DataTableTemplateComponent } from '../data-table/template/data-table-template.component';
+import { DropdownSelectionComponent } from "../dropdown-selection/dropdown-selection.component";
 
 @Component({
   selector: 'custom-table',
-  imports: [DataTableComponent, CommonModule, PaginatorComponent],
+  imports: [DataTableComponent, CommonModule, PaginatorComponent, DropdownSelectionComponent],
   templateUrl: './custom-table.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
@@ -18,10 +19,10 @@ export class CustomTableComponent implements OnInit, OnChanges {
 
   // custom-table variables
   public tableList = input.required<TableListItem[]>();
-  public currentTable = signal<TableListItem | null>(null);
+  public currentTable = signal<TableListItem>(null as any);
   protected loadingTable = computed(() => this.currentTable()?.dataTableRow.length === 0);
   @ContentChildren(DataTableTemplateComponent) templates!: QueryList<DataTableTemplateComponent>;
-
+  
   
   ngOnInit(): void {
     this.setActiveItem()
@@ -65,5 +66,6 @@ export class CustomTableComponent implements OnInit, OnChanges {
       activeItem.page.currentPage = page; // update currentPage of active item
     }
   }
+
   
 }

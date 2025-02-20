@@ -10,7 +10,7 @@ export class DocumentListenerService {
     constructor(rendererFactory: RendererFactory2) {
         this.renderer = rendererFactory.createRenderer(null, null);
         this.registerClickEventListener();
-        this.registerEscEventListener();
+        this.registerKeyboardEventListener();
     }
     
     private registerClickEventListener() {
@@ -19,11 +19,9 @@ export class DocumentListenerService {
         })
     }
 
-    private registerEscEventListener() {
+    private registerKeyboardEventListener() {
         this.renderer.listen('document', 'keydown', (event: KeyboardEvent) => {
-            if(event.key === 'Escape') {
-                this.eventSignal.set(event);
-            }
+            this.eventSignal.set(event);
         })
     }
 

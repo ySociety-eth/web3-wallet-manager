@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
-import { AfterViewInit, ChangeDetectionStrategy, Component, computed, ElementRef, EventEmitter, HostListener, input, Input, output, Output, signal, ViewChild } from '@angular/core';
+import { AfterViewInit, ChangeDetectionStrategy, Component, computed, effect, ElementRef, input, output, signal, ViewChild } from '@angular/core';
+import { DocumentListenerService } from '../../../services/document-listener.service';
 // import { popUp, slideUpDown } from '../../../animations/transition-animations';
 
 export interface DropdownListOptions{
@@ -38,8 +39,16 @@ export class DropdownSelectionComponent implements AfterViewInit{
   //variables
   private dropdownElement!: HTMLElement
   protected dropdownMenuId = computed(()=> `${this.dropdownId()}-menu`)
-  // dropdownMenuId: string = `${this.dropdownId()}-menu`;
   
+  constructor(private documentListener: DocumentListenerService){
+    effect(()=> {
+      const event = documentListener.event$();
+      if(event instanceof MouseEvent ) {
+        this.onClickOutside(event);
+      }
+    })
+  }
+
   ngAfterViewInit(): void {
     this.displayedLabel.set(this.label())
     this.dropdownElement = this.dropdown.nativeElement; // set the dropdown native element after view init
@@ -51,7 +60,6 @@ export class DropdownSelectionComponent implements AfterViewInit{
 
   openDropDown(){
     this.isExpanded.set(true);
-
     setTimeout(() => { // focus on the first item of the dropdown list
       const list = this.dropdownMenu.nativeElement as HTMLElement;
       const firstChild = list.querySelector('.dropdown__item') as HTMLElement;
@@ -71,30 +79,26 @@ export class DropdownSelectionComponent implements AfterViewInit{
     }
   }
 
-  @HostListener('document:click', ['$event'])
-    onClickOutside(event: MouseEvent){
-      if(this.isExpanded() == true){
-        const element = event.target as HTMLElement;
-        const clickInsideDropdown = ( element.classList.contains("dropdown__item") || element.classList.contains("dropdown__button") );
+  onclickItem(item: DropdownListOptions){
+    this.clickedItem.emit(item); // when item clicked, parent will receive it and set the active item
+    setTimeout(() => { // this will wait for the item to be active before changing the displayed label
+      if(item.isActive && this.labelAfterSelect()) {
+        this.displayedLabel.set(this.labelAfterSelect()!);
+      } else if(item.isActive) {
+        this.displayedLabel.set(item.name);
+      }
+      this.closeDropDown();
+    }, 100);
+  }
 
-        if(!clickInsideDropdown){
-          this.closeDropDown();
-        }
+  onClickOutside(event: MouseEvent){ // close dropdown when click outside the element
+    if(this.isExpanded() == true){
+      const element = event.target as HTMLElement;
+      const clickInsideDropdown = ( element.classList.contains("dropdown__item") || element.classList.contains("dropdown__button") );
+      if(!clickInsideDropdown){
+        this.closeDropDown();
       }
     }
+  }
 
-    onclickItem(item: DropdownListOptions){
-      this.clickedItem.emit(item);
-      setTimeout(() => {
-        if(item.isActive && this.labelAfterSelect()) {
-          this.displayedLabel.set(this.labelAfterSelect()!);
-        } else if(item.isActive) {
-          this.displayedLabel.set(item.name);
-        }
-        this.closeDropDown();
-      }, 100);
-    }
-  
-
-  
 }
