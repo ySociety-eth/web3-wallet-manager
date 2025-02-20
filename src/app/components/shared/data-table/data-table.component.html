@@ -3,7 +3,7 @@
         <tr class="bg-card text-sm text-mutedForegroundNeutral whitespace-nowrap" @queryAnimations>
             @for (column of columns(); track $index) {    
                 <th class="py-3 px-2 first:pl-3 last:pr-3 font-semibold select-none
-                transition-colors" [interactiveElement]="column.sort !== 'unavailable'" [@popIn]="{ value: '', params: { duration: '300ms', width: 0 } }"
+                transition-colors" [interactiveElement]="column.sort !== 'unavailable'" [@popIn]="{ value: '', params: { duration: '400ms', width: 0 } }"
                 [ngClass]="{'hover:text-accentForeground focus:text-accentForeground hover:cursor-pointer': column.sort !== 'unavailable',
                     'text-accentForeground': column.sort !== 'unavailable' && column.sort !== 'none',
                 }"
@@ -31,12 +31,12 @@
                         @if (column.useTemplate && templateMap[column.property]) {
                             @if(loadingData() === true || firstLoad()) {
                                 <!-- skeleton span -->
-                                <span class="inline-block animate-pulse bg-muted text-muted rounded-md min-w-28 min-h-7" [@popIn]="{ value: '', params: { duration: '300ms', width: 0 } }">
+                                <span class="inline-block animate-pulse bg-muted text-muted rounded-md min-w-28 min-h-7" [@popIn]="{ value: '', params: { duration: '400ms', width: 0 } }">
                                     A
                                 </span>
                             } @else {
                                  <!-- render the custom template -->
-                                 <ng-container [@popIn]="{ value: '', params: { duration: '300ms', width: 0 } }"
+                                 <ng-container [@popIn]="{ value: '', params: { duration: '400ms', width: 0 } }"
                                     *ngTemplateOutlet="templateMap[column.property]; context: { $implicit: row[column.property] }"
                                  ></ng-container>
                              }
@@ -47,16 +47,16 @@
                                 <!-- skeleton -->
                                 @if (loadingData() === true || firstLoad()) {
                                     <span class="inline-block animate-pulse bg-muted text-muted rounded-md min-h-7"
-                                    [ngClass]="column.truncate || column.isTimestamp ? 'min-w-28' : 'min-w-44'" [@popIn]="{ value: '', params: { duration: '300ms', width: 0 } }"> <!-- smaller width when element data is truncated or a timestamp -->
+                                    [ngClass]="column.truncate || column.isTimestamp ? 'min-w-28' : 'min-w-44'" [@popIn]="{ value: '', params: { duration: '400ms', width: 0 } }"> <!-- smaller width when element data is truncated or a timestamp -->
                                         A
                                     </span>
-                                    <span *ngIf="column.copyToClipboard" class="inline-block animate-pulse bg-muted text-muted rounded-md min-w-6 min-h-7" [@popIn]="{ value: '', params: { duration: '300ms', width: 0 } }">
+                                    <span *ngIf="column.copyToClipboard" class="inline-block animate-pulse bg-muted text-muted rounded-md min-w-6 min-h-7" [@popIn]="{ value: '', params: { duration: '400ms', width: 0 } }">
                                         A
                                     </span>
                                 }@else {
                                     @if(column.href) {
                                         <!-- common span -->
-                                            <a class="gb_a px-1 rounded border border-dashed transition-all whitespace-nowrap min-h-7" [@popIn]="{ value: '', params: { duration: '300ms', width: 0 } }" 
+                                            <a class="gb_a px-1 rounded border border-dashed transition-all whitespace-nowrap min-h-7" [@popIn]="{ value: '', params: { duration: '400ms', width: 0 } }" 
                                             [href]="column.href(row[column.property]) || null" [target]="column.hrefTarget || '_self'" rel="noopener noreferrer"
                                             [matTooltip]="column.truncate ? row[column.property] : null"
                                             [ngClass]="highlightedData() == row[column.property] && column.highlighData ? 'border-primary/50 bg-primary/15' : 'border-transparent'"
@@ -72,7 +72,7 @@
                                             </a>
                                         }@else {
                                             <!-- anchor link -->
-                                            <span class="px-1 rounded border border-dashed transition-all whitespace-nowrap min-h-7" [@popIn]="{ value: '', params: { duration: '300ms', width: 0 } }"
+                                            <span class="px-1 rounded border border-dashed transition-all whitespace-nowrap min-h-7" [@popIn]="{ value: '', params: { duration: '400ms', width: 0 } }"
                                             [matTooltip]="column.truncate ? row[column.property] : (column.isTimestamp ? (row[column.property] | dateFormat) : null)"
                                             [ngClass]="highlightedData() == row[column.property] && column.highlighData ? 'border-primary/50 bg-primary/15' : 'border-transparent'"
                                             (mouseenter)="setHighlightData(row[column.property])"
@@ -91,7 +91,7 @@
                                         }
                                         <!-- copy to clipboard icon -->
                                     @if(column.copyToClipboard === true) {
-                                        <button copy-to-clipboard [value]="row[column.property]" [@popIn]="{ value: '', params: { duration: '300ms', width: 0 } }"></button>
+                                        <button copy-to-clipboard [value]="row[column.property]" [@popIn]="{ value: '', params: { duration: '400ms', width: 0 } }"></button>
                                     }
                                 }
                             </div>

@@ -11,6 +11,8 @@ import { DataTableTemplateComponent } from './template/data-table-template.compo
 import { UpdatedTimeService } from '../../../services/updated-time.service';
 import { TimeAgoPipe } from '../../../pipes/formatting/time-ago.pipe';
 import { DateFormatPipe } from '../../../pipes/formatting/date-format.pipe';
+import { TableSortService } from './table-sort.service';
+import { TableSkeletonService } from './table-skeleton.service';
 
 @Component({
   selector: 'data-table',
@@ -30,39 +32,29 @@ import { DateFormatPipe } from '../../../pipes/formatting/date-format.pipe';
 })
 export class DataTableComponent implements AfterViewInit {
   //injections
-  updatedTimeService = inject(UpdatedTimeService);
+  protected updatedTimeService = inject(UpdatedTimeService);
+  private tableSortService = inject(TableSortService);
+  private tableSkeletonService = inject(TableSkeletonService)
   private zone = inject(NgZone);
   //inputs
-  public columns = input<DataTableColumn[]>();
+  public columns = input.required<DataTableColumn[]>();
   public rows = input<any[]>();
   public limit = input.required<number>();
   public parentTemplates = input<QueryList<DataTableTemplateComponent>>();
   //outputs
   public sorted = output<DataTableColumn>();
   //signals
-  protected loadingData = computed(()=> {
-    if(this.rows()?.length === 0) {
-      return true;
-    }
-    return false
-  })
-  protected displayedRows = computed(()=>{
-    if(this.loadingData()) { // set 
-      return this.createSkeletonRows();
-    } else {
-      return this.rows()?.slice(0, this.limit()) || []; //slice displayedRows to limit size
-    }
-  })
+  protected firstLoad = signal(true);
+  protected displayedRows = computed(()=> this.handleDisplayedRows())
   protected highlightedData = signal<string | null>(null);
   protected updatedTime = this.updatedTimeService.getTimeNow();
+  protected loadingData = computed(()=> { if(this.rows()?.length === 0) { return true; } return false }) // return true if rows signal has empty value
   //content children
   @ContentChildren(DataTableTemplateComponent) templates?: QueryList<DataTableTemplateComponent>;
   templateMap: { [key: string]: TemplateRef<any> } = {}
   
-  firstLoad = signal(true);
   ngAfterViewInit(): void {
-    
-    if (this.firstLoad()) {
+    if (this.firstLoad() === true) {
       this.zone.runOutsideAngular(() => { // avoid website from freezing when using setTimeout
         setTimeout(() => {
           this.fillTemplates() // fill the templates here to avoid duplicate table data on skeleton rows
@@ -73,26 +65,8 @@ export class DataTableComponent implements AfterViewInit {
   }
 
 
-  handleSort(column: DataTableColumn) {
-    switch (column.sort) {
-      case 'none': 
-        column.sort = 'descending'; break;
-      case 'descending':
-        column.sort = 'ascending'; break;
-      case 'ascending':
-        column.sort = 'none'; break;
-      default:
-        column.sort = 'unavailable'; break
-    }
-  }
-
   sort(column: DataTableColumn) {
-    this.columns()!.forEach(col => { // sets all other columns to none
-      if(col !== column && col.sort !== 'unavailable') {
-        col.sort = 'none';
-      }
-    });
-    this.handleSort(column);
+    this.tableSortService.handleSort(column, this.columns());
     this.sorted.emit(column);
   }
 
@@ -115,18 +89,12 @@ export class DataTableComponent implements AfterViewInit {
     })
   }
 
-  createSkeletonRows() {
-    var skeletonRow: any[] = [] 
-
-    for(var i = 0; i < this.limit(); i++ ) {
-      let row: any = {}
-      this.columns()?.forEach(value => {
-        row[value.property] = 'skeleton' // sets all properties of the rows to 'skeleton'
-      })
-      skeletonRow.push(row); // pushes the row to the skeletonRow array
+  handleDisplayedRows(){
+    if(this.loadingData()) {
+      return this.tableSkeletonService.skeletonRows(this.limit(), this.columns()); // set skeleton rows format
+    } else {
+      return this.rows()?.slice(0, this.limit()) || []; //set rows and slice it to limit size
     }
-
-    return skeletonRow// sets the displayed rows to the skeleton rows
   }
   
 }

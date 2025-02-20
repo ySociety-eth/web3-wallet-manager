@@ -47,6 +47,11 @@ transactionColumns: DataTableColumn[] = [
   //   property: 'gas',
   //   sort: 'none',
   // },
+  // {
+  //   label: 'Nonce',
+  //   property: 'gas',
+  //   sort: 'none',
+  // },
   {
     label: 'From',
     property: 'from',
@@ -82,6 +87,11 @@ transactionColumns: DataTableColumn[] = [
     isTimestamp: true,
     sort: 'none',
   },
+  // {
+  //   label: 'Gas',
+  //   property: 'gas_limit',
+  //   sort: 'none',
+  // },
   {
     label: 'Hash',
     property: 'hash',
