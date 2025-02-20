@@ -4,6 +4,8 @@ $button-fg: var(--muted-foreground);
 $button-border: var(--border);
 $button-bg-hover: var(--accent);
 $button-fg-hover: var(--accent-foreground);
+$button-bg-active: var(--muted);
+$button-fg-active: var(--muted-foreground);
 //list
 $list-bg: var(--muted);
 $list-fg: var(--muted-foreground-neutral);
@@ -33,11 +35,18 @@ $useBorder: false;
         font-size: 1em;
         height: 100%;
         width: 100%;
-        transition: background-color 150ms ease-in-out;
-        &:hover, &[aria-expanded="true"]{ 
+        transition: all 150ms ease-in-out;
+        &:hover{ 
             background-color: hsla($button-bg-hover);
             color: hsla($button-fg-hover);
+            .dropdown__arrow-down{
+                border-color: hsla($button-fg-hover);
+            }
         }
+        // &[aria-expanded="true"] { //when the dropdown is open
+        //     background-color: hsla($button-bg-active);
+        //     color: hsla($button-fg-active);
+        // }
     }
 
     &__arrow-down {
@@ -73,8 +82,12 @@ $useBorder: false;
         color: hsla($list-fg);
         padding-block: .5em;
         padding-left: 2em;
+        padding-right: .5em;
         position: relative;
         transition: background-color 150ms ease-in-out;
+        &:not(:last-child){
+            margin-bottom: .25em;
+        }
         &:hover, &:focus{
             background-color: hsla($list-bg-hover);
             color: hsla($list-fg-hover);

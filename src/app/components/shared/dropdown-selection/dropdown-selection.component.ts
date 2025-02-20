@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { AfterViewInit, Component, ElementRef, EventEmitter, HostListener, Input, Output, ViewChild } from '@angular/core';
+import { AfterViewInit, ChangeDetectionStrategy, Component, computed, ElementRef, EventEmitter, HostListener, input, Input, output, Output, signal, ViewChild } from '@angular/core';
 // import { popUp, slideUpDown } from '../../../animations/transition-animations';
 
 export interface DropdownListOptions{
@@ -17,32 +17,40 @@ export interface DropdownListOptions{
   imports: [CommonModule],
   templateUrl: './dropdown-selection.component.html',
   styleUrl: './dropdown-selection.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush
   // animations: [slideUpDown, popUp]
 })
 
 export class DropdownSelectionComponent implements AfterViewInit{
-  @Input() name: string = "Dropdown";
-  @Input({ required: true }) items: DropdownListOptions[] = [];
-  @Input({ required: true }) dropdownId: string = '';
-  @Output() clickedItem = new EventEmitter<DropdownListOptions>;
-  
+  //inputs
+  public label = input<string>('Dropdown Name');
+  public labelAfterSelect = input<string>();
+  public items = input<DropdownListOptions[]>();
+  public dropdownId = input.required<string>();
+  //output
+  public clickedItem = output<DropdownListOptions>();
+  //signals
+  protected displayedLabel = signal(this.label())
+  protected isExpanded = signal(false);
+  //view child
   @ViewChild('DropdownButton') dropdown!: ElementRef;
   @ViewChild('DropdownMenu') dropdownMenu!: ElementRef;
-
-  dropdownElement!: HTMLElement
-  dropdownMenuId: string = `${this.dropdownId}-menu`;
-  isExpanded: boolean = false;
+  //variables
+  private dropdownElement!: HTMLElement
+  protected dropdownMenuId = computed(()=> `${this.dropdownId()}-menu`)
+  // dropdownMenuId: string = `${this.dropdownId()}-menu`;
   
   ngAfterViewInit(): void {
+    this.displayedLabel.set(this.label())
     this.dropdownElement = this.dropdown.nativeElement; // set the dropdown native element after view init
   }
 
   toggleDropDown(){
-    this.isExpanded ? this.closeDropDown() : this.openDropDown();
+    this.isExpanded() ? this.closeDropDown() : this.openDropDown();
   }
 
   openDropDown(){
-    this.isExpanded = true;
+    this.isExpanded.set(true);
 
     setTimeout(() => { // focus on the first item of the dropdown list
       const list = this.dropdownMenu.nativeElement as HTMLElement;
@@ -52,7 +60,7 @@ export class DropdownSelectionComponent implements AfterViewInit{
   }
 
   closeDropDown(){
-    this.isExpanded = false;
+    this.isExpanded.set(false);
     this.dropdownElement.focus();
   }
 
@@ -65,7 +73,7 @@ export class DropdownSelectionComponent implements AfterViewInit{
 
   @HostListener('document:click', ['$event'])
     onClickOutside(event: MouseEvent){
-      if(this.isExpanded == true){
+      if(this.isExpanded() == true){
         const element = event.target as HTMLElement;
         const clickInsideDropdown = ( element.classList.contains("dropdown__item") || element.classList.contains("dropdown__button") );
 
@@ -78,7 +86,11 @@ export class DropdownSelectionComponent implements AfterViewInit{
     onclickItem(item: DropdownListOptions){
       this.clickedItem.emit(item);
       setTimeout(() => {
-        this.name = item.isActive ? item.name : this.name;
+        if(item.isActive && this.labelAfterSelect()) {
+          this.displayedLabel.set(this.labelAfterSelect()!);
+        } else if(item.isActive) {
+          this.displayedLabel.set(item.name);
+        }
         this.closeDropDown();
       }, 100);
     }
