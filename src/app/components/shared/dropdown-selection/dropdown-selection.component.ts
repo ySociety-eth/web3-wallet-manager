@@ -5,6 +5,7 @@ import { slideAnimation } from '../../../animations/default-transitions.animatio
 
 export interface DropdownListOptions{
   name: string,
+  value?: any,
   isActive: boolean
 }
 
@@ -26,7 +27,7 @@ export class DropdownSelectionComponent implements AfterViewInit{
   //inputs
   public label = input<string>('Dropdown Name');
   public labelAfterSelect = input<string>();
-  public items = input<DropdownListOptions[]>();
+  public items = input.required<DropdownListOptions[]>();
   public dropdownId = input.required<string>();
   //output
   public clickedItem = output<DropdownListOptions>();
@@ -47,6 +48,7 @@ export class DropdownSelectionComponent implements AfterViewInit{
         this.onClickOutside(event);
       }
     })
+    effect(() => this.setLabelOnItemSelected())
   }
 
   ngAfterViewInit(): void {
@@ -81,14 +83,16 @@ export class DropdownSelectionComponent implements AfterViewInit{
 
   onclickItem(item: DropdownListOptions){
     this.clickedItem.emit(item); // when item clicked, parent will receive it and set the active item
-    setTimeout(() => { // this will wait for the item to be active before changing the displayed label
-      if(item.isActive && this.labelAfterSelect()) {
-        this.displayedLabel.set(this.labelAfterSelect()!);
-      } else if(item.isActive) {
-        this.displayedLabel.set(item.name);
-      }
-      this.closeDropDown();
-    }, 100);
+    this.closeDropDown();
+  }
+
+  setLabelOnItemSelected(): void { // set the label of the dropdown when input signal items is updated // effect function
+    const activeItem = this.items().find((item) => item.isActive);
+    if(activeItem && this.labelAfterSelect()) {
+      this.displayedLabel.set(this.labelAfterSelect()!);
+    } else if(activeItem) {
+      this.displayedLabel.set(activeItem.name);
+    }
   }
 
   onClickOutside(event: MouseEvent){ // close dropdown when click outside the element
