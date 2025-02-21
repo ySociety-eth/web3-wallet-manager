@@ -24,9 +24,9 @@
     </thead>
     <tbody>
         @for (row of displayedRows(); track $index) {
-            <tr>
+            <tr class="border-b border-border last:border-b-0">
                 @for (column of columns(); track $index) {
-                    <td class="py-3 px-2 first:pl-3 last:pr-3 border-b border-border max-w" @queryAnimations> 
+                    <td class="py-3 px-2 first:pl-3 last:pr-3 max-w" @queryAnimations> 
                         <!-- data of row -->
                         @if (column.useTemplate && templateMap[column.property]) {
                             @if(loadingData() === true || firstLoad()) {

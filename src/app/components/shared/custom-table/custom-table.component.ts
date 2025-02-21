@@ -4,7 +4,7 @@ import { DataTableColumn, TableListItem } from '../../../models/tables.interface
 import { CommonModule } from '@angular/common';
 import PaginatorComponent from '../paginator/paginator.component';
 import { DataTableTemplateComponent } from '../data-table/template/data-table-template.component';
-import { DropdownSelectionComponent } from "../dropdown-selection/dropdown-selection.component";
+import { DropdownListOptions, DropdownSelectionComponent } from "../dropdown-selection/dropdown-selection.component";
 
 @Component({
   selector: 'custom-table',
@@ -14,14 +14,22 @@ import { DropdownSelectionComponent } from "../dropdown-selection/dropdown-selec
 })
 export class CustomTableComponent implements OnInit, OnChanges {
   // data-table variables
-  public limit = input.required<number>();
   public sorted = output<DataTableColumn>();
-
+  
   // custom-table variables
+  public limit = signal<number>(10);
   public tableList = input.required<TableListItem[]>();
   public currentTable = signal<TableListItem>(null as any);
   protected loadingTable = computed(() => this.currentTable()?.dataTableRow.length === 0);
+  protected dropdownItems = computed(() => [
+    { name: '10 rows', isActive: this.limit() === 10, value: 10 },
+    { name: '25 rows', isActive: this.limit() === 25, value: 25 },
+    { name: '50 rows', isActive: this.limit() === 50, value: 50 },
+    { name: '100 rows', isActive: this.limit() === 100, value: 100 }
+  ])
+  //content children
   @ContentChildren(DataTableTemplateComponent) templates!: QueryList<DataTableTemplateComponent>;
+  
   
   
   ngOnInit(): void {
@@ -64,6 +72,13 @@ export class CustomTableComponent implements OnInit, OnChanges {
     let activeItem = this.tableList()?.find((item) => item.active);
     if (activeItem && activeItem.page) {
       activeItem.page.currentPage = page; // update currentPage of active item
+    }
+  }
+
+  onDropdownItemClicked(item: DropdownListOptions) {
+    const limit = item.value;
+    if(typeof limit === 'number') {
+      this.limit.set(limit);
     }
   }
 
