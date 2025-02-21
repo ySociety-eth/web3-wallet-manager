@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { AfterViewInit, ChangeDetectionStrategy, Component, computed, effect, ElementRef, input, output, signal, ViewChild } from '@angular/core';
 import { DocumentListenerService } from '../../../services/document-listener.service';
-// import { popUp, slideUpDown } from '../../../animations/transition-animations';
+import { slideAnimation } from '../../../animations/default-transitions.animations';
 
 export interface DropdownListOptions{
   name: string,
@@ -18,8 +18,8 @@ export interface DropdownListOptions{
   imports: [CommonModule],
   templateUrl: './dropdown-selection.component.html',
   styleUrl: './dropdown-selection.component.scss',
+  animations: [ slideAnimation('slideDropdown', { duration: '200ms', animateY: true, transform: 'scale(.8) translateY(-10px)' }) ],
   changeDetection: ChangeDetectionStrategy.OnPush
-  // animations: [slideUpDown, popUp]
 })
 
 export class DropdownSelectionComponent implements AfterViewInit{
@@ -40,7 +40,7 @@ export class DropdownSelectionComponent implements AfterViewInit{
   private dropdownElement!: HTMLElement
   protected dropdownMenuId = computed(()=> `${this.dropdownId()}-menu`)
   
-  constructor(private documentListener: DocumentListenerService){
+  constructor(private documentListener: DocumentListenerService, private el: ElementRef) {
     effect(()=> {
       const event = documentListener.event$();
       if(event instanceof MouseEvent ) {
@@ -94,7 +94,7 @@ export class DropdownSelectionComponent implements AfterViewInit{
   onClickOutside(event: MouseEvent){ // close dropdown when click outside the element
     if(this.isExpanded() == true){
       const element = event.target as HTMLElement;
-      const clickInsideDropdown = ( element.classList.contains("dropdown__item") || element.classList.contains("dropdown__button") );
+      const clickInsideDropdown = !element.contains(this.el.nativeElement);
       if(!clickInsideDropdown){
         this.closeDropDown();
       }

@@ -10,7 +10,7 @@
         <span class="dropdown__arrow-down" [ngStyle]="{'transform': isExpanded() ? 'rotate(225deg)' : 'rotate(45deg)'}"></span>
     </button>
     @if (isExpanded()) {
-        <ul #DropdownMenu class="dropdown__list" @slideUpDown
+        <ul #DropdownMenu class="dropdown__list" @slideDropdown
         [attr.aria-labelledby]="DropdownButton.id"
         role="menu"
         [id]="dropdownMenuId()">
