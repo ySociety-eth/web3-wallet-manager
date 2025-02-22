@@ -3,14 +3,17 @@ import { Component, inject, input, OnInit } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 import { PageLayoutService } from '../page-layout.service';
 import { SidebarSections } from '../../../../models/navbar-items.interface';
-import { navbarItemCollapseAnimation, navbarSidebarSlideInOutAnimation } from '../../../../animations/navbar-transitions.animations';
+import { createAnimation } from '../../../../animations/default-transitions.animations';
 
 @Component({
   selector: 'app-sidebar',
   imports: [CommonModule, RouterLink],
   templateUrl: './sidebar.component.html',
   styleUrl: './sidebar.component.scss',
-  animations: [navbarItemCollapseAnimation, navbarSidebarSlideInOutAnimation]
+  animations: [
+    createAnimation('navbarItemCollapseExpand', { duration: '250ms', animateY: true, transform: 'scale(.9)' }),
+    createAnimation('navbarSlideInOut', { duration: '250ms', animateX: true, opacity: '1' })
+  ]
 })
 
 export class SidebarComponent implements OnInit {

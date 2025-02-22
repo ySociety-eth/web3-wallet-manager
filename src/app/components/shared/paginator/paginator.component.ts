@@ -1,9 +1,9 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, computed, effect, ElementRef, HostListener, inject, input, OnChanges, output, Signal, signal, SimpleChanges, ViewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, effect, ElementRef, inject, input, OnChanges, output, signal, SimpleChanges, ViewChild } from '@angular/core';
 import { NgxMaskDirective } from 'ngx-mask';
 import { FormsModule } from '@angular/forms';
-import { popIn } from '../../../animations/default-transitions.animations';
 import { DocumentListenerService } from '../../../services/document-listener.service';
+import { createAnimation } from '../../../animations/default-transitions.animations';
 
 @Component({
   selector: 'paginator',
@@ -11,8 +11,8 @@ import { DocumentListenerService } from '../../../services/document-listener.ser
   imports: [CommonModule, NgxMaskDirective, FormsModule],
   templateUrl: './paginator.component.html',
   styleUrl: './paginator.component.scss',
-  animations: [popIn],
-  // changeDetection: ChangeDetectionStrategy.OnPush
+  animations: [createAnimation('selectorPopIn', { animateX: true, duration: '200ms', transform: 'scale(.5) translate(-100%, -50%)' })],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export default class PaginatorComponent implements OnChanges {
   //injections

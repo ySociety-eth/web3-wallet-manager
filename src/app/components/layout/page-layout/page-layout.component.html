@@ -5,7 +5,7 @@
         @if (smallScreen === true && isCollapsed === true) {
             <!-- it will not display sidebar -->
         } @else {
-            <app-sidebar [sidebarSections]="sidebarSections()" @queryAnimations></app-sidebar>
+            <app-sidebar [sidebarSections]="sidebarSections()" @queryAnimationSidebar></app-sidebar>
         }
         <div class="border-l border-t border-border flex-1 transition-all duration-300
         bg-background overflow-auto"

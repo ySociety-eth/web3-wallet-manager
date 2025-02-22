@@ -4,13 +4,13 @@ import { SidebarComponent } from './sidebar/sidebar.component';
 import { TopBarComponent } from "./top-bar/top-bar.component";
 import { PageLayoutService } from './page-layout.service';
 import { SidebarSections } from '../../../models/navbar-items.interface';
-import { queryAnimations } from '../../../animations/default-transitions.animations';
+import { createQueryAnimations } from '../../../animations/default-transitions.animations';
 
 @Component({
   selector: 'app-page-layout',
   imports: [CommonModule, SidebarComponent, TopBarComponent],
   templateUrl: './page-layout.component.html',
-  animations: [queryAnimations]
+  animations: [createQueryAnimations('queryAnimationSidebar', '@navbarSlideInOut')]
 })
 export class PageLayoutComponent{
   private pageLayoutService = inject(PageLayoutService);

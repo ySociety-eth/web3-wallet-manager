@@ -2,7 +2,7 @@ import { AfterViewInit, ChangeDetectionStrategy, Component, computed, ContentChi
 import { CommonModule, DatePipe } from '@angular/common';
 import { DataTableColumn } from '../../../models/tables.interface';
 import { InteractiveElementDirective } from '../../../directives/accessibility/interactive-element.directive';
-import { popIn, queryAnimations } from '../../../animations/default-transitions.animations';
+import { createAnimation, createQueryAnimations } from '../../../animations/default-transitions.animations';
 import { TruncatePipe } from '../../../pipes/formatting/truncate.pipe';
 import { CopyToClipboardComponent } from '../copy-to-clipboard/copy-to-clipboard.component';
 import { ClipboardModule } from '@angular/cdk/clipboard';
@@ -27,7 +27,11 @@ import { TableSkeletonService } from './table-skeleton.service';
       overflow: auto;
     }
     `,
-  animations: [popIn, queryAnimations],
+  animations: [
+    createAnimation('slideXTableElement', { animateX: true, duration: '400ms', transform: 'scale(.4)' }),
+    createAnimation('slideXSortIcon', { animateX: true, duration: '200ms', transform: 'scale(0) translateX(-30px)' }),
+    createQueryAnimations('queryAnimationsDataTable', '@slideXTableElement, @slideXSortIcon')
+  ],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class DataTableComponent implements AfterViewInit {

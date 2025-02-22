@@ -39,7 +39,7 @@
 </div>
 
 @if (showPageSelector()) {
-    <div #pageSelector class="select" [@popIn]="{ value: '', params: { duration: '175ms', width: 0, transform: 'translate(-50%, -20%) scale(0.6)' } }">
+    <div #pageSelector class="select" @selectorPopIn>
         <div class="select__header">
             <h2>Select Page:</h2>
             <input #pageSelectorInput type="tel" [placeholder]="1 + '-' + limit()" mask="0000"

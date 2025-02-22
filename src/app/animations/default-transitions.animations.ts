@@ -1,43 +1,7 @@
 import { animate, animateChild, group, query, state, style, transition, trigger } from "@angular/animations";
 
-export const popIn = trigger('popIn', [
-    state('void', style({
-        padding: 0,
-        margin: 0,
-        width: '{{width}}',
-        minWidth: '{{width}}',
-        height: '{{height}}',
-        minHeight: '{{height}}',
-        transform: '{{transform}}',
-        opacity: 0
-    }),
-        { params: { height: 'auto', width: 'auto', transform: 'scale(0)' } }),
-
-    transition(':enter', [
-        style({
-            width: '{{width}}',
-            minWidth: '{{width}}',
-            height: '{{height}}',
-            minHeight: '{{height}}',
-            transform: '{{transform}}',
-        }),
-        animate('{{duration}} ease-in-out')
-    ],
-    { params: { duration: '200ms', height: 'auto', width: 'auto', transform: 'scale(0)' } }),
-    
-    transition(':leave', [
-        animate('{{duration}} ease-in-out')
-    ],
-    { params: { duration: '200ms' } })
-]);
-//use this in the template like this:
-//[@popIn]="{ value: '', params: { duration: '200ms', width: 0}}"
-//width:0 will animate width, also for height: 0
-
-
 //================================================= SLIDE =======================================================
-
-export function slideAnimation(triggerName: string, 
+export function createAnimation(triggerName: string, 
   params: { duration?: string, animateY?:boolean, animateX?:boolean, transform?:string, opacity?:string }) {
   const animateY = params.animateY ? { height: 0, minHeight: 0, paddingTop: 0, marginTop: 0, paddingBottom: 0, marginBottom: 0 } : { }
   const animateX = params.animateX ? { width: 0, minWidth: 0, paddingRight: 0, marginRight: 0, paddingLeft: 0, marginLeft: 0 } : { }
@@ -53,20 +17,15 @@ export function slideAnimation(triggerName: string,
     ),
     transition(':enter, :leave', animate(params.duration ? `${params.duration} ease-in-out` : '200ms ease-in-out'))
   ])
-  
 }
 //================================================= END SLIDE =======================================================
-
-
-
-
-
-export const queryAnimations = [
-    trigger('queryAnimations', [
-      transition(':leave', [
-        group([
-          query('@popIn, @navbarSidebarSlideInOutAnimation', animateChild(), { optional: true }),
-        ])
+type queryAnimationTriggerFormat = `queryAnimations${string}` | `queryAnimation${string}` ;
+export function createQueryAnimations(triggerName: queryAnimationTriggerFormat, triggersToAnimate: string) {
+  return trigger(triggerName, [
+    transition(':leave', [
+      group([
+        query(triggersToAnimate, animateChild(), { optional: true }),
       ])
     ])
-  ];
+  ])
+}

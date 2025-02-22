@@ -1,4 +1,4 @@
-<aside class="transition-all duration-300 overflow-hidden h-full bg-mutedDark" @navbarSidebarSlideInOutAnimation
+<aside class="transition-all duration-300 overflow-hidden h-full bg-mutedDark" @navbarSlideInOut
 [ngClass]="[isCollapsed ? 'w-16' : 'w-64',
  smallScreen ? 'absolute border-r border-r-border' : 'relative']" 
 (mouseenter)="isCollapsed ? onMouseEnterSidebar() : null"
@@ -24,7 +24,7 @@
                 <!-- empty -->
             }@else {
                 <!-- sidebar items -->
-                <ul class="flex flex-col gap-1 overflow-hidden" @navbarItemCollapseAnimation>
+                <ul class="flex flex-col gap-1 overflow-hidden" @navbarItemCollapseExpand>
                     @for (item of section.items ; track $index) {
                         <li class="pr-4 pl-5 py-2 rounded-r-2xl flex gap-3 items-center cursor-pointer hover:bg-accent hover:text-accentForeground transition-all"
                         [ngClass]="{

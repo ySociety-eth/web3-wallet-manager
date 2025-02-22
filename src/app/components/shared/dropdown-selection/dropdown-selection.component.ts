@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { AfterViewInit, ChangeDetectionStrategy, Component, computed, effect, ElementRef, input, output, signal, ViewChild } from '@angular/core';
 import { DocumentListenerService } from '../../../services/document-listener.service';
-import { slideAnimation } from '../../../animations/default-transitions.animations';
+import { createAnimation } from '../../../animations/default-transitions.animations';
 
 export interface DropdownListOptions{
   name: string,
@@ -19,7 +19,7 @@ export interface DropdownListOptions{
   imports: [CommonModule],
   templateUrl: './dropdown-selection.component.html',
   styleUrl: './dropdown-selection.component.scss',
-  animations: [ slideAnimation('slideDropdown', { duration: '200ms', animateY: true, transform: 'scale(.8) translateY(-10px)' }) ],
+  animations: [ createAnimation('slideDropdown', { duration: '200ms', animateY: true, transform: 'scale(.8) translateY(-10px)' }) ],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 
