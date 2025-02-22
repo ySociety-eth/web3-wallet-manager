@@ -3,7 +3,7 @@
         <tr class="bg-card text-sm text-mutedForegroundNeutral whitespace-nowrap" @queryAnimationsDataTable>
             @for (column of columns(); track $index) {    
                 <th class="py-3 px-2 first:pl-3 last:pr-3 font-semibold select-none
-                transition-colors" [interactiveElement]="column.sort !== 'unavailable'" @slideXTableElement
+                transition-colors" [interactiveElement]="column.sort !== 'unavailable'" @slideXTableElement [@.disabled]="false"
                 [ngClass]="{'hover:text-accentForeground focus:text-accentForeground hover:cursor-pointer': column.sort !== 'unavailable',
                     'text-accentForeground': column.sort !== 'unavailable' && column.sort !== 'none',
                 }"
@@ -23,84 +23,91 @@
         </tr>
     </thead>
     <tbody>
-        @for (row of displayedRows(); track $index) {
-            <tr class="border-b border-border last:border-b-0">
-                @for (column of columns(); track $index) {
-                    <td class="py-3 px-2 first:pl-3 last:pr-3 max-w" @queryAnimationsDataTable> 
-                        <!-- data of row -->
-                        @if (column.useTemplate && templateMap[column.property]) {
-                            @if(loadingData() === true || firstLoad()) {
-                                <!-- skeleton span -->
-                                <span class="inline-block animate-pulse bg-muted text-muted rounded-md min-w-28 min-h-7" @slideXTableElement>
-                                    A
-                                </span>
-                            } @else {
-                                 <!-- render the custom template -->
-                                  <div class="inline-block" @slideXTableElement>
-                                      <ng-container
-                                         *ngTemplateOutlet="templateMap[column.property]; context: { $implicit: row[column.property] }"
-                                      ></ng-container>
-                                  </div>
-                             }
-                            
-                        }@else {
-                            <!-- render the default template -->
-                            <div class="flex items-center gap-1">
-                                <!-- skeleton -->
-                                @if (loadingData() === true || firstLoad()) {
-                                    <span class="inline-block animate-pulse bg-muted text-muted rounded-md min-h-7"
-                                    [ngClass]="column.truncate || column.isTimestamp ? 'min-w-28' : 'min-w-44'" @slideXTableElement> <!-- smaller width when element data is truncated or a timestamp -->
+        @for (row of displayedRows(); track $index; let rowIndex = $index) {
+            <tr class="border-b border-border last:border-b-0" [attr.data-index]="rowIndex">
+            <!-- defer to lazyload the table data  -->
+            @defer (on viewport) { 
+                    @for (column of columns(); track $index) {
+                        <td class="py-3 px-2 first:pl-3 last:pr-3 max-w" @queryAnimationsDataTable [@.disabled]="!rowsOnViewport().has(rowIndex)"> 
+                            <!-- data of row -->
+                            @if (column.useTemplate && templateMap[column.property]) {
+                                @if(loadingData() === true || firstLoad()) {
+                                    <!-- skeleton span -->
+                                    <span class="inline-block animate-pulse bg-muted text-muted rounded-md min-w-28 min-h-7" @slideXTableElement [@.disabled]="!rowsOnViewport().has(rowIndex)">
                                         A
                                     </span>
-                                    <span *ngIf="column.copyToClipboard" class="inline-block animate-pulse bg-muted text-muted rounded-md min-w-6 min-h-7" @slideXTableElement>
-                                        A
-                                    </span>
-                                }@else {
-                                    @if(column.href) {
-                                        <!-- common span -->
-                                            <a class="gb_a px-1 rounded border border-dashed transition-all whitespace-nowrap min-h-7" @slideXTableElement
-                                            [href]="column.href(row[column.property]) || null" [target]="column.hrefTarget || '_self'" rel="noopener noreferrer"
-                                            [matTooltip]="column.truncate ? row[column.property] : null"
-                                            [ngClass]="highlightedData() == row[column.property] && column.highlighData ? 'border-primary/50 bg-primary/15' : 'border-transparent'"
-                                            (mouseenter)="setHighlightData(row[column.property])"
-                                            (mouseleave)="clearHighlightData()">
-                                            @if(column.truncate){
-                                                <!-- truncate the string to middle format or end format, end format receives a length value on column.truncate[0] -->
-                                                    {{column.truncate === 'middle' ? (row[column.property] | truncate) : (row[column.property] | truncate:column.truncate[0]:column.truncate[1])}}
+                                } @else {
+                                     <!-- render the custom template -->
+                                      <div class="inline-block" @slideXTableElement [@.disabled]="!rowsOnViewport().has(rowIndex)">
+                                          <ng-container
+                                             *ngTemplateOutlet="templateMap[column.property]; context: { $implicit: row[column.property] }"
+                                          ></ng-container>
+                                      </div>
+                                 }
+                                
+                            }@else {
+                                <!-- render the default template -->
+                                <div class="flex items-center gap-1">
+                                    <!-- skeleton -->
+                                    @if (loadingData() === true || firstLoad()) {
+                                        <span class="inline-block animate-pulse bg-muted text-muted rounded-md min-h-7"
+                                        [ngClass]="column.truncate || column.isTimestamp ? 'min-w-28' : 'min-w-44'" @slideXTableElement [@.disabled]="!rowsOnViewport().has(rowIndex)"> <!-- smaller width when element data is truncated or a timestamp -->
+                                            A
+                                        </span>
+                                        <span *ngIf="column.copyToClipboard" class="inline-block animate-pulse bg-muted text-muted rounded-md min-w-6 min-h-7" @slideXTableElement [@.disabled]="!rowsOnViewport().has(rowIndex)">
+                                            A
+                                        </span>
+                                    }@else {
+                                        @if(column.href) {
+                                            <!-- common span -->
+                                                <a class="gb_a px-1 rounded border border-dashed transition-all whitespace-nowrap min-h-7" @slideXTableElement [@.disabled]="!rowsOnViewport().has(rowIndex)"
+                                                [href]="column.href(row[column.property]) || null" [target]="column.hrefTarget || '_self'" rel="noopener noreferrer"
+                                                [matTooltip]="column.truncate ? row[column.property] : null"
+                                                [ngClass]="highlightedData() == row[column.property] && column.highlighData ? 'border-primary/50 bg-primary/15' : 'border-transparent'"
+                                                (mouseenter)="setHighlightData(row[column.property])"
+                                                (mouseleave)="clearHighlightData()">
+                                                @if(column.truncate){
+                                                    <!-- truncate the string to middle format or end format, end format receives a length value on column.truncate[0] -->
+                                                        {{column.truncate === 'middle' ? (row[column.property] | truncate) : (row[column.property] | truncate:column.truncate[0]:column.truncate[1])}}
+                                                }@else {
+                                                        <!-- returns raw data -->
+                                                        {{row[column.property]}}
+                                                    }
+                                                </a>
                                             }@else {
-                                                    <!-- returns raw data -->
-                                                    {{row[column.property]}}
-                                                }
-                                            </a>
-                                        }@else {
-                                            <!-- anchor link -->
-                                            <span class="px-1 rounded border border-dashed transition-all whitespace-nowrap min-h-7" @slideXTableElement
-                                            [matTooltip]="column.truncate ? row[column.property] : (column.isTimestamp ? (row[column.property] | dateFormat) : null)"
-                                            [ngClass]="highlightedData() == row[column.property] && column.highlighData ? 'border-primary/50 bg-primary/15' : 'border-transparent'"
-                                            (mouseenter)="setHighlightData(row[column.property])"
-                                            (mouseleave)="clearHighlightData()">
-                                            @if(column.truncate){
-                                                <!-- truncate the string to middle format or end format, end format receives a length value on column.truncate[0] -->
-                                                    {{ column.truncate === 'middle' ? (row[column.property] | truncate) : (row[column.property] | truncate:column.truncate[0]:column.truncate[1]) }}
-                                            }@else if(column.isTimestamp) {
-                                                    <!-- timestamp formated -->
-                                                    {{row[column.property] | timeAgo: updatedTime() }}
-                                            }@else {
-                                                    <!-- returns raw data -->
-                                                    {{ row[column.property] }}
-                                                }
-                                            </span>
+                                                <!-- anchor link -->
+                                                <span class="px-1 rounded border border-dashed transition-all whitespace-nowrap min-h-7" @slideXTableElement [@.disabled]="!rowsOnViewport().has(rowIndex)"
+                                                [matTooltip]="column.truncate ? row[column.property] : (column.isTimestamp ? (row[column.property] | dateFormat) : null)"
+                                                [ngClass]="highlightedData() == row[column.property] && column.highlighData ? 'border-primary/50 bg-primary/15' : 'border-transparent'"
+                                                (mouseenter)="setHighlightData(row[column.property])"
+                                                (mouseleave)="clearHighlightData()">
+                                                @if(column.truncate){
+                                                    <!-- truncate the string to middle format or end format, end format receives a length value on column.truncate[0] -->
+                                                        {{ column.truncate === 'middle' ? (row[column.property] | truncate) : (row[column.property] | truncate:column.truncate[0]:column.truncate[1]) }}
+                                                }@else if(column.isTimestamp) {
+                                                        <!-- timestamp formated -->
+                                                        {{row[column.property] | timeAgo: updatedTime() }}
+                                                }@else {
+                                                        <!-- returns raw data -->
+                                                        {{ row[column.property] }}
+                                                    }
+                                                </span>
+                                            }
+                                            <!-- copy to clipboard icon -->
+                                        @if(column.copyToClipboard === true) {
+                                            <button copy-to-clipboard [value]="row[column.property]" @slideXTableElement [@.disabled]="!rowsOnViewport().has(rowIndex)"></button>
                                         }
-                                        <!-- copy to clipboard icon -->
-                                    @if(column.copyToClipboard === true) {
-                                        <button copy-to-clipboard [value]="row[column.property]" @slideXTableElement></button>
                                     }
-                                }
-                            </div>
-                        }
+                                </div>
+                            }
+                        </td>
+                    }
+                } @placeholder {
+                    <td class="py-3 px-2 first:pl-3 last:pr-3 max-w">
+                        <span class="block min-w-28 min-h-7"></span>
                     </td>
                 }
             </tr>
-        }
+            }
     </tbody>
 </table>

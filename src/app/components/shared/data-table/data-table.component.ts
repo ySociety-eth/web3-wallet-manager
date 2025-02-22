@@ -1,4 +1,4 @@
-import { AfterViewInit, ChangeDetectionStrategy, Component, computed, ContentChildren, effect, inject, input, NgZone, output, QueryList, signal, TemplateRef } from '@angular/core';
+import { AfterViewInit, ChangeDetectionStrategy, Component, computed, ContentChildren, effect, ElementRef, inject, input, NgZone, OnInit, output, QueryList, signal, TemplateRef } from '@angular/core';
 import { CommonModule, DatePipe } from '@angular/common';
 import { DataTableColumn } from '../../../models/tables.interface';
 import { InteractiveElementDirective } from '../../../directives/accessibility/interactive-element.directive';
@@ -34,9 +34,10 @@ import { TableSkeletonService } from './table-skeleton.service';
   ],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class DataTableComponent implements AfterViewInit {
+export class DataTableComponent implements AfterViewInit, OnInit {
   //injections
   protected updatedTimeService = inject(UpdatedTimeService);
+  private el = inject(ElementRef);
   private tableSortService = inject(TableSortService);
   private tableSkeletonService = inject(TableSkeletonService)
   private zone = inject(NgZone);
@@ -53,10 +54,11 @@ export class DataTableComponent implements AfterViewInit {
   protected highlightedData = signal<string | null>(null);
   protected updatedTime = this.updatedTimeService.getTimeNow();
   protected loadingData = computed(()=> { if(this.rows()?.length === 0) { return true; } return false }) // return true if rows signal has empty value
+  protected rowsOnViewport = signal<Set<number>>(new Set());
   //content children
   @ContentChildren(DataTableTemplateComponent) templates?: QueryList<DataTableTemplateComponent>;
   templateMap: { [key: string]: TemplateRef<any> } = {}
-  
+
   ngAfterViewInit(): void {
     if (this.firstLoad() === true) {
       this.zone.runOutsideAngular(() => { // avoid website from freezing when using setTimeout
@@ -68,7 +70,12 @@ export class DataTableComponent implements AfterViewInit {
     }
   }
 
-
+  ngOnInit(): void {
+    if(typeof window !== 'undefined'){
+      this.setupIntersectionObserver();
+    }
+  }
+  
   sort(column: DataTableColumn) {
     this.tableSortService.handleSort(column, this.columns());
     this.sorted.emit(column);
@@ -100,5 +107,30 @@ export class DataTableComponent implements AfterViewInit {
       return this.rows()?.slice(0, this.limit()) || []; //set rows and slice it to limit size
     }
   }
-  
+
+  // track rows through data-index, adding the intersected rows to signal rowsOnViewport
+  // inside html template it will disable row animation if the row is not in viewport
+  setupIntersectionObserver() { 
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        const index = Number(entry.target.getAttribute('data-index') || '0');
+        this.rowsOnViewport.update(loaded => {
+          if(entry.isIntersecting){
+            loaded.add(index);
+          } else {
+            loaded.delete(index);
+          }
+          return new Set(loaded);
+        })
+      })
+    });
+
+    const hostElement = this.el.nativeElement as HTMLElement;
+    const elementsToObserve = hostElement.querySelectorAll('[data-index]');
+
+    elementsToObserve.forEach(element => {
+      observer.observe(element);
+    });
+  }
+
 }
