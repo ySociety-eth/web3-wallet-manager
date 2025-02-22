@@ -1,6 +1,6 @@
 import { animate, animateChild, group, query, state, style, transition, trigger } from "@angular/animations";
 
-//================================================= SLIDE =======================================================
+//================================================= CREATE ANIMATION =======================================================
 export function createAnimation(triggerName: string, 
   params: { duration?: string, animateY?:boolean, animateX?:boolean, transform?:string, opacity?:string }) {
   const animateY = params.animateY ? { height: 0, minHeight: 0, paddingTop: 0, marginTop: 0, paddingBottom: 0, marginBottom: 0 } : { }
@@ -18,7 +18,9 @@ export function createAnimation(triggerName: string,
     transition(':enter, :leave', animate(params.duration ? `${params.duration} ease-in-out` : '200ms ease-in-out'))
   ])
 }
-//================================================= END SLIDE =======================================================
+//================================================= END CREATE ANIMATION ===================================================
+
+//=============================== CREATE QUERY ANIMATIONS ================================
 type queryAnimationTriggerFormat = `queryAnimations${string}` | `queryAnimation${string}` ;
 export function createQueryAnimations(triggerName: queryAnimationTriggerFormat, triggersToAnimate: string) {
   return trigger(triggerName, [
@@ -29,3 +31,4 @@ export function createQueryAnimations(triggerName: queryAnimationTriggerFormat, 
     ])
   ])
 }
+//=============================== END CREATE QUERY ANIMATIONS ================================

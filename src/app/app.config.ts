@@ -9,12 +9,14 @@ import { provideAnimationsAsync } from '@angular/platform-browser/animations/asy
 import { provideEnvironmentNgxMask } from 'ngx-mask';
 
 export const appConfig: ApplicationConfig = {
-  providers: [provideZoneChangeDetection({ eventCoalescing: true }),
-  provideRouter(routes),
-  provideClientHydration(withEventReplay()),
-  importProvidersFrom(BrowserAnimationsModule),
-  provideHttpClient(withFetch()),
-  provideAnimations(),
-  provideAnimationsAsync(),
-  provideEnvironmentNgxMask()]
+  providers: [
+    provideZoneChangeDetection({ eventCoalescing: true }),
+    provideRouter(routes),
+    provideClientHydration(withEventReplay()),
+    importProvidersFrom(BrowserAnimationsModule),
+    provideHttpClient(withFetch()),
+    provideAnimations(),
+    provideAnimationsAsync(),
+    provideEnvironmentNgxMask(),
+  ]
 };
