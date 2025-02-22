@@ -56,12 +56,20 @@ export class CustomTableComponent implements OnInit, OnChanges {
     }
     const data$ = activeItem!.loadData;
     this.currentTable.set( {...activeItem!, dataTableRow: [] }) // it will sets an empty tableRow, displaying an empty table while api is requested
+    let limit = 0;
+    this.limit.update((currentLimit)=> {
+      limit = currentLimit; // store current limit
+      return 10; // set limit to 10
+    })
     data$.subscribe(
       {
         next: (data) => {
             const updatedItem = { ...activeItem!, dataTableRow: data } // creates a new object with updated data so signals can detect changes
             if(this.currentTable()?.key === updatedItem.key) { // avoid updating table if user has changed active item
               this.currentTable.set(updatedItem);
+              setTimeout(() => {
+                this.limit.set(limit); // set limit back to stored limit
+              }, 500);
             }
         }
       }
