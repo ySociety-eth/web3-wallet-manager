@@ -3,7 +3,7 @@
         <tr class="bg-card text-sm text-mutedForegroundNeutral whitespace-nowrap" @queryAnimationsDataTable>
             @for (column of columns(); track $index) {    
                 <th class="py-3 px-2 first:pl-3 last:pr-3 font-semibold select-none
-                transition-colors" [interactiveElement]="column.sort !== 'unavailable'" @slideXTableElement [@.disabled]="false"
+                transition-colors" [interactiveElement]="column.sort !== 'unavailable'" @slideXTableElement [@.disabled]="firstLoad()"
                 [ngClass]="{'hover:text-accentForeground focus:text-accentForeground hover:cursor-pointer': column.sort !== 'unavailable',
                     'text-accentForeground': column.sort !== 'unavailable' && column.sort !== 'none',
                 }"
@@ -104,7 +104,7 @@
                     }
                 } @placeholder {
                     <td class="py-3 px-2 first:pl-3 last:pr-3 max-w">
-                        <span class="block min-w-28 min-h-7"></span>
+                        <span class="block min-h-7"></span>
                     </td>
                 }
             </tr>

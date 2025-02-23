@@ -20,15 +20,9 @@ import { TableSkeletonService } from './table-skeleton.service';
    MatTooltipModule, TimeAgoPipe, DateFormatPipe ],
   providers: [DatePipe],
   templateUrl: './data-table.component.html',
-  styles: `
-    :host {
-      display: block;
-      max-width: 100%;
-      overflow: auto;
-    }
-    `,
+  styleUrl: './data-table.component.scss',
   animations: [
-    createAnimation('slideXTableElement', { animateX: true, duration: '400ms', transform: 'scale(.4)' }),
+    createAnimation('slideXTableElement', { animateX: true, duration: '400ms', transform: 'scale(.1)' }),
     createAnimation('slideXSortIcon', { animateX: true, duration: '200ms', transform: 'scale(0) translateX(-30px)' }),
     createQueryAnimations('queryAnimationsDataTable', '@slideXTableElement, @slideXSortIcon')
   ],
@@ -65,7 +59,7 @@ export class DataTableComponent implements AfterViewInit, OnInit {
         setTimeout(() => {
           this.fillTemplates() // fill the templates here to avoid duplicate table data on skeleton rows
           this.zone.run(() => this.firstLoad.set(false)); // 
-        }, 1000);
+        }, 2000);
       });
     }
   }

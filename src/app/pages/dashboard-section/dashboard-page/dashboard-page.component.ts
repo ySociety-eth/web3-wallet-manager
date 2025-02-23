@@ -8,7 +8,6 @@ import { UserTransaction } from '../../../models/api/users.interface';
 import { map, shareReplay } from 'rxjs';
 import { UpdatedTimeService } from '../../../services/updated-time.service';
 import { CardComponent } from '../../../components/shared/cards/card/card/card.component';
-import { title } from 'node:process';
 import { DataTableTemplateComponent } from "../../../components/shared/data-table/template/data-table-template.component";
 
 @Component({

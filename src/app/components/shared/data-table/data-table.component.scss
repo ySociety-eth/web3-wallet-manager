@@ -1,0 +1,29 @@
+:host {
+    display: block;
+    max-width: 100%;
+    overflow-x: auto;
+    // Para navegadores baseados em WebKit (Chrome, Edge, Safari, Opera)
+    &::-webkit-scrollbar {
+      width: 10px;  // Largura do scrollbar vertical
+      height: 10px; // Altura do scrollbar horizontal
+    }
+
+    &::-webkit-scrollbar-track {
+      background: hsla(var(--muted)); // Cor de fundo do trilho da scrollbar
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background: #888; // Cor da barra do scrollbar
+      border-radius: 5px;
+      border: 2px solid hsla(var(--muted)); // Cria um espaçamento entre a barra e o trilho
+    }
+
+    &::-webkit-scrollbar-thumb:hover {
+      background: #555; // Cor ao passar o mouse
+    }
+
+    &::-webkit-scrollbar-corner {
+      background: transparent; // Remove a cor do canto entre os scrollbars
+    }
+
+  }
