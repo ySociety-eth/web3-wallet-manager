@@ -29,6 +29,7 @@ export class DropdownSelectionComponent implements AfterViewInit{
   public labelAfterSelect = input<string>();
   public items = input.required<DropdownListOptions[]>();
   public dropdownId = input.required<string>();
+  public disabled = input<boolean>(false);
   //output
   public clickedItem = output<DropdownListOptions>();
   //signals
@@ -61,6 +62,7 @@ export class DropdownSelectionComponent implements AfterViewInit{
   }
 
   openDropDown(){
+    if(this.disabled()) return;
     this.isExpanded.set(true);
     setTimeout(() => { // focus on the first item of the dropdown list
       const list = this.dropdownMenu.nativeElement as HTMLElement;
@@ -82,6 +84,7 @@ export class DropdownSelectionComponent implements AfterViewInit{
   }
 
   onclickItem(item: DropdownListOptions){
+    if(this.disabled()) return;
     this.clickedItem.emit(item); // when item clicked, parent will receive it and set the active item
     this.closeDropDown();
   }

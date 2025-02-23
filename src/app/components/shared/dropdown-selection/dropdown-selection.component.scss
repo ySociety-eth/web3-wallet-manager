@@ -22,7 +22,6 @@ $useBorder: false;
     position: relative;
 
     &__button {
-        cursor: pointer;
         line-height: 1;
         display: flex;
         align-items: center;
@@ -36,11 +35,19 @@ $useBorder: false;
         height: 100%;
         width: 100%;
         transition: all 150ms ease-in-out;
-        &:hover{ 
+        &:hover:not(:disabled){ 
+            cursor: pointer;
             background-color: hsla($button-bg-hover);
             color: hsla($button-fg-hover);
             .dropdown__arrow-down{
                 border-color: hsla($button-fg-hover);
+            }
+        }
+        &:disabled {
+            color: hsla($button-fg, 0.5);
+            cursor: not-allowed;
+            .dropdown__arrow-down{
+                border-color: hsla($button-fg, 0.5);
             }
         }
         // &[aria-expanded="true"] { //when the dropdown is open

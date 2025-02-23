@@ -1,5 +1,5 @@
 <!-- <div class="dropdown"> -->
-    <button #DropdownButton class="dropdown__button" type="button" 
+    <button #DropdownButton class="dropdown__button" type="button" [disabled]="disabled()"
     (click)="toggleDropDown()"
     [attr.aria-expanded]="isExpanded()"
     aria-haspopup="true"
