@@ -28,6 +28,7 @@
 dropdownId="transactionsTable"
 label="Manage rows"
 (clickedItem)="onDropdownItemClicked($event)"
+[disabled]="loadingTable()"
 >
 </dropdown-selection>
 </div>
