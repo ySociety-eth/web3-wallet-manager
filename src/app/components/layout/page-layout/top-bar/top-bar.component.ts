@@ -1,9 +1,10 @@
 import { Component } from '@angular/core';
 import { PageLayoutService } from '../page-layout.service';
+import { AppkitBtnComponent } from "../../../base/appkit-btn/appkit-btn.component";
 
 @Component({
   selector: 'app-top-bar',
-  imports: [],
+  imports: [AppkitBtnComponent],
   templateUrl: './top-bar.component.html',
 })
 export class TopBarComponent {
