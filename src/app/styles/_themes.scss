@@ -1,7 +1,7 @@
 :root {
     --radius: .5rem;
     color-scheme: dark;
-    // --test: hsl(280, 80%, 47%);
+    // --test: hsla(0, 0%, 93%, 0.171);
     --primary: 270, 70%, 57%;
     --primary-light: 270, 45%, 80%;
     --primary-lighter: 270, 45%, 90%;
@@ -17,4 +17,5 @@
     --muted-foreground-neutral: 270, 5%, 65%;
     --tooltip-background: 270, 7%, 15%;
     --tooltip-foreground: 270, 10%, 85%;
+    --backdrop: 0, 0%, 93%, 0.050;
 }
