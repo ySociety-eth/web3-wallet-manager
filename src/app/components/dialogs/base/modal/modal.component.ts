@@ -2,6 +2,7 @@ import { AfterViewInit, ChangeDetectionStrategy, Component, effect, ElementRef, 
 import { CommonModule } from '@angular/common';
 import { FocusTrapDirective } from '../../../../directives/accessibility/focus-trap.directive';
 import { DocumentListenerService } from '../../../../services/document-listener.service';
+import { createAnimation, createQueryAnimations } from '../../../../animations/default-transitions.animations';
 
 export type ModalSizeUnit = `${number}${'px' | 'em' | 'rem'}`;
 
@@ -9,9 +10,14 @@ export type ModalSizeUnit = `${number}${'px' | 'em' | 'rem'}`;
   selector: 'modal',
   standalone: true,
   imports: [CommonModule, FocusTrapDirective],
+  host: { '[@queryAnimationsModal]': '', class: 'modal' },
   templateUrl: './modal.component.html',
   styleUrl: './modal.component.scss',
-  animations: [],
+  animations: [
+    createAnimation('popUp', { duration: '200ms', transform: 'scale(.3)', opacity: '0' }),
+    createAnimation('fadeInOut', { duration: '250ms', opacity: '0' }),
+    createQueryAnimations('queryAnimationsModal', '@popUp, @fadeInOut')
+  ],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 

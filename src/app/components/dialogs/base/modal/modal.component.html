@@ -1,4 +1,4 @@
-<div class="modal" @parentAnimation>
+<!-- <div class="modal"> host div-->
     <div class="modal__content" @popUp focusTrap
     [ngStyle]="{'width': 'min(' + minWidth() + ', 100%)'}"
     [attr.role]="role()" [attr.aria-labelledby]="ariaLabelledBy()" [attr.aria-describedby]="ariaDescribedBy()"
@@ -7,4 +7,4 @@
         <ng-content></ng-content>
     </div>
     <div class="modal__backdrop" @fadeInOut (click)="onCloseModal.emit()"></div>
-</div>
+<!-- </div> -->
