@@ -1,0 +1,185 @@
+$foreground-color: var(--foreground);
+$background-color: var(--background);
+$label-color: var(--muted-foreground);
+$border-color: var(--input);
+$border-color-hover: var(--accent);
+$highlight-color: var(--ring);
+$danger-color: var(--destructive);
+$info-color: var(--primary);
+:host {
+    &.ng-invalid.ng-dirty .input-wrapper {
+        input {
+            outline: hsl($danger-color) solid 2px;
+            border-color: transparent;
+            &::placeholder {
+                color: hsl($danger-color / .45);
+            }
+            &:focus {
+                border-color: transparent;
+                outline-offset: 0;
+
+                & + .placeholder-title + .right-info {
+                    outline-color: transparent;
+                }
+            }
+        }
+        .placeholder-title {
+            color: hsl($danger-color);
+        }
+        .right-info {
+            background-color: hsl($danger-color);
+        }
+    }
+}
+
+:host{
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-size: .8em;
+
+    input{
+        color: hsl($foreground-color);
+        font-size: 1em;
+        border-radius: var(--radius);
+        border: 1px solid hsl($border-color);
+        padding: .75em 1.25em;
+        width: 100%;
+        background-color: hsl($background-color);
+        text-overflow: ellipsis;
+        outline: 1px solid transparent;
+        transition: all 150ms ease-in-out;
+        &::placeholder{
+            color: transparent;
+            transition: color 150ms ease-in-out 150ms;
+        }
+        &:hover:not(:focus, :disabled){
+            border-color: hsla($border-color-hover);
+        }
+        &:focus{
+            outline-color: hsla($highlight-color);
+            border-color: transparent;
+            &::placeholder {
+                color: hsla($highlight-color, .45);
+            }
+        }
+        &:disabled {
+            color: hsla($label-color, .65);
+            &+ .placeholder-title{
+                color: hsla($label-color, .5);
+            }
+        }
+    }
+
+    .placeholder-title{
+        position: absolute;
+        --padding: .3em;
+        padding-bottom: .3em;
+        white-space: nowrap;
+        padding-inline: var(--padding);
+        left: calc(1.25em - var(--padding));
+        top: .75em;
+        user-select: none;
+        pointer-events: none;
+        background-color: hsl($background-color);
+        border-radius: var(--radius);
+        color: hsla($label-color);
+        transition: color 150ms ease-in-out,
+         top 200ms ease-in-out,
+         transform 200ms ease-in-out,
+         padding-inline 200ms ease-in-out;
+    }
+    
+    input:focus + .placeholder-title, .placeholder-title.filled{
+        top: 0;
+        transform: translateY(-50%) scale(0.9);
+        padding-inline: .4em;
+    }
+
+    input:focus + .placeholder-title{
+        color: hsl($highlight-color);
+    }
+    
+
+    .show-password-btn{
+        cursor: pointer;
+        padding: .25em;
+        position: absolute;
+        right: 1.25em;
+        font-size: 1em;
+        background-color: transparent;
+        border: 0;
+        color: hsla($highlight-color, .3);
+        transition: color 150ms ease-in-out;
+        &:hover, .fi-br-eye-crossed{
+            color: hsl($highlight-color);
+        }
+    }
+
+    .right-info {
+        position: absolute;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding-inline: 1em;
+        background-color: hsla($info-color);
+        border-radius: 0 calc(var(--radius) / 1.07) calc(var(--radius) / 1.07) 0; // /1.2 to fit the outline input
+        right: 0;
+        top: 0;
+        height: 100%;
+        font-size: 1em;
+        color: hsla($foreground-color);
+        // outline: 2px solid transparent;
+        transition: all 150ms ease-in-out;
+    }
+
+    .invalid{
+        width: 100%;
+        font-size: .8em;
+        font-weight: 600;
+        color: hsla($danger-color);
+        position: relative;
+        // bottom: -1.4em;
+    }
+    .fi {
+        display: flex;
+    }
+}
+
+
+//remove default hide password button
+input[type="password"]::-webkit-credentials-auto-fill-button {
+    visibility: hidden;
+    display: none !important;
+}
+  input[type="password"]::-ms-reveal {
+    display: none;
+}
+
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none; /* Remove o estilo padrão */
+    margin: 0; /* Remove margens */
+}
+input[type="number"] {
+    -moz-appearance: textfield; /* Remove a aparência do campo de número */
+}
+
+p {
+    position: absolute;
+    // display: none;
+    left: 1.25em;
+    // user-select: none;
+}
+
+input[type="number"] {
+    padding-left: 3em !important;
+    caret-color: white;  
+    color: transparent !important;
+    user-select: none;
+    &::selection {
+        background-color: transparent;
+    }
+}
