@@ -1,0 +1,17 @@
+<modal role="dialog" (onCloseModal)="onCloseRegisterModal.emit()">
+    <form [formGroup]="registerForm" >
+        <custom-input class="login-modal__input"
+        [title]="'Usuário'"
+        [type]="'text'"
+        [id]="'registerWalletInput'"
+        [disabled]="true"
+        initialValue="0x1234567890"
+        />
+        <custom-input class="login-modal__input"
+        [title]="'Usuário'"
+        [type]="'text'"
+        formControlName="username"
+        [id]="'registerUsernameInput'"
+        />
+    </form>
+</modal>
