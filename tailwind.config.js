@@ -4,9 +4,18 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        primary: "hsla(var(--primary))",
-        primaryLight: "hsla(var(--primary-light))",
-        primaryLighter: "hsla(var(--primary-lighter))",
+        primary: {
+          DEFAULT: "hsla(var(--primary-500))",
+          100: "hsla(var(--primary-100))",
+          200: "hsla(var(--primary-200))",
+          300: "hsla(var(--primary-300))",
+          400: "hsla(var(--primary-400))",
+          500: "hsla(var(--primary-500))",
+          600: "hsla(var(--primary-600))",
+          700: "hsla(var(--primary-700))",
+          800: "hsla(var(--primary-800))",
+          900: "hsla(var(--primary-900))"
+        },
         background: "hsla(var(--background))",
         foreground: "hsla(var(--foreground))",
         accentForeground: "hsla(var(--accent-foreground))",

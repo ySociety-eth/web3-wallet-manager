@@ -1,11 +1,22 @@
 :root {
-    --radius: .5rem;
+    --radius: .75rem;
     color-scheme: dark;
-    --test: hsl(0, 56%, 53%);
+    --test: hwb(0 27% 21%);
+    //primary start
     --primary: 270, 70%, 57%;
-    --ring: 270, 70%, 57%;
+    --primary-100: 270, 70%, 97%;
+    --primary-200: 270, 70%, 87%;
+    --primary-300: 270, 70%, 77%;
+    --primary-400: 270, 70%, 67%;
+    --primary-500: 270, 70%, 57%; //base color
+    --primary-600: 270, 70%, 47%;
+    --primary-700: 270, 70%, 37%;
+    --primary-800: 270, 70%, 27%;
+    --primary-900: 270, 70%, 17%;
     --primary-light: 270, 45%, 80%;
     --primary-lighter: 270, 45%, 90%;
+    //primary end
+    --ring: 270, 70%, 57%;
     --background: 270, 10%, 3%;
     --foreground: 270, 5%, 90%;
     --card: 270, 8%, 13%;
