@@ -4,33 +4,38 @@ $label-color: var(--muted-foreground);
 $border-color: var(--input);
 $border-color-hover: var(--accent);
 $highlight-color: var(--ring);
-$danger-color: var(--destructive);
+$danger-color: var(--danger);
 $info-color: var(--primary);
-:host {
-    &.ng-invalid.ng-dirty .input-wrapper {
-        input {
-            outline: hsl($danger-color) solid 2px;
-            border-color: transparent;
-            &::placeholder {
-                color: hsl($danger-color / .45);
-            }
-            &:focus {
-                border-color: transparent;
-                outline-offset: 0;
 
-                & + .placeholder-title + .right-info {
-                    outline-color: transparent;
-                }
+:host.ng-invalid.ng-dirty {
+    input {
+        outline: hsl($danger-color) solid 1px;
+        border-color: transparent;
+        &:hover {
+            border-color: transparent;
+        }
+        &:focus {
+            border-color: transparent;
+            outline-offset: 0;
+            &::placeholder {
+                color: hsla($danger-color, .45);
             }
-        }
-        .placeholder-title {
-            color: hsl($danger-color);
-        }
-        .right-info {
-            background-color: hsl($danger-color);
+            & + .placeholder-title + .right-info {
+                outline-color: transparent;
+            }
+            & + .placeholder-title {
+                color: hsl($danger-color);
+            }
         }
     }
+    .placeholder-title {
+        color: hsl($danger-color);
+    }
+    .right-info {
+        background-color: hsl($danger-color);
+    }
 }
+
 
 :host{
     position: relative;
@@ -53,7 +58,7 @@ $info-color: var(--primary);
         transition: all 150ms ease-in-out;
         &::placeholder{
             color: transparent;
-            transition: color 150ms ease-in-out 150ms;
+            transition: color 150ms ease-in-out;
         }
         &:hover:not(:focus, :disabled){
             border-color: hsla($border-color-hover);
@@ -137,7 +142,7 @@ $info-color: var(--primary);
 
     .invalid{
         width: 100%;
-        font-size: .8em;
+        font-size: .9em;
         font-weight: 600;
         color: hsla($danger-color);
         position: relative;

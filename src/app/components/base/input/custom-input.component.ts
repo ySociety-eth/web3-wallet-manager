@@ -1,13 +1,13 @@
 import { CommonModule } from '@angular/common';
-import { AfterViewInit, Component, ElementRef, EventEmitter, Input, OnInit, Output, forwardRef, input } from '@angular/core';
+import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, EventEmitter, Input, OnInit, Output, forwardRef, input, signal } from '@angular/core';
 import { ControlValueAccessor, FormsModule, NG_VALUE_ACCESSOR, ReactiveFormsModule } from '@angular/forms';
 import { NgxMaskDirective } from 'ngx-mask';
 import { createAnimation } from '../../../animations/default-transitions.animations';
 type InputTypes = "text" | "email" | "password" | "date" | "search" | "tel" | "number";
-export interface CheckInput {
-  sourceElement: HTMLInputElement,
-  formControlName: string
-}
+// export interface CheckInput {
+//   sourceElement: HTMLInputElement,
+//   formControlName: string
+// }
 
 
 @Component({
@@ -26,68 +26,62 @@ export interface CheckInput {
   ],
   templateUrl: './custom-input.component.html',
   styleUrl: './custom-input.component.scss',
-  animations: [createAnimation('fadeInOut', { duration: '200ms', opacity: '0' })],
+  animations: [createAnimation('fadeInOut', { duration: '200ms', opacity: '0', animateY: true, transform: 'translateY(-100%)' })],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 
 
 export class CustomInputComponent implements ControlValueAccessor, OnInit, AfterViewInit {
-  @Input() type: InputTypes = "text";
-  @Input() title: string = "";
-  @Input() placeholder: string = "";
-  @Input() formControlName: string = '';
-  @Input() isInvalid: boolean = false;
-  @Input() rightInfo: boolean = false;
-  @Output() inputElement = new EventEmitter<CheckInput>;
-  @Input({ required: true }) id = '';
-  @Input() disabled: boolean = false;
+  type = input<InputTypes>("text");
+  title = input<string>("");
+  placeholder = input<string>("");
+  isInvalid = input<boolean>(false);
+  rightInfo = input<boolean>(false);
+  id = input.required<string>();
+  disabled = input<boolean>(false);
 
   //accessibility
-  @Input() ariaLabel: string = '';
-  @Input() ariaLabelledby: string = '';
-  @Input() ariaRequired: boolean = false;
+  ariaLabel = input<string>('');
+  ariaLabelledby = input<string>('');
+  ariaRequired = input<boolean>(false);
   
 
   //ngxmask inputs
-  @Input() dropSpecialCharacters: boolean = false;
-  @Input() mask: string = '';
-  @Input() prefix: string = '';
-  @Input() suffix: string = '';
+  mask = input<string>('');
+  prefix = input<string>('');
+  suffix = input<string>('');
   //input control
-  @Input() maxLength: number = 0;
-
-
+  maxLength = input<number>(0);
   hideShowPassword = input<boolean>(false);
-  passwordVisible: boolean = false;
-  inputErrorId: string = '';
   initialValue = input('');
-  value: string = ''
 
-  constructor(private element: ElementRef) { }
+  passwordVisible = signal<boolean>(false);
+  inputErrorId: string = '';
+  value = signal('');
 
   ngOnInit(): void {
-    this.inputErrorId = "input-error-" + this.id;
+    this.inputErrorId = "input-error-" + this.id();
   }
 
   ngAfterViewInit(): void {
-    this.value = this.initialValue();
-  }
-
-  get hasInvalidClass() { // REFACTOR THIS
-    return this.element.nativeElement.classList.contains('ng-invalid') && this.element.nativeElement.classList.contains('ng-dirty');
+    if(this.initialValue() !== '') {
+      setTimeout(() => {  // settTimetout to avoid ngxmask override the value
+        this.value.set(this.initialValue());
+      }, 0);
+    }
   }
 
   showPassword() {
-    this.passwordVisible = false;
+    this.passwordVisible.set(true);
   }
 
   hidePassword() {
-    this.passwordVisible = true;
+    this.passwordVisible.set(false);
   }
 
   togglePasswordVisibility() {
-    this.passwordVisible = !this.passwordVisible;
+    this.passwordVisible.update(visible => !visible);
   }
-  
 
   //NGVALUEACCESSOR
 
@@ -96,14 +90,14 @@ export class CustomInputComponent implements ControlValueAccessor, OnInit, After
 
   
   onInput(event: Event): void {
-    const value = (event.target as HTMLInputElement).value;
-    this.onChange(value);
+    const inputElementValue = (event.target as HTMLInputElement).value // get value from
+    this.onChange(inputElementValue);
     this.onTouched();
   }
 
   writeValue(value: any): void {
     setTimeout(() => { // settTimetout to avoid ngxmask override the value
-      this.value = value;
+      this.value.set(value);
     });
   }
   

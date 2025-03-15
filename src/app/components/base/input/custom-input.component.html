@@ -1,38 +1,37 @@
 <!-- <div class="input-wrapper"> -->
         <input
         #input
-        [disabled]="disabled"
-        [value]="value" [id]="id"
+        [disabled]="disabled()"
+        [value]="value()" [id]="id()"
         (input)="onInput($event)"
-        (input)="inputElement.emit({ sourceElement: input, formControlName: formControlName })"
-        [type]="passwordVisible ? 'text' : type"
-        [ngClass]="{'error': isInvalid}"
-        [placeholder]="placeholder"
-        [mask]="mask" [prefix]="prefix" [suffix]="suffix"
-        [dropSpecialCharacters]="dropSpecialCharacters"
-        [attr.maxLength]="maxLength ? maxLength : null"
-        [attr.aria-label]="ariaLabel || placeholder" [attr.aria-labelledby]="ariaLabelledby"
-        [attr.aria-describedby]="inputErrorId" [attr.aria-required]="ariaRequired"
-        [attr.aria-invalid]="hasInvalidClass"
-         />
+        [type]="passwordVisible() ? 'text' : type()"
+        [ngClass]="{'error': isInvalid()}"
+        [placeholder]="placeholder()"
+        [mask]="mask()" [prefix]="prefix()" [suffix]="suffix()"
+        [attr.maxLength]="maxLength() ? maxLength() : null"
+        [attr.aria-label]="ariaLabel() || placeholder()" [attr.aria-labelledby]="ariaLabelledby()"
+        [attr.aria-invalid]="isInvalid()"
+        [attr.aria-describedby]="inputErrorId" [attr.aria-required]="ariaRequired()"
+        />
+
          <!-- placeholder-title -->
-         <span [ngClass]="{'filled':input.value.length > 0}"
+         <span [ngClass]="{'filled': input.value.length > 0}"
           class="placeholder-title"
           >
-         {{title}}
+         {{title()}}
          </span>
 
          <!-- right info -->
-          @if (rightInfo) {
+          @if (rightInfo()) {
                 <div class="right-info">
                     <ng-content select="[right-info]"></ng-content>
                 </div>
           }
     
          <!-- show password icon -->
-         @if(!hideShowPassword() && type === "password"){
+         @if(!hideShowPassword() && type() === "password"){
              <button type="button" class="show-password-btn" (click)="togglePasswordVisibility()">
-                @if(passwordVisible){
+                @if(passwordVisible()){
                     <i class="fi fi-br-eye-crossed"></i>
                 }@else{
                     <i class="fi fi-br-eye"></i>
@@ -40,7 +39,7 @@
             </button>
          }
          <!-- text description on error  -->
-         @if(hasInvalidClass){
+         @if(isInvalid()){
              <div @fadeInOut class="invalid" aria-live="assertive" [id]="inputErrorId">
                 <ng-content select="[invalid]"></ng-content>
              </div>
