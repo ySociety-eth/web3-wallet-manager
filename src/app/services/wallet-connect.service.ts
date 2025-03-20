@@ -1,7 +1,8 @@
 import { Injectable, NgZone } from "@angular/core";
-import { createAppKit } from '@reown/appkit'
+import { AppKit, createAppKit, ModalControllerArguments } from '@reown/appkit'
 import { berachain } from '@reown/appkit/networks'
 import { WagmiAdapter } from '@reown/appkit-adapter-wagmi'
+import { EthersAdapter } from '@reown/appkit-adapter-ethers'
 
 
 @Injectable({
@@ -9,15 +10,17 @@ import { WagmiAdapter } from '@reown/appkit-adapter-wagmi'
 })
 export class WalletConnectService {
     readonly projectId = 'ed4df6855affb067866326a536a6421e'
-    
+    modal: AppKit | undefined;
     
     constructor(private ngZone: NgZone){
         this.ngZone.runOutsideAngular(() => {
             const networks = [berachain]
-            const adapter = new WagmiAdapter({
-                projectId: this.projectId,
-                networks: networks,
-            })
+
+            // ----------------------    wagmiAdapter version --------------------
+            // const adapter = new WagmiAdapter({ //wagmiAdapter version
+            //     projectId: this.projectId,
+            //     networks: networks,
+            // })
     
             const metadata = {
                 name: 'CryptoManager',
@@ -26,8 +29,8 @@ export class WalletConnectService {
                 icons: ['https://avatars.githubusercontent.com/u/179229932']
             }
             
-            const modal = createAppKit({
-                adapters: [adapter],
+            this.modal = createAppKit({
+                adapters: [new EthersAdapter()],
                 networks: [berachain],
                 metadata,
                 themeMode: 'dark',
@@ -40,7 +43,6 @@ export class WalletConnectService {
                 features: { analytics: true },
                 projectId: this.projectId,
             })
-        
         });
     }
 
