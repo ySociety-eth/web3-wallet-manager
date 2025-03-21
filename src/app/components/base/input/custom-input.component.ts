@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, EventEmitter, Input, OnInit, Output, forwardRef, input, signal } from '@angular/core';
+import { AfterViewInit, ChangeDetectionStrategy, Component, ElementRef, OnInit, ViewChild, effect, forwardRef, input, signal } from '@angular/core';
 import { ControlValueAccessor, FormsModule, NG_VALUE_ACCESSOR, ReactiveFormsModule } from '@angular/forms';
 import { NgxMaskDirective } from 'ngx-mask';
 import { createAnimation } from '../../../animations/default-transitions.animations';
@@ -39,6 +39,7 @@ export class CustomInputComponent implements ControlValueAccessor, OnInit, After
   rightInfo = input<boolean>(false);
   id = input.required<string>();
   disabled = input<boolean>(false);
+  @ViewChild('input') inputElementRef: ElementRef<HTMLInputElement> | undefined;
 
   //accessibility
   ariaLabel = input<string>('');
@@ -64,11 +65,16 @@ export class CustomInputComponent implements ControlValueAccessor, OnInit, After
   }
 
   ngAfterViewInit(): void {
-    if(this.initialValue() !== '') {
-      setTimeout(() => {  // settTimetout to avoid ngxmask override the value
-        this.value.set(this.initialValue());
-      }, 0);
-    }
+    setTimeout(() => { // setTimeout to avoid ngxmask override the value
+      this.inputElementRef!.nativeElement.value = this.initialValue();
+    });
+  }
+
+  constructor() {
+    effect(() => {
+      if(this.inputElementRef) this.inputElementRef.nativeElement.value = this.initialValue() // set the initial value if initialValue is setted after the component is initialized
+      this.value.set(this.initialValue());
+    })
   }
 
   showPassword() {
