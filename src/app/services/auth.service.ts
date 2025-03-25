@@ -1,7 +1,7 @@
 import { HttpClient } from "@angular/common/http";
 import { inject, Injectable } from "@angular/core";
 import { catchError, Observable, of, switchMap } from "rxjs";
-import { NonceResponse, ValidateSignatureResponse } from "../models/api/register.interface";
+import { NonceResponse, ValidateSignatureResponse } from "../models/api/auth.interface";
 import { EthersService } from "./ethers.service";
 import { LocalStorageService } from "./local-storage.service";
 
@@ -15,7 +15,7 @@ export class AuthService {
     private ethersService = inject(EthersService);
     private localStorageService = inject(LocalStorageService);
     private readonly url = "/api/auth"
-    
+
     // This method is responsible for generating a nonce for a given wallet address.
     public generateNonce(wallet: string): Observable<NonceResponse>{
         const body = { wallet: wallet };
