@@ -3,7 +3,7 @@
     [ngStyle]="{'width': 'min(' + minWidth() + ', 100%)'}"
     [attr.role]="role()" [attr.aria-labelledby]="ariaLabelledBy()" [attr.aria-describedby]="ariaDescribedBy()"
     [attr.aria-label]="ariaLabel()" aria-modal="true"> 
-    <button #ModalCloseButton class="close-sr-only" aria-label="Fechar modal" (keydown)="onKeydownClose($event)"></button>
+    <button #ModalCloseButton class="close-sr-only" aria-label="Close Modal" (keydown)="onKeydownClose($event)"></button>
         <ng-content></ng-content>
     </div>
     <div class="modal__backdrop" @fadeInOut (click)="onCloseModal.emit()"></div>
