@@ -1,6 +1,6 @@
 import { HttpClient } from "@angular/common/http";
 import { inject, Injectable } from "@angular/core";
-import { catchError, Observable, of, switchMap } from "rxjs";
+import { catchError, Observable, of, switchMap, throwError } from "rxjs";
 import { NonceResponse, ValidateSignatureResponse } from "../models/api/auth.interface";
 import { EthersService } from "./ethers.service";
 import { LocalStorageService } from "./local-storage.service";
@@ -17,13 +17,13 @@ export class AuthService {
     private readonly url = "/api/auth"
 
     // This method is responsible for generating a nonce for a given wallet address.
-    public generateNonce(wallet: string): Observable<NonceResponse>{
+    private generateNonce(wallet: string): Observable<NonceResponse>{
         const body = { wallet: wallet };
         return this.http.post<NonceResponse>(this.url + "/nonce", body);
     }
     
     // This method is responsible for validating the signature of a wallet address using a nonce.
-    public validateSignature(wallet: string, signature: string, nonce: number): Observable<ValidateSignatureResponse> {
+    private validateSignature(wallet: string, signature: string, nonce: number): Observable<ValidateSignatureResponse> {
         const body = { wallet: wallet, signature: signature, nonce: nonce };
         return this.http.post<ValidateSignatureResponse>(this.url + "/validate", body);
     }
@@ -33,7 +33,7 @@ export class AuthService {
     // and finally validates the signature with the server to obtain a token.
     // The token is then saved in local storage for future use.
     // It returns an observable that emits the token response or null in case of an error.
-    public generateToken(wallet: string): Observable<ValidateSignatureResponse | null> {
+    public generateToken(wallet: string): Observable<ValidateSignatureResponse> {
         return this.generateNonce(wallet).pipe(
             switchMap(nonceResponse => { // generate nonce
                 return this.ethersService.signMessage(nonceResponse.message).pipe( // sign message
@@ -48,8 +48,9 @@ export class AuthService {
                 );
             }),
             catchError(err => {
-                console.error(err);
-                return of(null); // Retorna null em caso de erro
+                console.error(err); // log error
+                this.localStorageService.removeToken(); // remove token from local storage in case of error
+                return throwError(() => new Error(err)); // handle error
             })
         );
     }
