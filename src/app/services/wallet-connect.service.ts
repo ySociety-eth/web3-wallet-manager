@@ -1,5 +1,5 @@
 import { Injectable, NgZone, signal } from "@angular/core";
-import { AppKit, createAppKit } from '@reown/appkit'
+import { AppKit, createAppKit, EventsControllerState } from '@reown/appkit'
 import { berachain } from '@reown/appkit/networks'
 import { EthersAdapter } from '@reown/appkit-adapter-ethers'
 
@@ -9,9 +9,12 @@ import { EthersAdapter } from '@reown/appkit-adapter-ethers'
 })
 export class WalletConnectService {
     readonly projectId = 'ed4df6855affb067866326a536a6421e'
-    modal: AppKit | undefined;
+    public modal: AppKit | undefined;
     private walletAddressSig = signal<string | undefined>(undefined);
-    public walletAddress = this.walletAddressSig.asReadonly();
+    private walletConnectEventsSig = signal<EventsControllerState | undefined>(undefined);
+    //
+    public $walletAddress = this.walletAddressSig.asReadonly();
+    public $walletConnectEvents = this.walletConnectEventsSig.asReadonly();
     
     constructor(private ngZone: NgZone){
         this.ngZone.runOutsideAngular(() => {
@@ -33,13 +36,20 @@ export class WalletConnectService {
                     '--w3m-color-mix-strength': 3,
                     '--w3m-border-radius-master': '3px'
                 },
-                features: { analytics: true },
+                features: { analytics: false },
                 projectId: this.projectId,
             })
             this.modal?.subscribeAccount(account => {
-                this.walletAddressSig.set(account.address)
+                this.walletAddressSig.set(account.address);
+            })
+            this.modal?.subscribeEvents(events => {
+                this.walletConnectEventsSig.set({ ...events }); // spread operator to create a new object and update the signal
             })
         });
+    }
+
+    public disconnect() {
+        this.modal?.disconnect();
     }
 
 
