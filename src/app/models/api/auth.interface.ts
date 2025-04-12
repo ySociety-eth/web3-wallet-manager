@@ -5,6 +5,7 @@ export interface NonceResponse {
 
 export interface ValidateSignatureResponse {
     token: string
+    registeredUser: boolean
 }
 
 export interface RegisterRequest {

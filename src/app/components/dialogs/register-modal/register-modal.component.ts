@@ -31,7 +31,7 @@ export class RegisterModalComponent{
   registerForm!: FormGroup<RegisterForm>;
   onCloseRegisterModal = output();
   isEmpty = signal(true);
-  walletAddress = computed(() => this.walletConnectService.walletAddress());
+  walletAddress = computed(() => this.walletConnectService.$walletAddress());
 
   constructor(private fb: FormBuilder) {
     this.registerForm = this.fb.group({
@@ -50,7 +50,7 @@ export class RegisterModalComponent{
       return
     }
     if(this.registerForm.valid) {
-      this.registerService.registerUser(this.walletAddress()!, this.registerForm.value.name, this.registerForm.value.email);
+      this.registerService.register(this.walletAddress()!, this.registerForm.value.name, this.registerForm.value.email);
     }
   }
 
