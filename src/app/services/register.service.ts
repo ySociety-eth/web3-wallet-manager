@@ -42,10 +42,12 @@ export class RegisterService {
     public register(wallet: string, name?: string, email?: string) {
         this.http.post(`${this.url}/register`, { wallet, name, email }).subscribe({
             next: (res) => {
+                this.registerModalService.clearError();
                 this.registerModalService.closeModal(); // Close the modal after successful registration
             },
             error: (err) => {
                 console.error(err);
+                this.registerModalService.setError(err.error.message); // Set error message in the modal service
             }
         })
     }

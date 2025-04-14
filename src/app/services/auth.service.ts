@@ -48,9 +48,9 @@ export class AuthService {
                 );
             }),
             catchError(err => {
-                console.error(err); // log error
+                console.error(err);
                 this.localStorageService.removeToken(); // remove token from local storage in case of error
-                return throwError(() => new Error(err)); // handle error
+                return throwError(() => new Error(err)); 
             })
         );
     }

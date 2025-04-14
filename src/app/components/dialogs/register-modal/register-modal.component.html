@@ -1,4 +1,9 @@
 <modal role="dialog" (onCloseModal)="onCloseRegisterModal.emit()">
+    @if (errorMessage) {
+        <div class="py-2 px-4 bg-danger/10 text-danger border border-danger mb-6 rounded-dft overflow-hidden overflow-ellipsis" @popUpError>
+            <h2>{{errorMessage}}</h2>
+        </div>
+    }
     <form [formGroup]="registerForm"
     class="flex flex-col gap-4"
     >

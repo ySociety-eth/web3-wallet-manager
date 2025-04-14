@@ -9,6 +9,8 @@ export class RegisterModalService {
   private walletConnectService = inject(WalletConnectService);
   private authService = inject(AuthService);
   private isModalOpen = signal(true);
+  private error = signal<string | null>(null);
+  public $error = this.error.asReadonly();
 
   constructor() { 
     effect(() => {
@@ -46,5 +48,16 @@ export class RegisterModalService {
 
   public toggleModal() {
     this.isModalOpen.update((isOpen) => !isOpen);
+  }
+
+  public setError(error: string | null) {
+    this.clearError(); // clear previous error so animation can be shown
+    setTimeout(() => { // set a timeout to show loading animation
+      this.error.set(error);
+    }, 200);
+  }
+
+  public clearError() {
+    this.error.set(null);
   }
 }

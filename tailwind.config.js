@@ -26,6 +26,7 @@ module.exports = {
         mutedForegroundNeutral: "hsla(var(--muted-foreground-neutral))",
         card: "hsla(var(--card))",
         border: "hsla(var(--border))",
+        danger: "hsla(var(--danger))",
       },
       borderRadius: {
         dft: '0.75rem'
