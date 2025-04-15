@@ -33,7 +33,7 @@
         </custom-input>
         <button customized-button class="mt-2"
         [variant]="isEmpty() ? 'outline' : 'contained'" 
-        type="submit" (click)="register()"
+        type="submit" (click)="isEmpty() ? close() : updateUser()"
         [disabled]="registerForm.invalid"
         >
             {{ isEmpty() ? 'Skip for now' : 'Register'}}

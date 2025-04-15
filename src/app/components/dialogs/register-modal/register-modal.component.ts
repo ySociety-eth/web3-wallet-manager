@@ -47,14 +47,18 @@ export class RegisterModalComponent{
     })
   }
 
-  register() {
+  updateUser() {
     if(!this.walletAddress()) {
       console.error("Invalid Wallet")
       return
     }
     if(this.registerForm.valid) {
-      this.registerService.register(this.walletAddress()!, this.registerForm.value.name, this.registerForm.value.email);
+      this.registerService.update(this.registerForm.value.name, this.registerForm.value.email);
     }
+  }
+
+  close() {
+    this.registerModalService.closeModal(); // close the modal
   }
 
 }

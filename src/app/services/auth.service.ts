@@ -36,11 +36,11 @@ export class AuthService {
     public generateToken(wallet: string): Observable<ValidateSignatureResponse> {
         return this.generateNonce(wallet).pipe(
             switchMap(nonceResponse => { // generate nonce
-                return this.ethersService.signMessage(nonceResponse.message).pipe( // sign message
+                return this.ethersService.signMessage(nonceResponse.data.message).pipe( // sign message
                     switchMap(signature => {
-                        return this.validateSignature(wallet, signature, nonceResponse.nonce).pipe(
+                        return this.validateSignature(wallet, signature, nonceResponse.data.nonce).pipe(
                             switchMap(tokenResponse => {
-                                this.localStorageService.saveToken(tokenResponse.token); // save token in local storage
+                                this.localStorageService.saveToken(tokenResponse.data.token); // save token in local storage
                                 return of(tokenResponse); // return token response
                             })
                         )

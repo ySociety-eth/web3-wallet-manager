@@ -1,11 +1,19 @@
 export interface NonceResponse {
+    status: string
     message: string,
-    nonce: number
+    data: {
+        message: string,
+        nonce: number
+    }
 }
 
 export interface ValidateSignatureResponse {
-    token: string
-    registeredUser: boolean
+    status: string
+    message: string,
+    data: {
+        token: string,
+        registeredUser: boolean
+    }
 }
 
 export interface RegisterRequest {
