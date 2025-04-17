@@ -16,11 +16,11 @@ export class CustomizedButtonComponent {
 
   
   contained = 
-    'bg-primary text-foreground ' + //base
-    'enabled:hover:bg-primary-600 ' + //hover
-    'disabled:opacity-40 disabled:bg-primary-700 disabled:text-primary-300 ' + //disabled
+    'bg-primary text-foreground border border-primary ' + //base
+    'enabled:hover:bg-primary-600 enabled:hover:border-primary-600 ' + //hover
+    'disabled:opacity-40 disabled:bg-primary-700 disabled:text-primary-300 disabled:border-primary-700 ' + //disabled
     'enabled:active:opacity-90'; //active
-
+    
   outline = 'border border-primary text-primary ' + //base
     'enabled:hover:bg-primary-600 enabled:hover:text-foreground enabled:hover:border-primary-600 ' + //hover 
     'disabled:opacity-30 ' + //disabled
