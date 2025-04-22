@@ -2,6 +2,7 @@ import { Injectable, NgZone, signal } from "@angular/core";
 import { AppKit, createAppKit, EventsControllerState } from '@reown/appkit'
 import { berachain } from '@reown/appkit/networks'
 import { EthersAdapter } from '@reown/appkit-adapter-ethers'
+import { getAddress } from "ethers"
 
 
 @Injectable({
@@ -40,7 +41,11 @@ export class WalletConnectService {
                 projectId: this.projectId,
             })
             this.modal?.subscribeAccount(account => {
-                this.walletAddressSig.set(account.address);
+                if (account.address) {
+                    this.walletAddressSig.set(getAddress(account.address)); // use utils.getAddress to ensure the address is checksummed
+                } else {
+                    this.walletAddressSig.set(undefined); // set to undefined if no address is returned
+                }
             })
             this.modal?.subscribeEvents(events => {
                 this.walletConnectEventsSig.set({ ...events }); // spread operator to create a new object and update the signal

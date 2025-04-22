@@ -1,9 +1,12 @@
 import { HttpClient } from "@angular/common/http";
-import { inject, Injectable } from "@angular/core";
+import { effect, inject, Injectable } from "@angular/core";
 import { catchError, Observable, of, switchMap, throwError } from "rxjs";
 import { NonceResponse, ValidateSignatureResponse } from "../models/api/auth.interface";
 import { EthersService } from "./ethers.service";
 import { LocalStorageService } from "./local-storage.service";
+import { WalletConnectService } from "./wallet-connect.service";
+import { User } from "./user.service";
+import { RegisterModalService } from "./register-modal.service";
 
 @Injectable(
     {
@@ -14,7 +17,19 @@ export class AuthService {
     private http = inject(HttpClient)
     private ethersService = inject(EthersService);
     private localStorageService = inject(LocalStorageService);
+    private walletConnectService = inject(WalletConnectService);
+    private userService = inject(User);
+    private registerModalService = inject(RegisterModalService);
     private readonly url = "/api/auth"
+
+    constructor() {
+        effect(() => {
+            const walletEvents = this.walletConnectService.$walletConnectEvents();
+            if (walletEvents?.data.event == "CONNECT_SUCCESS") {
+                this.authenticate(); // authenticate after wallet connect success
+            }
+        })
+    }
 
     // This method is responsible for generating a nonce for a given wallet address.
     private generateNonce(wallet: string): Observable<NonceResponse>{
@@ -23,8 +38,8 @@ export class AuthService {
     }
     
     // This method is responsible for validating the signature of a wallet address using a nonce.
-    private validateSignature(wallet: string, signature: string, nonce: number): Observable<ValidateSignatureResponse> {
-        const body = { wallet: wallet, signature: signature, nonce: nonce };
+    private validateSignature(id: string, wallet: string, signature: string, nonce: number): Observable<ValidateSignatureResponse> {
+        const body = { id, wallet, signature, nonce };
         return this.http.post<ValidateSignatureResponse>(this.url + "/validate", body);
     }
 
@@ -38,7 +53,7 @@ export class AuthService {
             switchMap(nonceResponse => { // generate nonce
                 return this.ethersService.signMessage(nonceResponse.data.message).pipe( // sign message
                     switchMap(signature => {
-                        return this.validateSignature(wallet, signature, nonceResponse.data.nonce).pipe(
+                        return this.validateSignature(nonceResponse.data.id, wallet, signature, nonceResponse.data.nonce).pipe(
                             switchMap(tokenResponse => {
                                 this.localStorageService.saveToken(tokenResponse.data.token); // save token in local storage
                                 return of(tokenResponse); // return token response
@@ -53,6 +68,23 @@ export class AuthService {
                 return throwError(() => new Error(err)); 
             })
         );
+    }
+
+    private authenticate() {
+        const walletAddress = this.walletConnectService.$walletAddress(); // get the wallet address from the wallet connect service
+        if(walletAddress) { // check if the address is not null
+          this.generateToken(walletAddress).subscribe({
+            next: (res) => {
+                if(res.data.registeredUser === false) {
+                    this.userService.register(res.data.id, walletAddress); // register the user if not registered
+                    this.registerModalService.openModal(); // open the modal so user can fill the optional fields
+                }
+            },
+            error: (err) => {
+              this.walletConnectService.disconnect(); // disconnect the wallet if there is an error
+            }
+          })
+        }
     }
 
 

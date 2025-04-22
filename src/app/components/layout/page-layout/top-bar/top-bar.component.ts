@@ -8,6 +8,7 @@ import { AppkitBtnComponent } from "../../../base/appkit-btn/appkit-btn.componen
   templateUrl: './top-bar.component.html',
 })
 export class TopBarComponent {
+  
   constructor(private pageLayoutService: PageLayoutService) {
   
   }

@@ -1,14 +1,10 @@
-import { effect, inject, Injectable, Signal, signal } from '@angular/core';
-import { WalletConnectService } from './wallet-connect.service';
-import { AuthService } from './auth.service';
+import { Injectable, Signal, signal } from '@angular/core';
 
 @Injectable({
   providedIn: 'root'
 })
 export class RegisterModalService {
-  private walletConnectService = inject(WalletConnectService);
-  private authService = inject(AuthService);
-  private isModalOpen = signal(true);
+  private isModalOpen = signal(false);
   private error = signal<string | null>(null);
   public $error = this.error.asReadonly();
 

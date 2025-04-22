@@ -7,7 +7,7 @@ import { RegisterForm } from '../../../models/register-form.interface';
 import { CustomizedButtonComponent } from '../../base/customized-button/customized-button.component';
 import { WalletConnectService } from '../../../services/wallet-connect.service';
 
-import { RegisterService } from '../../../services/register.service';
+import { User } from '../../../services/user.service';
 import { RegisterModalService } from '../../../services/register-modal.service';
 
 @Component({
@@ -25,7 +25,7 @@ import { RegisterModalService } from '../../../services/register-modal.service';
 export class RegisterModalComponent{
   //injections
   protected walletConnectService = inject(WalletConnectService);
-  private registerService = inject(RegisterService);
+  private userService = inject(User);
   private registerModalService = inject(RegisterModalService);
   //variables
   registerForm!: FormGroup<RegisterForm>;
@@ -53,7 +53,7 @@ export class RegisterModalComponent{
       return
     }
     if(this.registerForm.valid) {
-      this.registerService.update(this.registerForm.value.name, this.registerForm.value.email);
+      this.userService.update(this.registerForm.value.name, this.registerForm.value.email);
     }
   }
 

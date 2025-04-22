@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
 import { WalletConnectService } from "./wallet-connect.service";
-import { ethers, BrowserProvider, Eip1193Provider } from "ethers";
+import { BrowserProvider, Eip1193Provider } from "ethers";
 import { BehaviorSubject, filter, from, Observable, Subject, switchMap, take } from "rxjs";
 
 @Injectable({
