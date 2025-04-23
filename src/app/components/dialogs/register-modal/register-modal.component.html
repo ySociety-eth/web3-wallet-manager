@@ -1,0 +1,42 @@
+<modal role="dialog" (onCloseModal)="onCloseRegisterModal.emit()">
+    @if (errorMessage) {
+        <div class="py-2 px-4 bg-danger/10 text-danger border border-danger mb-6 rounded-dft overflow-hidden overflow-ellipsis" @popUpError>
+            <h2>{{errorMessage}}</h2>
+        </div>
+    }
+    <form [formGroup]="registerForm"
+    class="flex flex-col gap-4"
+    >
+        <custom-input class="login-modal__input"
+        [title]="'Wallet'"
+        [id]="'registerWalletInput'"
+        [disabled]="true"
+        [initialValue]="walletAddress() || ''"
+        />
+        <custom-input class="login-modal__input"
+        [title]="'Name'"
+        formControlName="name"
+        placeholder="John Doe"
+        [id]="'registerNameInput'"
+        />
+        <custom-input class="login-modal__input"
+        [title]="'E-mail'"
+        [type]="'text'"
+        placeholder="JohnDoe@example.com"
+        formControlName="email"
+        [id]="'registerEmailInput'"
+        [isInvalid]="registerForm.controls['email'].invalid && registerForm.controls['email'].touched"
+        >
+        @if(registerForm.controls['email'].errors?.['email']) {
+            <small invalid>Invalid e-mail</small>
+        }
+        </custom-input>
+        <button customized-button class="mt-2"
+        [variant]="isEmpty() ? 'outline' : 'contained'" 
+        type="submit" (click)="isEmpty() ? close() : updateUser()"
+        [disabled]="registerForm.invalid"
+        >
+            {{ isEmpty() ? 'Skip for now' : 'Register'}}
+        </button>
+    </form>
+</modal>
