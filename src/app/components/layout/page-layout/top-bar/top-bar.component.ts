@@ -1,11 +1,16 @@
-import { Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { PageLayoutService } from '../page-layout.service';
 import { AppkitBtnComponent } from "../../../base/appkit-btn/appkit-btn.component";
 
 @Component({
-  selector: 'app-top-bar',
+  selector: 'top-bar',
   imports: [AppkitBtnComponent],
+  host: {
+    class: 'pr-5 h-16 py-2 gap-4 w-full fixed top-0 flex justify-between items-center bg-mutedDark z-[100]'
+  },
   templateUrl: './top-bar.component.html',
+  styleUrl: './top-bar.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TopBarComponent {
   

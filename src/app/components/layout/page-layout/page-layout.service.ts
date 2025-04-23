@@ -1,19 +1,19 @@
-import { Injectable, Renderer2, RendererFactory2, signal } from '@angular/core';
+import { Injectable, Renderer2, RendererFactory2, Signal, signal } from '@angular/core';
 
 @Injectable({
   providedIn: 'root'
 })
 export class PageLayoutService {
-  private _smallScreen = signal<boolean>(false);
-  private _sidebarCollapsed = signal<boolean>(true);
+  private smallScreen = signal<boolean>(false);
+  private sidebarCollapsed = signal<boolean>(true);
   private renderer: Renderer2;
 
-  get isSmallScreen() {
-    return this._smallScreen();
+  get isSmallScreen$(): Signal<boolean> {
+    return this.smallScreen.asReadonly();
   }
   
-  get isSidebarCollapsed() {
-    return this._sidebarCollapsed();
+  get isSidebarCollapsed$(): Signal<boolean> {
+    return this.sidebarCollapsed.asReadonly();
   }
   
   constructor(private rendererFactory: RendererFactory2) {
@@ -27,19 +27,19 @@ export class PageLayoutService {
   }
 
   private checkMobileScreenSize(): void {
-    this._smallScreen.set(window.innerWidth < 640); //turns true if window width < 640px
+    this.smallScreen.set(window.innerWidth < 640); //turns true if window width < 640px
   }
 
   toggleSidebar() {
-    this._sidebarCollapsed.update((val) => !val);
+    this.sidebarCollapsed.update((val) => !val);
   }
   
   collapseSidebar() {
-    this._sidebarCollapsed.set(true);
+    this.sidebarCollapsed.set(true);
   }
 
   expandSidebar() {
-    this._sidebarCollapsed.set(false);
+    this.sidebarCollapsed.set(false);
   }
   
 

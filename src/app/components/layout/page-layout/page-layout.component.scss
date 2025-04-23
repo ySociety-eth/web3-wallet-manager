@@ -1,0 +1,35 @@
+.layout-border {
+    display: block;
+    position: fixed;
+    top: calc(4rem + 1px);
+    left: calc(4rem + 1px);
+    width: calc(100% - 4rem);
+    height: calc(100vh - 4rem);
+    pointer-events: none;
+    background-color: transparent;
+    box-shadow: 
+        0 0 0 1px hsla(var(--border)), 
+        -10px 0 0 10px hsla(var(--muted-dark)); // fills the hole from top left corner
+    border-top-left-radius: 1.5rem;
+    z-index: 100;
+    transition: all 250ms ease-in-out;
+    &--expanded {
+        left: calc(16rem + 1px);
+        width: calc(100% - 16rem);
+    }
+    &--small-screen {
+        left: 0;
+        width: 100%;
+        border-top-left-radius: 0;
+        box-shadow: 0 0 0 1px hsla(var(--border));
+
+        &--expanded {
+            left: calc(16rem + 1px);
+            width: calc(100% - 16rem);
+            box-shadow: 
+            0 0 0 1px hsla(var(--border)), 
+            -10px 0 0 10px hsla(var(--muted-dark)); // fills the hole from top left corner
+            border-top-left-radius: 1.5rem;
+        }
+    }
+}

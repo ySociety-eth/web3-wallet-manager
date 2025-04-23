@@ -1,19 +1,23 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject, input, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, HostBinding, HostListener, inject, input, OnInit } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 import { PageLayoutService } from '../page-layout.service';
 import { SidebarSections } from '../../../../models/navbar-items.interface';
 import { createAnimation } from '../../../../animations/default-transitions.animations';
 
 @Component({
-  selector: 'app-sidebar',
+  selector: 'sidebar',
   imports: [CommonModule, RouterLink],
+  host: {
+    '[@navbarSlideInOut]': '',
+  },
   templateUrl: './sidebar.component.html',
   styleUrl: './sidebar.component.scss',
   animations: [
     createAnimation('navbarItemCollapseExpand', { duration: '250ms', animateY: true, transform: 'scale(.9)' }),
     createAnimation('navbarSlideInOut', { duration: '250ms', animateX: true, opacity: '1' })
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 
 export class SidebarComponent implements OnInit {
@@ -24,11 +28,11 @@ export class SidebarComponent implements OnInit {
   currentRoute = '';
 
   get smallScreen() {
-    return this.pageLayoutService.isSmallScreen;
+    return this.pageLayoutService.isSmallScreen$();
   }
 
   get isCollapsed() {
-    return this.pageLayoutService.isSidebarCollapsed;
+    return this.pageLayoutService.isSidebarCollapsed$();
   }
 
   constructor(private router: Router) {
@@ -87,5 +91,24 @@ export class SidebarComponent implements OnInit {
       this.changeRoute(route);
       event.preventDefault();
     }
+  }
+
+  //host bindings
+
+  @HostBinding('class')
+  get hostClasses(): string {
+    const base = 'fixed bottom-0 transition-all duration-300 overflow-hidden bg-mutedDark h-[calc(100%_-_4rem)]';
+    const collapsed  = this.isCollapsed ? 'w-16' : 'w-64';
+    return `${base} ${collapsed}`;
+  }
+
+  @HostListener('mouseenter')
+  onMouseEnter() {
+    this.isCollapsed ? this.onMouseEnterSidebar() : null
+  }
+  
+  @HostListener('mouseleave')
+  onMouseLeave() {
+    this.onMouseLeaveSidebar()
   }
 }

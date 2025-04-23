@@ -1,6 +1,6 @@
-<app-page-layout [sidebarSections]="sidebarSections">
+<page-layout [sidebarSections]="sidebarSections">
     <router-outlet></router-outlet>
-</app-page-layout>
+</page-layout>
 @if (registerModal.isModalOpen$()) {
     <register-modal (onCloseRegisterModal)="registerModal.closeModal()"></register-modal>
 }

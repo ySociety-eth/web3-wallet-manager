@@ -1,8 +1,8 @@
-<aside class="transition-all duration-300 overflow-hidden h-full bg-mutedDark" @navbarSlideInOut
+<!-- <aside class="transition-all duration-300 overflow-hidden h-full bg-mutedDark" @navbarSlideInOut
 [ngClass]="[isCollapsed ? 'w-16' : 'w-64',
  smallScreen ? 'absolute border-r border-r-border' : 'relative']" 
 (mouseenter)="isCollapsed ? onMouseEnterSidebar() : null"
-(mouseleave)="onMouseLeaveSidebar()">
+(mouseleave)="onMouseLeaveSidebar()"> -->
     <div class="py-4">
         <!-- sidebar title label and expand button -->
         @for (section of sidebarSections(); track $index) {
@@ -44,4 +44,4 @@
             <hr class=" border-border my-2" [ngClass]="isCollapsed ? 'mx-2' : 'mx-5'">
         }
     </div>
-</aside>
+<!-- </aside> -->

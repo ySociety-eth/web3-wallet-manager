@@ -13,6 +13,9 @@ import { DataTableTemplateComponent } from "../../../components/shared/data-tabl
 @Component({
   selector: 'dashboard-page',
   imports: [BasicCardComponent, CommonModule, CustomTableComponent, CardComponent, DataTableTemplateComponent],
+  host: {
+    class: 'page-container space-y-8 block'
+  },
   templateUrl: './dashboard-page.component.html',
   styleUrl: './dashboard-page.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush

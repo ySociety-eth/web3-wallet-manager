@@ -1,0 +1,16 @@
+// :host {
+//     &::before {
+//         content: '';
+//         position: absolute;
+//         inset: 0;
+//         top: 4rem;
+//         left: calc(4rem + 1px);
+//         width: calc(100% - 4rem);
+//         height: calc(100vh - 4rem);
+//         pointer-events: none;
+//         background-color: transparent;
+//         box-shadow: 0 0 0 1px hsla(var(--border));
+//         border-top-left-radius: 1.5rem;
+//         z-index: -1;
+//     }
+// }
