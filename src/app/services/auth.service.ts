@@ -5,7 +5,7 @@ import { NonceResponse, ValidateSignatureResponse } from "../models/api/auth.int
 import { EthersService } from "./ethers.service";
 import { LocalStorageService } from "./local-storage.service";
 import { WalletConnectService } from "./wallet-connect.service";
-import { User } from "./user.service";
+import { UserService } from "./user.service";
 import { RegisterModalService } from "./register-modal.service";
 
 @Injectable(
@@ -18,7 +18,7 @@ export class AuthService {
     private ethersService = inject(EthersService);
     private localStorageService = inject(LocalStorageService);
     private walletConnectService = inject(WalletConnectService);
-    private userService = inject(User);
+    private userService = inject(UserService);
     private registerModalService = inject(RegisterModalService);
     private readonly url = "/api/auth"
 

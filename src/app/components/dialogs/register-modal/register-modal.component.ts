@@ -6,8 +6,6 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { RegisterForm } from '../../../models/register-form.interface';
 import { CustomizedButtonComponent } from '../../base/customized-button/customized-button.component';
 import { WalletConnectService } from '../../../services/wallet-connect.service';
-
-import { User } from '../../../services/user.service';
 import { RegisterModalService } from '../../../services/register-modal.service';
 
 @Component({
@@ -25,7 +23,6 @@ import { RegisterModalService } from '../../../services/register-modal.service';
 export class RegisterModalComponent{
   //injections
   protected walletConnectService = inject(WalletConnectService);
-  private userService = inject(User);
   private registerModalService = inject(RegisterModalService);
   //variables
   registerForm!: FormGroup<RegisterForm>;
@@ -34,6 +31,9 @@ export class RegisterModalComponent{
   walletAddress = computed(() => this.walletConnectService.$walletAddress());
   get errorMessage(): string | null {
     return this.registerModalService.$error();
+  }
+  get status(): 'loading' | 'success' | 'default' {
+    return this.registerModalService.$status();
   }
 
   constructor(private fb: FormBuilder) {
@@ -52,8 +52,8 @@ export class RegisterModalComponent{
       console.error("Invalid Wallet")
       return
     }
-    if(this.registerForm.valid) {
-      this.userService.update(this.registerForm.value.name, this.registerForm.value.email);
+    if(this.registerForm.valid && this.registerModalService.$status() === "default") {
+      this.registerModalService.update(this.registerForm.value.name, this.registerForm.value.email);
     }
   }
 

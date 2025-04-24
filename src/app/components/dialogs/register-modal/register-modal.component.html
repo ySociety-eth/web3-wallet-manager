@@ -35,9 +35,9 @@
         [variant]="isEmpty() ? 'outline' : 'contained'" 
         type="submit" (click)="isEmpty() ? close() : updateUser()"
         [disabled]="registerForm.invalid"
-        status="success"
+        [status]="status"
         >
-            {{ isEmpty() ? 'Skip for now' : 'Register'}}
+            {{ isEmpty() ? 'Skip for now' : 'Submit'}}
         </button>
     </form>
 </modal>
