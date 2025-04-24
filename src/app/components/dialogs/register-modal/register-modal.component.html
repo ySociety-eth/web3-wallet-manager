@@ -35,6 +35,7 @@
         [variant]="isEmpty() ? 'outline' : 'contained'" 
         type="submit" (click)="isEmpty() ? close() : updateUser()"
         [disabled]="registerForm.invalid"
+        status="success"
         >
             {{ isEmpty() ? 'Skip for now' : 'Register'}}
         </button>

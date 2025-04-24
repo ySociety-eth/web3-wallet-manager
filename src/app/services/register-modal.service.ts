@@ -4,7 +4,7 @@ import { Injectable, Signal, signal } from '@angular/core';
   providedIn: 'root'
 })
 export class RegisterModalService {
-  private isModalOpen = signal(false);
+  private isModalOpen = signal(true);
   private error = signal<string | null>(null);
   public $error = this.error.asReadonly();
 
