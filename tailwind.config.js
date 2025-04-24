@@ -27,6 +27,7 @@ module.exports = {
         card: "hsla(var(--card))",
         border: "hsla(var(--border))",
         danger: "hsla(var(--danger))",
+        success: "hsla(var(--success))",
       },
       borderRadius: {
         dft: '0.75rem'
