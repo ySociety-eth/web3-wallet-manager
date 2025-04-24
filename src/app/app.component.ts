@@ -16,54 +16,71 @@ import { createQueryAnimations } from './animations/default-transitions.animatio
     createQueryAnimations('queryAnimationsModal', '@popUp, @fadeInOut') // necessary for animate modal when its removed from the DOM
   ]
 })
-export class AppComponent{
+export class AppComponent {
   protected registerModal = inject(RegisterModalService);
 
   title = 'wallet-manager';
 
-  
   sidebarSections: SidebarSections[] = [
     {
-    label: 'Wallet',
-    collapsed: false,
-    items: [
-      {
-        name: 'Dashboard',
-        icon: 'fi-sr-dashboard',
-        route: '/dashboard'
-      },
-      {
-        name: 'Smart Contracts',
-        icon: 'fi-sr-document',
-        route: '/smart-contract'
-      },
-      {
-        name: 'NFTs View',
-        icon: 'fi-sr-floor-layer',
-        route: '/nfts'
-      },
-      {
-        name: 'Logs',
-        icon: 'fi-sr-receipt',
-        route: '/logs'
-      },
-    ],
-  },
-  {
-    label: 'Trends',
-    collapsed: false,
-    items: [
-      {
-        name: 'Market Overview',
-        icon: 'fi-sr-chart-simple',
-        route: '/overview'
-      },
-      {
-        name: 'Social Trends',
-        icon: 'fi-sr-thumbs-up',
-        route: '/trends'
-      },
-    ],
-  },
-  ]
+      label: 'Wallet',
+      collapsed: false,
+      items: [
+        {
+          name: 'Dashboard',
+          icon: {
+            active: 'fi-sr-dashboard',
+            inactive: 'fi-rr-dashboard'
+          },
+          route: '/dashboard'
+        },
+        {
+          name: 'Smart Contracts',
+          icon: {
+            active: 'fi-sr-document',
+            inactive: 'fi-rr-document'
+          },
+          route: '/smart-contract'
+        },
+        {
+          name: 'NFTs View',
+          icon: {
+            active: 'fi-sr-floor-layer',
+            inactive: 'fi-rr-floor-layer'
+          },
+          route: '/nfts'
+        },
+        {
+          name: 'Logs',
+          icon: {
+            active: 'fi-sr-receipt',
+            inactive: 'fi-rr-receipt'
+          },
+          route: '/logs'
+        },
+      ],
+    },
+    {
+      label: 'Trends',
+      collapsed: false,
+      items: [
+        {
+          name: 'Market Overview',
+          icon: {
+            active: 'fi-sr-chart-simple',
+            inactive: 'fi-rr-chart-simple'
+          },
+          route: '/overview'
+        },
+        {
+          name: 'Social Trends',
+          icon: {
+            active: 'fi-sr-bookmark',
+            inactive: 'fi-rr-bookmark'
+          },
+          route: '/trends'
+        },
+      ],
+    },
+  ];
 }

@@ -6,6 +6,9 @@ export interface SidebarSections {
 
 export interface SidebarItem {
     name: string;
-    icon: string;
+    icon: {
+        active: string;
+        inactive: string;
+    }
     route: string;
 }

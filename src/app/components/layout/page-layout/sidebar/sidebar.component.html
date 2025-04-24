@@ -30,12 +30,13 @@
                         [ngClass]="{
                             'mr-1' : isCollapsed,
                             'mr-4': !isCollapsed,
-                            'bg-accent/80': currentRoute.includes(item.route),
-                            'text-accentForeground': currentRoute.includes(item.route),
+                            'bg-accent/80': currentRoute().includes(item.route),
+                            'text-accentForeground': currentRoute().includes(item.route),
                             }"
                         role="link" [routerLink]="item.route"
                         (keydown)="onKeyPressed($event, item.route)">
-                            <i class="fi {{item.icon}} flex text-[1.4rem]"></i>
+                            <i class="fi flex text-[1.4rem]"
+                            [ngClass]="currentRoute().includes(item.route) ? item.icon.active : item.icon.inactive"></i>
                             <a class="text-base overflow-hidden overflow-ellipsis whitespace-nowrap">{{item.name}}</a>
                         </li>
                     }

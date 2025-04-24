@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, HostBinding, HostListener, inject, input, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, HostBinding, HostListener, inject, input, OnInit, signal } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 import { PageLayoutService } from '../page-layout.service';
 import { SidebarSections } from '../../../../models/navbar-items.interface';
@@ -25,7 +25,7 @@ export class SidebarComponent implements OnInit {
   sidebarSections = input<SidebarSections[]>()
   isAutoExpanded = false;
   navbarTimeoutId: any;
-  currentRoute = '';
+  currentRoute = signal('');
 
   get smallScreen() {
     return this.pageLayoutService.isSmallScreen$();
@@ -39,9 +39,9 @@ export class SidebarComponent implements OnInit {
   }
   
   ngOnInit(): void {
-    this.currentRoute = this.router.url;
+    this.currentRoute.set(this.router.url);
     this.router.events.subscribe(() => {
-      this.currentRoute = this.router.url;
+      this.currentRoute.set(this.router.url);
     })
   }
 
