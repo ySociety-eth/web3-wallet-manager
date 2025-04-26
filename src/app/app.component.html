@@ -4,3 +4,8 @@
 @if (registerModal.isModalOpen$()) {
     <register-modal (onCloseRegisterModal)="registerModal.closeModal()"></register-modal>
 }
+
+
+<!-- portals -->
+<ng-template [cdkPortalHost]="toastPortal"></ng-template>
+

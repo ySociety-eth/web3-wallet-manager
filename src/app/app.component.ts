@@ -1,25 +1,31 @@
-import { Component, inject } from '@angular/core';
+import { AfterViewInit, Component, inject, OnInit, ViewContainerRef } from '@angular/core';
 import { PageLayoutComponent } from "./components/layout/page-layout/page-layout.component";
 import { SidebarSections } from './models/navbar-items.interface';
 import { RouterOutlet } from '@angular/router';
 import { RegisterModalComponent } from './components/dialogs/register-modal/register-modal.component';
-import { RegisterModalService } from './services/register-modal.service';
+import { RegisterModalService } from './services/ui/register-modal.service';
 import { createQueryAnimations } from './animations/default-transitions.animations';
+import { ToastComponent } from "./components/layout/toast/toast.component";
+import { ComponentPortal, PortalModule } from '@angular/cdk/portal';
 
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, PageLayoutComponent, RegisterModalComponent],
+  imports: [RouterOutlet, PageLayoutComponent, RegisterModalComponent, PortalModule],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
   animations: [
     createQueryAnimations('queryAnimationsModal', '@popUp, @fadeInOut') // necessary for animate modal when its removed from the DOM
   ]
 })
-export class AppComponent {
+export class AppComponent implements OnInit{
   protected registerModal = inject(RegisterModalService);
-
+  toastPortal: ComponentPortal<ToastComponent> | undefined;
   title = 'wallet-manager';
+  
+  ngOnInit(): void {
+    this.toastPortal = new ComponentPortal(ToastComponent);
+  }
 
   sidebarSections: SidebarSections[] = [
     {
