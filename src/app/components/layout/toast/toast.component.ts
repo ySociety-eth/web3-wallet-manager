@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, OnInit, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, effect, inject, OnInit, signal } from '@angular/core';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { Toast } from '../../../models/toast.interface';
 import { ToastService } from '../../../services/ui/toast.service';
@@ -42,41 +42,37 @@ const toastAnimation = trigger('toastAnimation', [
   animations: [toastAnimation],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ToastComponent implements OnInit {
-  toasts = signal<Toast[]>([]);
+export class ToastComponent {
+  protected toastService = inject(ToastService);
+  protected toasts = this.toastService.$toasts;
   private timeoutIds: { [key: string]: any } = {}; // object to store toast timeouts based on toast id
 
-  constructor(private toastService: ToastService) { }
-
-  ngOnInit(): void {
-    this.toastService.getToasts().subscribe({
-      next: newToast => {
-        newToast.isVisible = true;
-        this.toasts.update(value => {
-          return [...value, newToast]; // adds the new toast to the array
-        })
-        this.startDismissTimer(newToast);
+  constructor() {
+    effect(() => {
+      const recentToast = this.toasts()[this.toasts().length - 1]; // gets the last toast in the array
+      if (recentToast) {
+        this.startDismissTimer(recentToast); // starts the dismiss timer for the toast
       }
     })
   }
 
   private startDismissTimer(toast: Toast) {
     const duration = toast.duration || 3000;
+    if (this.timeoutIds[toast.id!]) { // checks if the toast already has a timeout set, if so, it doesn't set another one
+      return;
+    }
     this.timeoutIds[toast.id!] = setTimeout(() => {
       toast.isVisible = false; // sets the toast to invisible to trigger the animation
       setTimeout(() => {
-        this.removeToast(toast);
+        this.toastService.removeToast(toast);
+        delete this.timeoutIds[toast.id!];
       }, 300); // removes from array after animation is complete
     }, duration);
   }
 
-  removeToast(toast: Toast) {
-    const newToastArray = this.toasts().filter(value => value.id !== toast.id); // creates a new toastArray excluding selected toasted parameter
-    this.toasts.set(newToastArray);
-  }
-
   pauseToast(toast: Toast) {
     clearTimeout(this.timeoutIds[toast.id!]); // clears the timeout for the selected toast
+    delete this.timeoutIds[toast.id!]; // deletes the timeout id from the object
   }
 
   resumeToast(toast: Toast) {

@@ -6,7 +6,7 @@
                 (mouseleave)="resumeToast(toast)"
                 role="alert"
             >
-                <div class="toast__close" (click)="removeToast(toast)">
+                <div class="toast__close" (click)="toastService.removeToast(toast)">
                     <i class="fi fi-rr-cross-small"></i>
                 </div>
                 @if(!toast.title) {
