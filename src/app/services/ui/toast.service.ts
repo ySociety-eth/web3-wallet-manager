@@ -6,7 +6,7 @@ import { Toast } from '../../models/toast.interface';
   providedIn: 'root'
 })
 export class ToastService {
-  toastSubject = new Subject<Toast>();
+  private toastSubject = new Subject<Toast>();
   toastId = 0;
 
   create(toast: Toast) {

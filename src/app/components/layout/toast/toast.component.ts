@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, signal } from '@angular/core';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { Toast } from '../../../models/toast.interface';
 import { ToastService } from '../../../services/ui/toast.service';
@@ -39,10 +39,11 @@ const toastAnimation = trigger('toastAnimation', [
   imports: [CommonModule],
   templateUrl: './toast.component.html',
   styleUrl: './toast.component.scss',
-  animations: [toastAnimation]
+  animations: [toastAnimation],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ToastComponent implements OnInit {
-  toasts: Toast[] = [];
+  toasts = signal<Toast[]>([]);
   private timeoutIds: { [key: string]: any } = {}; // object to store toast timeouts based on toast id
 
   constructor(private toastService: ToastService) { }
@@ -51,7 +52,9 @@ export class ToastComponent implements OnInit {
     this.toastService.getToasts().subscribe({
       next: newToast => {
         newToast.isVisible = true;
-        this.toasts.push(newToast);
+        this.toasts.update(value => {
+          return [...value, newToast]; // adds the new toast to the array
+        })
         this.startDismissTimer(newToast);
       }
     })
@@ -68,8 +71,8 @@ export class ToastComponent implements OnInit {
   }
 
   removeToast(toast: Toast) {
-    const newToastArray = this.toasts.filter(value => value.id !== toast.id); // creates a new toastArray excluding selected toasted parameter
-    this.toasts = newToastArray;
+    const newToastArray = this.toasts().filter(value => value.id !== toast.id); // creates a new toastArray excluding selected toasted parameter
+    this.toasts.set(newToastArray);
   }
 
   pauseToast(toast: Toast) {

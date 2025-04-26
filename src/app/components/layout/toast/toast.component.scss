@@ -1,3 +1,6 @@
+:host {
+    pointer-events: none;
+}
 .toast {
     position: fixed;
     bottom: 0;
@@ -16,8 +19,9 @@
         color: hsl(var(--foreground));
         background-color: hsla(var(--muted-dark));
         border-radius: var(--radius);
-        padding: 22px;
-        padding-right: 38px;
+        padding-block: 14px;
+        padding-left: 20px;
+        padding-right: 30px;
         pointer-events: all;
         position: relative;
         overflow: hidden;
@@ -32,8 +36,9 @@
         }
 
         &--outline {
-            background-color: hsla(var(--background));
+            background-color: hsla(var(--muted-dark), 0.5);
             border: 1px solid hsla(var(--border));
+            backdrop-filter: blur(3px);
         }
 
         &--danger {
@@ -49,10 +54,23 @@
         }
     }
 
+    &__message {
+        line-height: 1.2;
+    }
+
+    &__icon {
+        &--success {
+            color: hsl(var(--success));
+        }
+        &--danger {
+            color: hsl(var(--danger));
+        }
+    }
+
     &__close {
         position: absolute;
-        top: 10px;
-        right: 10px;
+        top: 2px;
+        right: 2px;
         padding: 6px;
         cursor: pointer;
         transition: opacity 150ms ease-in-out;
@@ -65,7 +83,9 @@
         gap: 8px;
 
         &--with-title {
+            display: flex;
             flex-direction: column;
+            gap: 4px;
             align-items: flex-start;
         }
     }
@@ -73,14 +93,22 @@
     &__header {
         display: flex;
         align-items: center;
-        gap: 6px;
+        gap: 8px;
+
+        &--danger {
+            color: hsl(var(--danger));
+        }
+        &--success {
+            color: hsl(var(--success));
+        }
         .toast__icon {
-            font-size: 18px;
+            font-size: 17px;
         }
     }
 
     &__title {
-        font-weight: 700;
+        font-weight: 600;
+        line-height: 1;
         font-size: 18px;
     }
 }

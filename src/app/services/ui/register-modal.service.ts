@@ -1,6 +1,6 @@
 import { inject, Injectable, Signal, signal } from '@angular/core';
-import { UserService } from './user.service';
-import { catchError, defer, delay, of, switchMap, tap, throwError, timer } from 'rxjs';
+import { UserService } from '../user.service';
+import { catchError, delay, of, switchMap, throwError, timer } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'

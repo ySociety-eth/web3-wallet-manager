@@ -6,7 +6,7 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { RegisterForm } from '../../../models/register-form.interface';
 import { CustomizedButtonComponent } from '../../base/customized-button/customized-button.component';
 import { WalletConnectService } from '../../../services/wallet-connect.service';
-import { RegisterModalService } from '../../../services/register-modal.service';
+import { RegisterModalService } from '../../../services/ui/register-modal.service';
 
 @Component({
   selector: 'register-modal',

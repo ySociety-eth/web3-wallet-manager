@@ -6,7 +6,7 @@ import { EthersService } from "./ethers.service";
 import { LocalStorageService } from "./local-storage.service";
 import { WalletConnectService } from "./wallet-connect.service";
 import { UserService } from "./user.service";
-import { RegisterModalService } from "./register-modal.service";
+import { RegisterModalService } from "./ui/register-modal.service";
 
 @Injectable(
     {

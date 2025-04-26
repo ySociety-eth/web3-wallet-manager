@@ -1,6 +1,5 @@
 import { inject, Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
-import { RegisterModalService } from "./register-modal.service";
 import { LocalStorageService } from "./local-storage.service";
 import { RegisterResponse } from "../models/api/auth.interface";
 import { Observable, tap } from "rxjs";
