@@ -1,13 +1,29 @@
-import { Injectable, signal } from '@angular/core';
+import { ApplicationRef, ComponentRef, createComponent, effect, EnvironmentInjector, inject, Injectable, signal } from '@angular/core';
 import { Toast } from '../../models/toast.interface';
+import { ToastComponent } from '../../components/layout/toast/toast.component';
+import { DOCUMENT } from '@angular/common';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ToastService {
+  private enviromentInjector = inject(EnvironmentInjector);
+  private applicationRef = inject(ApplicationRef);
+  private document = inject(DOCUMENT);
+  private componentRef: ComponentRef<ToastComponent> | null = null;
   private toasts = signal<Toast[]>([]);
   private toastId = 0;
   public $toasts = this.toasts.asReadonly();
+
+  constructor() {
+    effect(() => {
+      if (this.toasts().length > 0) {
+        this.createToastComponent();
+      } else {
+        this.destroyToastComponent();
+      }
+    });
+  }
 
   public create(toast: Toast) {
     const newToast = toast;
@@ -17,8 +33,24 @@ export class ToastService {
   }
 
   public removeToast(toast: Toast) {
-    const newToastArray = this.toasts().filter(value => value.id !== toast.id); // creates a new toastArray excluding selected toasted parameter
+    const newToastArray = this.toasts().filter(value => value.id !== toast.id); // create a new toastArray excluding selected toasted parameter
     this.toasts.set(newToastArray);
+  }
+
+  private createToastComponent() {
+    if (!this.componentRef) {
+      this.componentRef = createComponent(ToastComponent, { environmentInjector: this.enviromentInjector }); // create standalone component
+      this.applicationRef.attachView(this.componentRef.hostView);
+      this.document.body.appendChild(this.componentRef.location.nativeElement);
+    }
+  }
+
+  private destroyToastComponent() {
+    if(this.componentRef) {
+      this.applicationRef.detachView(this.componentRef.hostView);
+      this.componentRef.destroy();
+      this.componentRef = null;
+    }
   }
 
 }

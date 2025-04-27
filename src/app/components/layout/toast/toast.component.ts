@@ -3,6 +3,7 @@ import { ChangeDetectionStrategy, Component, effect, inject, OnInit, signal } fr
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { Toast } from '../../../models/toast.interface';
 import { ToastService } from '../../../services/ui/toast.service';
+import { createQueryAnimations } from '../../../animations/default-transitions.animations';
 
 const toastAnimation = trigger('toastAnimation', [
   state('void', style({
@@ -37,9 +38,13 @@ const toastAnimation = trigger('toastAnimation', [
   selector: 'toast',
   standalone: true,
   imports: [CommonModule],
+  host: { '[@queryAnimationToast]': '' },
   templateUrl: './toast.component.html',
   styleUrl: './toast.component.scss',
-  animations: [toastAnimation],
+  animations: [
+    toastAnimation,
+    createQueryAnimations('queryAnimationToast', '@toastAnimation'),
+  ],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ToastComponent {
