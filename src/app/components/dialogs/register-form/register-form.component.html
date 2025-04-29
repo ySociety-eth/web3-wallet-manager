@@ -1,10 +1,11 @@
-<modal role="dialog" (onCloseModal)="onCloseRegisterModal.emit()">
+
     @if (errorMessage) {
         <div class="py-2 px-4 bg-danger/10 text-danger border border-danger mb-6 rounded-dft overflow-hidden overflow-ellipsis" @popUpError>
             <h2>{{errorMessage}}</h2>
         </div>
     }
     <form [formGroup]="registerForm"
+    (ngSubmit)="isEmpty() ? skip.emit() : onFormSubmit()"
     class="flex flex-col gap-4"
     >
         <custom-input class="login-modal__input"
@@ -33,11 +34,10 @@
         </custom-input>
         <button customized-button class="mt-2"
         [variant]="isEmpty() ? 'outline' : 'contained'" 
-        type="submit" (click)="isEmpty() ? close() : updateUser()"
+        type="submit"
         [disabled]="registerForm.invalid"
         [status]="status"
         >
             {{ isEmpty() ? 'Skip for now' : 'Submit'}}
         </button>
     </form>
-</modal>

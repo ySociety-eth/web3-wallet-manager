@@ -1,5 +1,4 @@
-import { ChangeDetectionStrategy, Component, computed, inject, output, signal } from '@angular/core';
-import { ModalComponent } from '../base/modal/modal.component';
+import { ChangeDetectionStrategy, Component, computed, inject, Input, input, output, signal } from '@angular/core';
 import { createAnimation, createQueryAnimations } from '../../../animations/default-transitions.animations';
 import { CustomInputComponent } from '../../base/input/custom-input.component';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
@@ -10,17 +9,16 @@ import { RegisterModalService } from '../../../services/ui/register-modal.servic
 
 @Component({
   selector: 'register-modal',
-  imports: [ModalComponent, CustomInputComponent, ReactiveFormsModule, CustomizedButtonComponent],
+  imports: [CustomInputComponent, ReactiveFormsModule, CustomizedButtonComponent],
   host: { '[@queryAnimationsModal]': '' },
-  templateUrl: './register-modal.component.html',
-  styleUrl: './register-modal.component.scss',
+  templateUrl: './register-form.component.html',
   animations: [
     createQueryAnimations('queryAnimationsModal', '@popUp, @fadeInOut'),
     createAnimation('popUpError', { duration: "200ms", animateY: true, transform: "scale(.5)" } )
   ],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class RegisterModalComponent{
+export class RegisterFormComponent{
   //injections
   protected walletConnectService = inject(WalletConnectService);
   private registerModalService = inject(RegisterModalService);
@@ -29,6 +27,9 @@ export class RegisterModalComponent{
   onCloseRegisterModal = output();
   isEmpty = signal(true);
   walletAddress = computed(() => this.walletConnectService.$walletAddress());
+  skip = output();
+  submitted = output<RegisterForm>();
+
   get errorMessage(): string | null {
     return this.registerModalService.$error();
   }
@@ -38,27 +39,22 @@ export class RegisterModalComponent{
 
   constructor(private fb: FormBuilder) {
     this.registerForm = this.fb.group({
-      name: '',
-      email: ['', Validators.email]
+      name: this.fb.control('', { nonNullable: true }),
+      email: this.fb.control('', { nonNullable: true, validators: [Validators.email] })
     });
-
+  
     this.registerForm.valueChanges.subscribe(value => { // check if the form is empty
       !!value.name || !!value.email ? this.isEmpty.set(false) : this.isEmpty.set(true);
-    })
+    });
   }
 
-  updateUser() {
+  onFormSubmit() {
     if(!this.walletAddress()) {
       console.error("Invalid Wallet")
       return
     }
     if(this.registerForm.valid && this.registerModalService.$status() === "default") {
-      this.registerModalService.update(this.registerForm.value.name, this.registerForm.value.email);
+      this.submitted.emit(this.registerForm.controls);
     }
   }
-
-  close() {
-    this.registerModalService.closeModal(); // close the modal
-  }
-
 }

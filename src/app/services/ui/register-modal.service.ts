@@ -7,30 +7,16 @@ import { catchError, delay, of, switchMap, throwError, timer } from 'rxjs';
 })
 export class RegisterModalService {
   private userService = inject(UserService);
-  private isModalOpen = signal(false);
   private error = signal<string | null>(null);
   private status = signal<'default' | 'loading' | 'success'>('default');
 
   // Public signals to be used in components
   public $error = this.error.asReadonly();
   public $status = this.status.asReadonly();
-
-  get isModalOpen$(): Signal<boolean> {
-    return this.isModalOpen.asReadonly();
-  }
-
-  public openModal() {
-    this.isModalOpen.set(true);
-  }
   
   public closeModal() {
-    this.isModalOpen.set(false);
     this.status.set("default");
     this.clearError(); // clear error when closing the modal
-  }
-
-  public toggleModal() {
-    this.isModalOpen.update((isOpen) => !isOpen);
   }
 
   public setError(error: string | null) {
@@ -52,10 +38,9 @@ export class RegisterModalService {
       switchMap(res => of(res).pipe(delay(1000))), // create a delayed observable with the answer
       catchError(err => timer(1000).pipe(switchMap(() => throwError(() => err))))
     ).subscribe({
-      next: (res) => {
+      next: () => {
         this.clearError()
         this.status.set("success")
-        setTimeout(() => this.closeModal(), 1000);
       },
       error: (err) => {
         this.setError(err.error?.message || "An unexpected error occurred");

@@ -1,16 +1,14 @@
-import { Component, inject } from '@angular/core';
+import { Component } from '@angular/core';
 import { PageLayoutComponent } from "./components/layout/page-layout/page-layout.component";
 import { SidebarSections } from './models/navbar-items.interface';
 import { RouterOutlet } from '@angular/router';
-import { RegisterModalComponent } from './components/dialogs/register-modal/register-modal.component';
-import { RegisterModalService } from './services/ui/register-modal.service';
 import { createQueryAnimations } from './animations/default-transitions.animations';
 import { PortalModule } from '@angular/cdk/portal';
 
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, PageLayoutComponent, RegisterModalComponent, PortalModule],
+  imports: [RouterOutlet, PageLayoutComponent, PortalModule],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
   animations: [
@@ -18,7 +16,6 @@ import { PortalModule } from '@angular/cdk/portal';
   ]
 })
 export class AppComponent {
-  protected registerModal = inject(RegisterModalService);
   // toastPortal: ComponentPortal<ToastComponent> | undefined;
   title = 'wallet-manager';
   
