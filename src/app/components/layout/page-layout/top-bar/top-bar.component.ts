@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { PageLayoutService } from '../page-layout.service';
+import { PageLayoutService } from '../dashboard-section-layout.service';
 import { AppkitBtnComponent } from "../../../base/appkit-btn/appkit-btn.component";
 
 @Component({

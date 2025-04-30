@@ -17,7 +17,6 @@ import { DataTableTemplateComponent } from "../../../components/shared/data-tabl
     class: 'page-container space-y-8 block'
   },
   templateUrl: './dashboard-page.component.html',
-  styleUrl: './dashboard-page.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class DashboardPageComponent {
