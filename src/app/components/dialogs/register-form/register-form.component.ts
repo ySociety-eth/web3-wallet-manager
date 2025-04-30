@@ -5,7 +5,7 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { RegisterForm } from '../../../models/register-form.interface';
 import { CustomizedButtonComponent } from '../../base/customized-button/customized-button.component';
 import { WalletConnectService } from '../../../services/wallet-connect.service';
-import { RegisterModalService } from '../../../services/ui/register-modal.service';
+import { RegisterService } from '../../../services/ui/register.service';
 
 @Component({
   selector: 'register-modal',
@@ -21,20 +21,19 @@ import { RegisterModalService } from '../../../services/ui/register-modal.servic
 export class RegisterFormComponent{
   //injections
   protected walletConnectService = inject(WalletConnectService);
-  private registerModalService = inject(RegisterModalService);
+  private registerService = inject(RegisterService);
   //variables
   registerForm!: FormGroup<RegisterForm>;
   onCloseRegisterModal = output();
   isEmpty = signal(true);
   walletAddress = computed(() => this.walletConnectService.$walletAddress());
-  skip = output();
-  submitted = output<RegisterForm>();
+  skipped = output();
 
   get errorMessage(): string | null {
-    return this.registerModalService.$error();
+    return this.registerService.$error();
   }
   get status(): 'loading' | 'success' | 'default' {
-    return this.registerModalService.$status();
+    return this.registerService.$state();
   }
 
   constructor(private fb: FormBuilder) {
@@ -53,8 +52,8 @@ export class RegisterFormComponent{
       console.error("Invalid Wallet")
       return
     }
-    if(this.registerForm.valid && this.registerModalService.$status() === "default") {
-      this.submitted.emit(this.registerForm.controls);
+    if(this.registerForm.valid && this.registerService.$state() === "default") {
+      this.registerService.update(this.registerForm.value.name, this.registerForm.value.email);
     }
   }
 }

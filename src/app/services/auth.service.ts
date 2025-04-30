@@ -6,7 +6,7 @@ import { EthersService } from "./ethers.service";
 import { LocalStorageService } from "./local-storage.service";
 import { WalletConnectService } from "./wallet-connect.service";
 import { UserService } from "./user.service";
-import { RegisterModalService } from "./ui/register-modal.service";
+import { RegisterService } from "./ui/register.service";
 import { ModalService } from "./ui/modal.service";
 import { RegisterFormComponent } from "../components/dialogs/register-form/register-form.component";
 
@@ -21,8 +21,7 @@ export class AuthService {
     private localStorageService = inject(LocalStorageService);
     private walletConnectService = inject(WalletConnectService);
     private userService = inject(UserService);
-    private modalService = inject(ModalService);
-    private registerModalService = inject(RegisterModalService);
+    private registerService = inject(RegisterService);
 
     private readonly url = "/api/auth"
 
@@ -81,7 +80,7 @@ export class AuthService {
             next: (res) => {
                 if(res.data.registeredUser === false) {
                     this.userService.register(res.data.id, walletAddress); // register the user if not registered
-                    this.createFormModal();
+                    this.registerService.openModal();
                 }
             },
             error: (err) => {
@@ -90,18 +89,4 @@ export class AuthService {
           })
         }
     }
-
-    private createFormModal() {
-        const modalRef = this.modalService.open(RegisterFormComponent, { role: 'dialog' }) // open the modal so user can fill the optional fields
-        modalRef.componentRef.instance.submitted.subscribe(formControl => { 
-            this.registerModalService.update(formControl.name.value, formControl.email.value);
-        }) // send request
-        modalRef.componentRef.instance.skip.subscribe(() => {
-            modalRef.close() // close modal when skip button is pressed
-        });
-
-        modalRef.afterClosed$.subscribe(() => this.registerModalService.closeModal());
-    }
-
-
 }

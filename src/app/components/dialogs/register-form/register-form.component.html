@@ -5,7 +5,7 @@
         </div>
     }
     <form [formGroup]="registerForm"
-    (ngSubmit)="isEmpty() ? skip.emit() : onFormSubmit()"
+    (ngSubmit)="isEmpty() ? skipped.emit() : onFormSubmit()"
     class="flex flex-col gap-4"
     >
         <custom-input class="login-modal__input"
