@@ -7,10 +7,13 @@
 
 
 .page-container {
-    padding: 2.5rem;
+  padding: 2.5rem;
 }
 html, body { height: 100%; }
-body { margin: 0; }
+body { 
+  margin: 0; 
+  background-color: hsla(var(--background));
+}
 
 :root {
     @include mat.tooltip-overrides((
