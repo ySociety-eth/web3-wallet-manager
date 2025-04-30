@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, HostBinding, HostListener, inject, input, OnInit, signal } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
-import { PageLayoutService } from '../dashboard-section-layout.service';
+import { PageLayoutService } from '../../../../services/ui/dashboard-section-layout.service';
 import { SidebarSections } from '../../../../models/navbar-items.interface';
 import { createAnimation } from '../../../../animations/default-transitions.animations';
 

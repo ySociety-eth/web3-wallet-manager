@@ -10,7 +10,7 @@
         <!-- it will not display sidebar -->
     } @else {
         <sidebar
-        [sidebarSections]="sidebarSections()" @queryAnimationSidebar/>
+        [sidebarSections]="sidebarSections" @queryAnimationSidebar/>
     }
 
     
@@ -21,7 +21,7 @@
         'ml-64' : !smallScreen && !isCollapsed,
         'ml-16' : !smallScreen && isCollapsed,
     }">
-        <ng-content></ng-content>
+        <router-outlet></router-outlet>
     </div>
     <!-- /page -->
 <!-- </div> -->
