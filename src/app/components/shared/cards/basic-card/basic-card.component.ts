@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, HostBinding, input } from '@angular/core';
-import { CardComponent } from '../card/card/card.component';
+import { CardComponent } from '../card/card.component';
 
 @Component({
   selector: 'basic-card',
