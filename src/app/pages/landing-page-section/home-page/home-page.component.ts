@@ -1,9 +1,11 @@
 import { ChangeDetectionStrategy, Component } from "@angular/core";
+import { CustomizedButtonComponent } from "../../../components/base/customized-button/customized-button.component";
 
 @Component({
     selector: 'home-page',
     templateUrl: './home-page.component.html',
-    imports: [],
+    styleUrl: './home-page-component.scss',
+    imports: [CustomizedButtonComponent],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class HomePageComponent {

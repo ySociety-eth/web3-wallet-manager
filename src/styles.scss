@@ -9,7 +9,15 @@
 .page-container {
   padding: 2.5rem;
 }
-html, body { height: 100%; }
+
+.landing-page-container {
+  width: min(1200px, calc(100% - 4rem));
+  margin: 0 auto;
+  @media screen and (max-width: 768px) {
+    width: calc(100% - 2rem);
+  }
+}
+// html, body { height: 100%; }
 body { 
   margin: 0; 
   background-color: hsla(var(--background));

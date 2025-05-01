@@ -5,7 +5,7 @@ import { ChangeDetectionStrategy, Component, HostBinding, input } from '@angular
   selector: 'button[customized-button]',
   imports: [NgClass],
   host: {
-    class: 'px-4 py-2 rounded-dft transition-all min-h-[2.5rem]',
+    class: 'px-4 py-2 rounded-dft transition-all min-h-[2.5rem] min-w-fit',
   },
   template: `
    @if(status() === 'loading') {
