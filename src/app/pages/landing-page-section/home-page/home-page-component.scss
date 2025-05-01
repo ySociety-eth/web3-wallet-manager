@@ -16,6 +16,9 @@
         // opacity: 0.8;
     }
 }
+.filter-primary {
+    filter: invert(30%) sepia(80%) saturate(500%) hue-rotate(265deg) brightness(100%) contrast(105%);
+}
 
 ::ng-deep cards-section {
     @media screen and (max-width: 640px) {
