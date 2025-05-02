@@ -1,0 +1,33 @@
+<div class="flex flex-col gap-6">
+    <div class="flex flex-col gap-4 items-center text-center">
+        <h2 class="text-3xl font-semibold">Supported Platforms</h2>
+        <p class="text-neutral-300 max-w-[32rem]">Our platform supports a wide range of liquidity pool platforms, enabling seamless 
+            integration and efficient management of your assets.</p>
+    </div>
+
+    <div class="flex flex-wrap gap-4 justify-center">
+        @for (platform of platformList; track $index) {
+            <a [href]="platform.href" target="_blank" rel="noopener noreferrer">
+                <div class="group p-6 backdrop-blur rounded-dft transition-all saturate-[35%]"
+                [ngStyle]="itemHover()[$index] ? {
+                    'background-color': 'hsla(' + platform.hslColor + ', 0.05)',
+                    'border': '1px solid hsla(' + platform.hslColor + ')',
+                    } : {
+                    'background-color': 'hsla(var(--accent), 0.05)',
+                    'border': '1px solid hsla(var(--border))'
+                    }"
+                (mouseover)="hover($index)"
+                (mouseleave)="leave($index)"
+                >
+                    <div [style.mask-image]="'url(' + platform.iconUrl + ')'"
+                    class="mask transition-all" [ngStyle]="itemHover()[$index] ? {
+                        'background-color': 'hsla(' + platform.hslColor + ')'
+                    } : {
+                        'background-color': 'hsla(var(--border))'
+                    }"
+                    ></div>
+                </div>
+            </a>
+        }
+    </div>
+</div>
