@@ -1,5 +1,5 @@
 <header class="lp-header">
-    <div class="landing-page-container flex flex-col items-center justify-center gap-6 min-h-[30rem]">
+    <div class="landing-page-container flex flex-col items-center justify-center gap-6 py-24 md:py-32">
         <div class="flex flex-col items-center text-center">
             <h1 class="md:mb-6 mb-4 md:text-5xl text-4xl font-semibold max-w-[50rem] leading-tight">Manage your liquidity on 
                 <div class="flex justify-center items-center gap-2">
@@ -44,7 +44,9 @@
         </div>
         <div class="lg:flex flex md:gap-8 gap-6">
             <button class="px-6" customized-button variant="contained">Launch App</button>
-            <button class="px-6" customized-button variant="outline">Learn More</button>
+            <a href="#lp-faq">
+                <button class="px-6" customized-button variant="outline">Learn More</button>
+            </a>
         </div>
     </div>
 </header>
@@ -52,5 +54,21 @@
 <section>
     <div class="landing-page-container">
         <cards-section></cards-section>
+    </div>
+</section>
+
+<section id="lp-faq" class="lp-faq py-24 md:py-32">
+    <div class="landing-page-container grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div>
+            <h2 class="text-3xl font-semibold mb-4">How BeraPools Works</h2>
+            <p class="text-neutral-400">BeraPools connects your wallet to the Berachain network and aggregates all your liquidity positions across different platforms into a single, streamlined dashboard. With an intuitive interface, it displays detailed investment data, including metrics like impermanent loss, yield performance, and asset allocation. Everything is automated and customizable — helping you track your DeFi activity with clarity and make smarter decisions.</p>
+        </div>
+        <div class="flex flex-col gap-4">
+            @for (item of accordions(); track $index) {
+                <accordion [title]="item.title" [isOpen]="item.active" (clicked)="accordionClicked($index)">
+                    <p class="text-neutral-300">{{ item.text }}</p>
+                </accordion>
+            }
+        </div>
     </div>
 </section>
