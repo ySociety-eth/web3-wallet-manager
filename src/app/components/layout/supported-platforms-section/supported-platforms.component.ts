@@ -19,25 +19,25 @@ export class SupportedPlatformsComponent {
             iconUrl: 'https://raw.githubusercontent.com/Uniswap/brand-assets/refs/heads/main/Uniswap%20Brand%20Assets/Uniswap_icon_pink.svg',
             href: 'https://uniswap.org',
             alt: 'Uniswap',
-            hslColor: '331, 100%, 50%'
+            hslColor: '331, 40%, 50%'
         },
         { 
             iconUrl: '/logo/pendle.png',
             href: 'https://pendle.finance',
             alt: 'Pendle',
-            hslColor: '230, 100%, 50%'
+            hslColor: '200, 40%, 50%'
         },
         { 
             iconUrl: '/logo/pancakeswap-bunny.png',
             href: 'https://pancakeswap.finance',
             alt: 'PancakeSwap',
-            hslColor: '39, 90%, 50%'
+            hslColor: '39, 40%, 50%'
         },
         { 
-            iconUrl: '/logo/balancer.png',
-            href: 'https://balancer.fi',
-            alt: 'Balancer',
-            hslColor: '240, 100%, 60%'
+            iconUrl: 'https://raw.githubusercontent.com/base/brand-kit/refs/heads/main/logo/symbol/Base_Symbol_Black.png',
+            href: 'https://base.org',
+            alt: 'Base',
+            hslColor: '240, 40%, 50%'
         },
     ]
     constructor() {

@@ -8,13 +8,13 @@
     <div class="flex flex-wrap gap-4 justify-center">
         @for (platform of platformList; track $index) {
             <a [href]="platform.href" target="_blank" rel="noopener noreferrer">
-                <div class="group p-6 backdrop-blur rounded-dft transition-all saturate-[35%]"
+                <div class="group p-6 backdrop-blur-sm rounded-dft transition-all"
                 [ngStyle]="itemHover()[$index] ? {
                     'background-color': 'hsla(' + platform.hslColor + ', 0.05)',
                     'border': '1px solid hsla(' + platform.hslColor + ')',
                     } : {
-                    'background-color': 'hsla(var(--accent), 0.05)',
-                    'border': '1px solid hsla(var(--border))'
+                    'background-color': 'hsla(0, 0%, 100%, 0.01)',
+                    'border': '1px solid hsla(0, 0%, 100%, 0.15)'
                     }"
                 (mouseover)="hover($index)"
                 (mouseleave)="leave($index)"
@@ -23,7 +23,7 @@
                     class="mask transition-all" [ngStyle]="itemHover()[$index] ? {
                         'background-color': 'hsla(' + platform.hslColor + ')'
                     } : {
-                        'background-color': 'hsla(var(--border))'
+                        'background-color': 'hsla(0, 0%, 60%)'
                     }"
                     ></div>
                 </div>
