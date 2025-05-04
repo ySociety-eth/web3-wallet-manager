@@ -22,13 +22,13 @@ export class SupportedPlatformsComponent {
             hslColor: '331, 40%, 50%'
         },
         { 
-            iconUrl: '/logo/pendle.png',
+            iconUrl: './logo/pendle.png',
             href: 'https://pendle.finance',
             alt: 'Pendle',
             hslColor: '200, 40%, 50%'
         },
         { 
-            iconUrl: '/logo/pancakeswap-bunny.png',
+            iconUrl: './logo/pancakeswap-bunny.png',
             href: 'https://pancakeswap.finance',
             alt: 'PancakeSwap',
             hslColor: '39, 40%, 50%'
