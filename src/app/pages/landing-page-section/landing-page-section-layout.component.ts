@@ -9,7 +9,7 @@ import { FooterComponent } from "../../components/layout/footer/footer.component
     template: `
     <navbar></navbar>
     <router-outlet></router-outlet>
-    <footer custom-footer></footer>
+    <footer custom-footer class="mt-12 md:mt-16 border-t border-border/30"></footer>
     `,
     changeDetection: ChangeDetectionStrategy.OnPush,
 })

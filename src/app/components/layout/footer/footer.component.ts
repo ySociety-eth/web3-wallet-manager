@@ -3,6 +3,9 @@ import { ChangeDetectionStrategy, Component } from "@angular/core";
 @Component({
     selector: 'footer[custom-footer]',
     templateUrl: './footer.component.html',
+    host: {
+        class: 'text-foreground',
+    },
     imports: [],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
