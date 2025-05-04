@@ -27,7 +27,7 @@
         width: 0;
         height: 0;
         border-radius: 50%;
-        box-shadow: 0 0 250px 80px hsla(var(--primary), 0.4);
+        box-shadow: 0 0 250px 80px hsla(var(--primary), 0.3);
         pointer-events: none;
         z-index: -1;
     }
@@ -45,7 +45,7 @@
         width: min(40%, 800px);
         height: 0;
         border-radius: 200%;
-        box-shadow: 0 0 150px 20px hsla(var(--primary), 0.4);
+        box-shadow: 0 0 150px 20px hsla(var(--primary), 0.3);
         pointer-events: none;
         z-index: -1;
     }
@@ -71,13 +71,25 @@
   mask-repeat: no-repeat;
   mask-size: 100% 100%;
 
-  opacity: 0.06;
+  opacity: 0.04;
 
   -webkit-mask-image: radial-gradient(ellipse at center, black 5%, transparent 70%);
   -webkit-mask-repeat: no-repeat;
   -webkit-mask-size: 100% 100%;
 }
-  
+
+.glow-fx {
+    ::after {
+        content: '';
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        border-radius: 50%;
+        box-shadow: 0 0 100px 30px hsla(var(--primary), 0.3);
+        z-index: -1;
+    }
+}
 
 ::ng-deep cards-section {
     @media screen and (max-width: 640px) {
