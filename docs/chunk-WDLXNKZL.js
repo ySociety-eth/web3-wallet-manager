@@ -1,0 +1,1 @@
+import{Wa as i}from"./chunk-IW2PTHIM.js";import"./chunk-HIVZEDT5.js";var n=class e{transform(r,t=8,s="middle"){return r?s==="middle"?r.substring(0,4)+"..."+r.substring(r.length-4,r.length):r.substring(0,t)+"...":""}static \u0275fac=function(t){return new(t||e)};static \u0275pipe=i({name:"truncate",type:e,pure:!0})};export{n as TruncatePipe};
