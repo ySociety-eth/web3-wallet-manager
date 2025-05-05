@@ -53,6 +53,10 @@ export class WalletConnectService {
         });
     }
 
+    public openModal() {
+        this.modal?.open();
+    }
+
     public disconnect() {
         this.modal?.disconnect();
     }
