@@ -7,7 +7,10 @@
 
 
 :root {
-  font-size: 14px;
+  font-size: 13px;
+  @media screen and (min-width: 400px) {
+    font-size: 14px;
+  }
   @media screen and (min-width: 768px) {
     font-size: 15px;
   }
